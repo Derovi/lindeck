@@ -69,8 +69,3 @@ class Card extends Component {
 }
 
 export default Card;
-
-// Live Cycle Hooks ->
-// Mount -> construcor / render / componentDidMount
-// update ->   render / componentDidUpdate
-// UnMount(destructor) ->   componentWillUnMount
