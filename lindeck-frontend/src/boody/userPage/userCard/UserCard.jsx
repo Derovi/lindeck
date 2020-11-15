@@ -8,20 +8,41 @@ import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+import Input from "@material-ui/core/Input";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
 
 export default class UserCard extends React.Component {
+    myImage = (user) => {
+        if (this.props.isMe)
+            return <div className="image-upload">
+                <ButtonBase className="imageHolderAva">
+                    <label htmlFor="file-input">
+                        <img className="imageAva" src={user.image} alt={"ava"}/>
+                    </label>
+                </ButtonBase>
+                <input id="file-input" type="file"/>
+            </div>
+
+        return <div className="image-upload">
+            <ButtonBase className="imageHolderAva">
+                <img className="imageAva" src={user.image} alt={"ava"}/>
+            </ButtonBase>
+        </div>
+
+    }
+    imgClicked = () => {
+        if (this.props.isMe)
+            this.props.history.push('/user')
+    }
 
     render() {
         let user = this.props.user
         return <Paper className="userPaper">
             <Grid container spacing={2}>
                 <Grid item>
-                    <ButtonBase className="imageHolderAva" onClick={() => this.props.history.push('/user')}>
-                        <img className="imageAva" src={user.image} alt={"ava"}/>
-                    </ButtonBase>
+                    {this.myImage(user)}
                 </Grid>
                 <Grid item xs={12} sm container>
                     <Grid item xs={5} container direction="column" spacing={2}>
@@ -37,12 +58,12 @@ export default class UserCard extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            {this.props.isMe && <Button>Edit</Button>}
                             {!this.props.isMe && <Button>Unfollow</Button>}
                         </Grid>
                     </Grid>
                     <Grid item xs={7}>
                         {this.createHistory()}
+
                     </Grid>
                 </Grid>
             </Grid>
@@ -53,8 +74,9 @@ export default class UserCard extends React.Component {
 
     createHistory = () => {
         return <List className="listOfDecks">
-            {this.props.user.deckList.map((decks,index) => {
-                return <button className="deckSelectButton" style={{background:index%2===0?"gainsboro":"white"}}>
+            {this.props.user.deckList.map((decks, index) => {
+                return <button key={index} className="deckSelectButton"
+                               style={{background: index % 2 === 0 ? "gainsboro" : "white"}}>
                     <ListItem>
                         <ListItemAvatar>
                             <Avatar>
@@ -66,6 +88,10 @@ export default class UserCard extends React.Component {
                 </button>
             })
             }
+            {this.props.user.deckList.length === 0 && <ListItem>
+                <Typography variant="overline" color="textSecondary">
+                    There is no deck created yest.
+                </Typography></ListItem>}
         </List>
     }
 }

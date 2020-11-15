@@ -12,7 +12,7 @@ export default class UserPage extends React.Component {
 
     render() {
         return <div className="rootUserPage backGroundImage">
-            <UserCard user={user} isMe={true}/>
+            <UserCard history={this.props.history} user={user} isMe={true}/>
             <Paper className="titlePaper">
                 <span>
                     Following
@@ -22,7 +22,7 @@ export default class UserPage extends React.Component {
         </div>
     }
 
-    followingGenerate(following) {
-        return following.map(user => <UserCard user={user}  isMe={false}/>)
+    followingGenerate = (following) =>{
+        return following.map((user,number) => <UserCard history={this.props.history} user={user} key={number} isMe={false}/>)
     }
 }

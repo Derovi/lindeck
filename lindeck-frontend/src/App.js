@@ -21,7 +21,7 @@ class App extends Component {
                 <Switch>
                     <Route path='/deck' component={DeckPage}/>
                     <Route path='/login' component={LoginPage}/>
-                    <Route path='/user' component={UserPage}/>
+                    <Route path='/user' component={(props) => <UserPage {...props}/>}/>
                     <Route path='/' component={(props) => <HomePage {...props}/>}/>
                 </Switch>
                 <Route component={Footer}/>

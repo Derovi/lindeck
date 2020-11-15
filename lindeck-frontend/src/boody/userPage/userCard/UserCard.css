@@ -23,6 +23,8 @@
     position: relative;
     width: 13em;
     height: auto;
+
+    cursor: pointer;
 }
 
 .deckSelectButton {
@@ -31,7 +33,11 @@
     background: 0;
 }
 
-.deckSelectButton:hover {
-    background: 0;
-    transition: all 0.3s ease 0s;
+.deckSelectButton li {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.image-upload>input {
+    display: none;
 }
