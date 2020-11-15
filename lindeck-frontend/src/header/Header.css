@@ -1,0 +1,73 @@
+
+.root {
+    flexGrow: 1;
+}
+
+.toolbar {
+    background: black;
+    transition: all 0.4s ease 0s;
+    box-shadow: 0 -30px 70px 30px rgba(128, 119, 122, 0.47);
+}
+
+
+.menuButton {
+    margin-right: 3em;
+}
+
+.longPlaceHolder {
+    width: 74%;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.headerLindeckButton {
+    width: 16em;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: black;
+    padding: 20px;
+    border: 0;
+    display: inline-block;
+    transition: all 0.4s ease 0s;
+}
+
+.logoName {
+    display: inline;
+    position: relative;
+    font: 40px Helvetica, Sans-Serif;
+    letter-spacing: -5px;
+    color: rgba(0, 0, 255, 0.5);
+}
+
+.logoName:after {
+    width: 5em;
+    content: "Life in deck";
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    color: rgba(255, 0, 0, 0.5);
+}
+
+.headerLindeckButton:hover {
+    color: #ffffff;
+    background: #f6b93b;
+    border-color: #f6b93b !important;
+    transition: all 0.4s ease 0s;
+
+}
+
+
+.imageHolderAvaSmall {
+    position: relative;
+    width: 3em;
+    height: 3em;
+    border-radius: 20%;
+    overflow: hidden;
+}
+
+.imageHolderAvaSmall img{
+    position: relative;
+    width: 3em;
+    height: auto;
+}

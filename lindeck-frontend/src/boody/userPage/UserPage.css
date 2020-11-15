@@ -1,0 +1,22 @@
+.rootUserPage {
+    flexGrow: 1;
+}
+
+.userPaper {
+    padding: 2em;
+    margin: auto;
+    max-width: 800px;
+}
+
+.imageHolderAva {
+    position: relative;
+    width: 13em;
+    height: 13em;
+    overflow: hidden;
+}
+
+.imageHolderAva img {
+    position: relative;
+    width: 13em;
+    height: auto;
+}

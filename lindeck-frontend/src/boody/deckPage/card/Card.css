@@ -1,0 +1,13 @@
+.react-card-flip {
+    height: 100%;
+}
+
+.paper {
+    word-wrap: break-word;
+    height: 100%;
+    overflow: hidden;
+}
+
+.text {
+    padding: 3px;
+}

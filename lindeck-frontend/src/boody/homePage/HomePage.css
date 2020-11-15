@@ -1,0 +1,77 @@
+.centerFirstText {
+    text-align: center;
+    padding: 28vh 0;
+}
+
+.firstCard {
+    padding: 20px;
+    clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%);
+    background: linear-gradient(14deg, #fe6b8beb 34%, #f2702c 99%);
+    backdrop-filter: blur(5px);
+}
+
+.firstCard h1 {
+    font-size: 72px;
+    background: -webkit-linear-gradient(#fff, #65313100);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.mainPageButton {
+    color: #494949 !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #ffffff;
+    padding: 20px;
+    border: 0px solid #494949 !important;
+    display: inline-block;
+    transition: all 0.4s ease 0s;
+}
+
+.mainPageButton:hover {
+    color: #ffffff;
+    background: #f6b93b;
+    border-color: #f6b93b !important;
+    transition: all 0.4s ease 0s;
+}
+
+.centerText {
+    transition: all 0.4s ease 0s;
+    position: relative;
+    text-align: center;
+    padding: 5vh 0;
+}
+
+.secondCard {
+    color: white;
+    padding: 6vh;
+    clip-path: polygon(0 26%, 100% 0, 100% 96%, 0% 73%);
+    background: linear-gradient(50deg, #000000 34%, #00000094 99%);
+    backdrop-filter: blur(5px);
+}
+
+.thirdCard {
+    color: white;
+    padding: 6vh;
+    clip-path: polygon(0% 0%, 100% 28%, 100% 71%, 0 100%);
+    background: linear-gradient(50deg, #000000 34%, #00000094 99%);
+    backdrop-filter: blur(5px);
+}
+
+
+.backGroundImage {
+    height: 100vh;
+    background-attachment: fixed;
+    overflow: hidden;
+    background-image: url(https://source.unsplash.com/random);
+    background-repeat: no-repeat;
+    background-color: gray;
+    background-size: cover;
+    background-position: center;
+}
+
+.blackLine {
+    background: currentColor;
+    height: 10px;
+    margin: 0;
+}

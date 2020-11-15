@@ -1,0 +1,14 @@
+
+.form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: fit-content;
+}
+
+.formControl {
+    margin-top: 1em;
+    min-width: 120px;
+
+    padding-right: 40px !important;
+}
