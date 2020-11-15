@@ -37,9 +37,8 @@ export default class UserCard extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Button variant="body2">
-                                Edit
-                            </Button>
+                            {this.props.isMe && <Button>Edit</Button>}
+                            {!this.props.isMe && <Button>Unfollow</Button>}
                         </Grid>
                     </Grid>
                     <Grid item xs={7}>
@@ -54,46 +53,19 @@ export default class UserCard extends React.Component {
 
     createHistory = () => {
         return <List className="listOfDecks">
-            <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <ViewCarouselIcon/>
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Photos" secondary="Jan 9, 2014"/>
-            </ListItem>
-            <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <ViewCarouselIcon/>
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Work" secondary="Jan 7, 2014"/>
-            </ListItem>
-            <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <ViewCarouselIcon/>
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Vacation" secondary="July 20, 2014"/>
-            </ListItem>
-            <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <ViewCarouselIcon/>
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Vacation" secondary="July 20, 2014"/>
-            </ListItem>
-            <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <ViewCarouselIcon/>
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Vacation" secondary="July 20, 2014"/>
-            </ListItem>
+            {this.props.user.deckList.map((decks,index) => {
+                return <button className="deckSelectButton" style={{background:index%2===0?"gainsboro":"white"}}>
+                    <ListItem>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <ViewCarouselIcon/>
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={decks.name} secondary={decks.description}/>
+                    </ListItem>
+                </button>
+            })
+            }
         </List>
     }
 }

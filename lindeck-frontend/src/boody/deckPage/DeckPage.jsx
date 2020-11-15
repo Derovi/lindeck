@@ -19,7 +19,7 @@ class deckPage extends Component {
         gridWidth: 800,
         layout: originalLayout,
         cards: originalCards,
-        deckSettings: originalDeckSettings,
+        deckSettings: originalDeckSettings, // {cols: int, rowHeight:int, name:str,description:str
     }
 
     cardIdGen = () => {

@@ -19,19 +19,49 @@ export default class GlobalStorage {
     getUser() {
         //return getFromLS("user") ||
         return {
-            username: "watislaf",
-            discribe: " Я влад коз",
             isLogged: false,
-            image: "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max"
+            username: "watislaf",
+            describe: " Я влад коз",
+            image: "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
+            deckList: [
+                {cols: 42, rowHeight: 123, name: "name1", description: "lol"},
+                {cols: 12, rowHeight: 123, name: "name1", description: "kek"},
+                {cols: 4, rowHeight: 241, name: "name1", description: "azaza"}
+            ],
+
+            following: [
+                {
+                    username: "derovi",
+                    describe: " Я запушу",
+                    image: "https://picsum.photos/200/300",
+                    deckList: [
+                        {cols: 42, rowHeight: 123, name: "name1", description: "lol"},
+                    ],
+                },
+                {
+                    username: "burik",
+                    describe: "где",
+                    image: "https://picsum.photos/200",
+                    deckList: [],
+                }
+            ]
         };
     }
 
     getLayout() {
-        return JSON.parse(JSON.stringify(getFromLS("layout"))) || [];
+        return JSON.parse(JSON.stringify(getFromLS("layout"))) || [{
+            0: {
+                h: 1, i: "0",
+                moved: false, static: false,
+                w: 2, x: 2, y: 0
+            }
+        }];
     }
 
     getCards() {
-        return JSON.parse(JSON.stringify(getFromLS("cards"))) || [];
+        return JSON.parse(JSON.stringify(getFromLS("cards"))) || [{
+            id: "0", isFlipped: false, textfield: "", type: "default"
+        }];
     }
 
     GetSettings() {

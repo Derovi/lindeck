@@ -60,7 +60,7 @@
 
 
 .backGroundImage {
-    height: 100vh;
+    min-height: 100vh;
     background-attachment: fixed;
     overflow: hidden;
     background-image: url(https://source.unsplash.com/random);

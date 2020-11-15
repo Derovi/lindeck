@@ -36,7 +36,7 @@ export default class Header extends React.Component {
                     {user.isLogged && <Button onClick={() => props.history.push('/login')} color="inherit">
                         Login
                     </Button>}
-                    {!user.isLogged && <ButtonBase onClick={() => props.history.push('/user')} className="imageHolderAvaSmall">
+                    {!user.isLogged && <ButtonBase onClick={() => props.history.push('/user')} className="AvaSmallHolder">
                         <img  src={user.image} alt={"ava"}/>
                     </ButtonBase>
                     }
