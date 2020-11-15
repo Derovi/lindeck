@@ -1,15 +1,16 @@
-import Grid from "@material-ui/core/Grid";
+import "./UserCard.css"
+import React from "react";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import React from "react";
-import Button from "@material-ui/core/Button";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
+import Grid from "@material-ui/core/Grid";
 import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
-import ListItemText from "@material-ui/core/ListItemText";
 
 export default class UserCard extends React.Component {
 
@@ -23,7 +24,7 @@ export default class UserCard extends React.Component {
                     </ButtonBase>
                 </Grid>
                 <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" spacing={2}>
+                    <Grid item xs={5} container direction="column" spacing={2}>
                         <Grid item xs>
                             <Typography gutterBottom variant="overline">
                                 {user.username}
@@ -41,7 +42,7 @@ export default class UserCard extends React.Component {
                             </Button>
                         </Grid>
                     </Grid>
-                    <Grid item>
+                    <Grid item xs={7}>
                         {this.createHistory()}
                     </Grid>
                 </Grid>
@@ -52,7 +53,7 @@ export default class UserCard extends React.Component {
 
 
     createHistory = () => {
-        return <List>
+        return <List className="listOfDecks">
             <ListItem>
                 <ListItemAvatar>
                     <Avatar>
