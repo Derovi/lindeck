@@ -89,8 +89,8 @@ class Card extends Component {
                                  changeVerdict={this.changeVerdict} inputAnswerDialogOpen={this.openInputAnswerDialog}
                 />
                 <div className="text">
-                        {this.getText(isFlipped)}
                     <ReactMarkdown>
+                        {this.getText(isFlipped)}
                     </ReactMarkdown>
                 </div>
 
@@ -98,8 +98,9 @@ class Card extends Component {
                                 textfield={this.getText(this.state.isFlipped)} setText={this.setText}
                                 needAnswer={this.props.card.type === "answer"}
                                 answerfield={this.props.card.answer} setAnswer={this.setAnswer}/>
+                {this.props.card.type === "answer"&&
                 <AnswerEditDialog open={this.state.inputAnswerDialog} openInputAnswerDialog={this.openInputAnswerDialog}
-                                  answer={this.props.card.answer} answerCheck={this.answerCheck}/>
+                                  answer={this.props.card.answer} answerCheck={this.answerCheck}/>}
             </Paper>
         })
     }
