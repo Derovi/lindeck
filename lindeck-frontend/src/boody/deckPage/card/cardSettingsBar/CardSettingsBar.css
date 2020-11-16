@@ -5,11 +5,12 @@
     clip-path: polygon(0 36%, 100% 0, 100% 76%, 0 100%);
 }
 
-.flipButton {
+.floatRight {
     float: right;
 }
 
-.bar {
-    background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+.settingsBar {
+    box-shadow: -1px -2px 6px 5px;
+    background: linear-gradient(45deg, #bf3351 30%, #7253ff 90%);
     width: 100%
 }

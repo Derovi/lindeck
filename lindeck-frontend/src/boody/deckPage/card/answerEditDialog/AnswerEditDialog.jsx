@@ -1,27 +1,35 @@
-import "./CardEditDialog.css"
-import React, {useRef} from 'react';
+import "./AnswerEditDialog.css"
+import React, {useRef, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import TextField from "@material-ui/core/TextField";
 
-export default function CardEditDialog(props) {
-    let inputRef = useRef(null)
+export default function AnswerEditDialog(props) {
+    let currentAnswer = ""
     const close = () => {
-        props.editDialogIsOpened(false)
+        props.openInputAnswerDialog(false)
     }
 
     const saveAndClose = () => {
-        props.setText(inputRef.current.value)
+        props.answerCheck(currentAnswer)
         close()
     }
 
+    function hideThisText(answer) {
+        let array = answer.split("")
+        return array.map(letter => letter === " " ? " " : "*").join("")
+    }
+
     return <Dialog scroll="paper" fullWidth={true} open={props.open} onClose={close}>
-        <DialogTitle>Save</DialogTitle>
+        <span className="stylishText dialogTitle">Put your answer</span>
         <DialogContent>
-            <TextareaAutosize ref={inputRef} className="input" defaultValue={props.textfield}/>
+            <TextField label="Answer" placeholder={hideThisText(props.answer)} fullWidth
+                       onChange={(event) => currentAnswer = event.target.value}
+                       variant="outlined"
+            />
         </DialogContent>
         <DialogActions>
             <Button color="primary" onClick={close}>

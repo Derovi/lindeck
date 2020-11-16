@@ -6,7 +6,7 @@
 .firstCard {
     padding: 20px;
     clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%);
-    background: linear-gradient(14deg, #fe6b8beb 34%, #f2702c 99%);
+    background: linear-gradient(45deg, #711519 30%, #80087f 90%);
     backdrop-filter: blur(5px);
 }
 

@@ -51,10 +51,7 @@ export default function DeckEditDialog(props) {
             {createWarnings()}
             <FormControl className="formControl">
                 <InputLabel>maxWidth</InputLabel>
-                <Select
-                    autoFocus
-                    value={cols}
-                    onChange={selectCols}>
+                <Select autoFocus value={cols} onChange={selectCols}>
                     <MenuItem value="2">2</MenuItem>
                     <MenuItem value="4">4</MenuItem>
                     <MenuItem value="6">6</MenuItem>
@@ -64,10 +61,7 @@ export default function DeckEditDialog(props) {
             </FormControl>
             <FormControl className="formControl">
                 <InputLabel> RowHeight</InputLabel>
-                <Select
-                    autoFocus
-                    value={height}
-                    onChange={selectHeight}>
+                <Select autoFocus value={height} onChange={selectHeight}>
                     <MenuItem value="300">300</MenuItem>
                     <MenuItem value="240">240</MenuItem>
                     <MenuItem value="100">100</MenuItem>

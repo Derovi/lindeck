@@ -1,15 +1,10 @@
-const originalLayout = getFromLS("layout") || [];
-const originalCards = getFromLS("cards") || [];
-const originalDeckSettings = getFromLS("deck") || {rowHeight: 100, cols: 6};
-
 function getFromLS(key) {
     // Rewrite to Get From GS (global storage)
     return JSON.parse(global.localStorage.getItem(key));
 }
 
 function saveToLS(key, value) {
-    // Rewrite to Push From GS (global storage)
-
+    // Rewrite to Push To GS (global storage)
     if (global.localStorage) {
         global.localStorage.setItem(key, JSON.stringify(value));
     }
@@ -60,7 +55,7 @@ export default class GlobalStorage {
 
     getCards() {
         return JSON.parse(JSON.stringify(getFromLS("cards"))) || [{
-            id: "0", isFlipped: false, textfield: "", type: "default"
+            type: "answer", textfield: "", secondfield: "", answer: "", verdict: 0, isFlipped: false, id: "0"
         }];
     }
 

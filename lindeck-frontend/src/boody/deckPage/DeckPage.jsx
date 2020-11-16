@@ -3,7 +3,7 @@ import 'react-grid-layout/css/styles.css';
 import React, {Component} from 'react';
 import ReactGridLayout from "react-grid-layout";
 import ReactResizeDetector from 'react-resize-detector';
-import MovingDeckEditButton from "./movingDeckEditButton/deckEditMenu";
+import MovingDeckEditButton from "./movingDeckEditButton/DeckEditMenu";
 import DeckEditDialog from "./editDeckDialog/DeckEditDialog";
 import GlobalStorage from "../../common/GlobalStorage";
 import Card from "./card/Card";
@@ -99,6 +99,21 @@ class deckPage extends Component {
         GS.saveCards([])
     }
 
+    changeCardAnswer = (text, id) => {
+        let newCardArray = this.state.cards
+        let card = newCardArray.filter(card => card.id === id)[0]
+        card.answer = text
+        GS.saveCards(newCardArray)
+        this.setState({cards: newCardArray})
+    }
+    changeCardVerdict = (verdict, id) => {
+        let newCardArray = this.state.cards
+        let card = newCardArray.filter(card => card.id === id)[0]
+        card.verdict = verdict
+        GS.saveCards(newCardArray)
+        this.setState({cards: newCardArray})
+    }
+
     changeCardText = (text, id, isFlipped) => {
         let newCardArray = this.state.cards
         let card = newCardArray.filter(card => card.id === id)[0]
@@ -142,8 +157,9 @@ class deckPage extends Component {
                             {this.state.cards.map((card) => (
                                 <div key={card.id} data-grid={this.state.layout.filter(lay => lay.i === card.id)[0]}>
                                     <Card card={card}
-                                          changeCardText={this.changeCardText} duplicateCard={this.duplicateCard}
-                                          deleteCard={this.deleteCard}/>
+                                          changeCardText={this.changeCardText} changeCardAnswer={this.changeCardAnswer}
+                                          changeCardVerdict={this.changeCardVerdict}
+                                          duplicateCard={this.duplicateCard} deleteCard={this.deleteCard}/>
                                 </div>
                             ))}
                         </ ReactGridLayout>}

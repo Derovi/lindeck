@@ -84,6 +84,12 @@ export default function DeckEditMenu(props) {
         })
     }
 
+    function addAnswerCard() {
+        props.addCard({
+            type: "answer", textfield: "", secondfield: "", answer: "", answered: 0, isFlipped: false, id: "0"
+        })
+    }
+
     return <div className={classes.root}>
         <div className={clsx(classes.content, {[classes.contentShift]: open})}>
             {props.children}
@@ -93,8 +99,8 @@ export default function DeckEditMenu(props) {
             </Fab>
         </div>
 
-        <SwipeableDrawer className={classes.drawer} anchor="right" open={open} onClose={()=>setOpen(false)}
-                         classes={{paper: classes.drawerPaper}} onOpen={()=>setOpen(true)}>
+        <SwipeableDrawer className={classes.drawer} anchor="right" open={open} onClose={() => setOpen(false)}
+                         classes={{paper: classes.drawerPaper}} onOpen={() => setOpen(true)}>
             <div>
                 <IconButton onClick={closeDrawer}>
                     <ChevronRightIcon/>
@@ -120,6 +126,10 @@ export default function DeckEditMenu(props) {
                 <ListItem button onClick={addTurningCard}>
                     <ListItemIcon> <PlusOneIcon/></ListItemIcon>
                     <ListItemText primary={"Create Turning Card"}/>
+                </ListItem>
+                <ListItem button onClick={addAnswerCard}>
+                    <ListItemIcon> <PlusOneIcon/></ListItemIcon>
+                    <ListItemText primary={"Create Answer Card"}/>
                 </ListItem>
                 <ListItem button onClick={props.resetLayout}>
                     <ListItemIcon> <ThreeSixtypIcon/> </ListItemIcon>
