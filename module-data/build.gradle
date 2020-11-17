@@ -33,7 +33,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.14'
     compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1' // jwts
     compile("org.springframework.boot:spring-boot-starter-data-rest")  // data rest
-    compile("org.springframework.boot:spring-boot-starter-security")  // security
     annotationProcessor 'org.projectlombok:lombok:1.18.14'  // lombok
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"  // jpa
     runtimeOnly 'org.postgresql:postgresql:42.2.1'  // postgre
