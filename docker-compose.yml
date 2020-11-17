@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  psql:
+    image: "bitnami/postgresql:latest"
+    ports:
+      - 5432:5432
+    env_file:
+      - database.env
+
+  auth:
+    build:
+      context: service-authorization/
+    ports:
+      - 8070:8080
+    links:
+      - psql
+    depends_on:
+      - psql
+
+  test:
+    build:
+      context: service-test/
+    ports:
+      - 8071:8080
+    links:
+      - psql
+    depends_on:
+      - psql
+
+  nginx:
+    image: nginx
+    volumes:
+    - './lindeck-frontend/build:/var/www/lindeck/static'
+    - './nginx.conf:/etc/nginx/nginx.conf'
+    depends_on:
+      - auth
+      - test
+    ports:
+    - 80:80
+    - 443:443
