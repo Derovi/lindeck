@@ -7,20 +7,20 @@ import HomePage from "./boody/homePage/HomePage";
 import Footer from "./footer/Footer";
 import UserPage from "./boody/userPage/UserPage";
 import GlobalStorage from "./common/GlobalStorage";
+import RegisterPage from "./boody/registerPage/RegisterPage";
 
 
-let GS = new GlobalStorage()
-const user = GS.getUser();
 
 class App extends Component {
 
     render() {
         return (
             <Router>
-                <Route component={(props) => <Header {...props} user={user}/>}/>
+                <Route component={(props) => <Header {...props} />}/>
                 <Switch>
                     <Route path='/deck' component={DeckPage}/>
                     <Route path='/login' component={LoginPage}/>
+                    <Route path='/register' component={(props) => <RegisterPage {...props}/>}/>
                     <Route path='/user' component={(props) => <UserPage {...props}/>}/>
                     <Route path='/' component={(props) => <HomePage {...props}/>}/>
                 </Switch>

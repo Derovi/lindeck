@@ -21,7 +21,7 @@
 }
 
 .headerLindeckButton {
-    width: 16em;
+    width: 17em;
     color: white;
     text-transform: uppercase;
     text-decoration: none;
@@ -65,7 +65,7 @@
     overflow: hidden;
 }
 
-.AvaSmallHolder img{
+.AvaSmallHolder img {
     position: relative;
     width: 3em;
     height: auto;
@@ -83,4 +83,10 @@
 
 ::-webkit-scrollbar-thumb {
     background-color: #e7e6e6;
+}
+
+@media only screen and (max-width: 780px) {
+    .registerAndLoginButtons {
+        display: none;
+    }
 }

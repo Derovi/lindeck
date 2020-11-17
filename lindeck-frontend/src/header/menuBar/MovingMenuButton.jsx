@@ -8,12 +8,13 @@ import Divider from "@material-ui/core/Divider";
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import IconButton from "@material-ui/core/IconButton";
 import {Directions} from "@material-ui/icons";
+import Button from "@material-ui/core/Button";
+import Toolbar from "@material-ui/core/Toolbar";
+import GlobalStorage from "../../common/GlobalStorage";
 
-const styles = {
-    menu: {
-        background:"red",
-    }
-}
+
+let GS = new GlobalStorage()
+let user = GS.getUser(GS.getMyName())
 
 class MovingMenuButton extends Component {
     state = {
@@ -32,18 +33,30 @@ class MovingMenuButton extends Component {
             onClick={ev => this.toggleDrawer(false, ev)}
             onKeyDown={ev => this.toggleDrawer(false, ev)}>
             <List>
-                <ListItem button>
-                    <ListItemIcon onClick={() => this.props.history.push('/deck')}> <InboxIcon/> </ListItemIcon>
-                    <ListItemText onClick={() => this.props.history.push('/deck')} primary={"My last deck"}/>
+                <ListItem onClick={() => this.props.history.push('/deck')} button>
+                    <ListItemIcon> <InboxIcon/> </ListItemIcon>
+                    <ListItemText primary={"My last deck"}/>
                 </ListItem>
             </List>
             <Divider/>
             <List>
-                <ListItem button>
-                    <ListItemIcon onClick={() => this.props.history.push('/decklibrary')}> <InboxIcon/> </ListItemIcon>
-                    <ListItemText onClick={() => this.props.history.push('/decklibrary  ')} primary={"Deck library"}/>
+                <ListItem onClick={() => this.props.history.push('/decklibrary')} button>
+                    <ListItemIcon> <InboxIcon/> </ListItemIcon>
+                    <ListItemText primary={"Deck library"}/>
                 </ListItem>
+                {!user && <div>
+                    <Divider/>
+                    <ListItem onClick={() => this.props.history.push('/login')} button>
+                        <ListItemIcon> <InboxIcon/> </ListItemIcon>
+                        <ListItemText primary={"Login"}/>
+                    </ListItem>
+                    <ListItem onClick={() => this.props.history.push('/register')} button>
+                        <ListItemIcon> <InboxIcon/> </ListItemIcon>
+                        <ListItemText primary={"Register"}/>
+                    </ListItem>
+                </div>}
             </List>
+
         </div>
     );
 
@@ -53,7 +66,7 @@ class MovingMenuButton extends Component {
                         edge="start" color="inherit" aria-label="menu">
                 <Directions/>
             </IconButton>
-            <SwipeableDrawer  open={this.state.drawerOpen}
+            <SwipeableDrawer open={this.state.drawerOpen}
                              onClose={() => this.toggleDrawer(false)} onOpen={() => this.toggleDrawer(true)}>
                 {this.list()}
             </SwipeableDrawer>

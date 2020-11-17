@@ -8,7 +8,7 @@ import GlobalStorage from "../common/GlobalStorage";
 import ButtonBase from "@material-ui/core/ButtonBase";
 
 let GS = new GlobalStorage()
-let user = GS.getUser()
+let user = GS.getUser(GS.getMyName())
 
 export default class Header extends React.Component {
     state = {
@@ -32,12 +32,14 @@ export default class Header extends React.Component {
                             <h1 className={"logoName"}>Life in deck</h1>
                         </button>
                     </div>
-
-                    {user.isLogged && <Button onClick={() => props.history.push('/login')} color="inherit">
+                    {console.log(user)}
+                    {!user && <div className={"registerAndLoginButtons"}><Button onClick={() => props.history.push('/login')} color="inherit">
                         Login
-                    </Button>}
-                    {!user.isLogged && <ButtonBase onClick={() => props.history.push('/user')} className="AvaSmallHolder">
-                        <img  src={user.image} alt={"ava"}/>
+                    </Button><Button onClick={() => props.history.push('/register')} color="inherit">
+                        Register
+                    </Button></div>}
+                    {user && <ButtonBase onClick={() => props.history.push('/user')} className="AvaSmallHolder">
+                        <img src={user.image} alt={"ava"}/>
                     </ButtonBase>
                     }
 

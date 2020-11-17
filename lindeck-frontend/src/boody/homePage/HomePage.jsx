@@ -1,11 +1,22 @@
 import React from 'react';
 import './HomePage.css'
+import GlobalStorage from "../../common/GlobalStorage";
 
+
+let GS = new GlobalStorage()
 export default class HomePage extends React.Component {
     state = {
         bigLine: null,
         firstMovingTextStyle: {},
         secondMovingTextStyle: {}
+    }
+
+    goStart = () => {
+        if (GS.getMyName() === "") {
+            this.props.history.push('/login')
+        } else {
+            this.props.history.push('/user/' + GS.getMyName() + '/create')
+        }
     }
 
     componentDidMount() {
@@ -42,8 +53,8 @@ export default class HomePage extends React.Component {
                         <h1>LIFE IN DECK</h1>
                         <hr/>
                         <div className="button_cont" align="center">
-                            <button className="mainPageButton" onClick={() => props.history.push('/login')}>
-                                Add Call to Action
+                            <button className="mainPageButton" onClick={this.goStart}>
+                                Start!
                             </button>
                         </div>
                     </div>
