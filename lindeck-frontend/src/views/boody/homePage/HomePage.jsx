@@ -1,6 +1,7 @@
 import React from 'react';
 import './HomePage.css'
-import GlobalStorage from "../../common/GlobalStorage";
+import GlobalStorage from "../../../common/GlobalStorage";
+import {navigate} from "@reach/router";
 
 
 let GS = new GlobalStorage()
@@ -13,9 +14,9 @@ export default class HomePage extends React.Component {
 
     goStart = () => {
         if (GS.getMyName() === "") {
-            this.props.history.push('/login')
+            navigate('/login')
         } else {
-            this.props.history.push('/user/' + GS.getMyName() + '/create')
+            navigate('/user/' + GS.getMyName() + '/create')
         }
     }
 

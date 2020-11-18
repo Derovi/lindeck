@@ -5,7 +5,7 @@ import ReactGridLayout from "react-grid-layout";
 import ReactResizeDetector from 'react-resize-detector';
 import MovingDeckEditButton from "./movingDeckEditButton/DeckEditMenu";
 import DeckEditDialog from "./editDeckDialog/DeckEditDialog";
-import GlobalStorage from "../../common/GlobalStorage";
+import GlobalStorage from "../../../common/GlobalStorage";
 import Card from "./card/Card";
 
 let GS = new GlobalStorage()

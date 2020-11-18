@@ -11,10 +11,9 @@ function saveToLS(key, value) {
 }
 
 export default class GlobalStorage {
-    myName = "";
 
     getMyName() {
-        return this.myName
+        return getFromLS("myUserName");
     }
 
     getUser(UserName) {
@@ -22,6 +21,7 @@ export default class GlobalStorage {
             {
                 username: "watislaf",
                 email: "vladkozulin@mail.ru",
+                password: "1234",
                 describe: " Я влад коз",
                 image: "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
                 deckList: [
@@ -34,6 +34,7 @@ export default class GlobalStorage {
             {
                 username: "derovi",
                 email: "iwillpush@mail.ru",
+                password: "4321",
                 describe: " Я запушу",
                 image: "https://picsum.photos/200/300",
                 deckList: [
@@ -142,6 +143,16 @@ export default class GlobalStorage {
             deckList: [],
             following: []
         })
-        saveToLS("users",users)
+        saveToLS("users", users)
+    }
+
+    signIn(email, password) {
+        console.log(getFromLS("users"))
+        let userFound = getFromLS("users").filter(user => user.email === email && user.password === password)[0]
+        if (userFound) {
+            saveToLS("myUserName", userFound.username);
+            return true;
+        }
+        return false
     }
 }

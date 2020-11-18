@@ -1,31 +1,38 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import DeckPage from "./boody/deckPage/DeckPage";
-import Header from "./header/Header";
-import LoginPage from "./boody/loginPage/LoginPage";
-import HomePage from "./boody/homePage/HomePage";
-import Footer from "./footer/Footer";
-import UserPage from "./boody/userPage/UserPage";
-import GlobalStorage from "./common/GlobalStorage";
-import RegisterPage from "./boody/registerPage/RegisterPage";
-
+import {Router} from "@reach/router"
+import Header from "./views/header/Header";
+import Footer from "./views/footer/Footer";
+import DeckPage from "./views/boody/deckPage/DeckPage";
+import LoginPage from "./views/boody/loginPage/LoginPage";
+import RegisterPage from "./views/boody/registerPage/RegisterPage";
+import HomePage from "./views/boody/homePage/HomePage";
+import UserPage from "./views/boody/userPage/UserPage";
+import OnRouteChange from "reach-router-scroll-top";
 
 
 class App extends Component {
 
     render() {
-        return (
-            <Router>
-                <Route component={(props) => <Header {...props} />}/>
-                <Switch>
-                    <Route path='/deck' component={DeckPage}/>
-                    <Route path='/login' component={LoginPage}/>
-                    <Route path='/register' component={(props) => <RegisterPage {...props}/>}/>
-                    <Route path='/user' component={(props) => <UserPage {...props}/>}/>
-                    <Route path='/' component={(props) => <HomePage {...props}/>}/>
-                </Switch>
-                <Route component={Footer}/>
-            </Router>
+        return (<div>
+                <Header/>
+                <Router primary={false} >
+                    <DeckPage path="/deck"/>
+                    <LoginPage path="/login"/>
+                    <RegisterPage path="/register"/>
+                    <HomePage path="/"/>
+                    <UserPage path='/user/:username'/>
+                </Router>
+                <Footer/>
+                <OnRouteChange
+                    action={() => {
+                        window.scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: 'smooth'
+                        });
+                    }}
+                />
+            </div>
         )
     }
 }

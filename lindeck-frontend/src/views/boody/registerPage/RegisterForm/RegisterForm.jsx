@@ -1,12 +1,10 @@
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import React, {useRef, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Link} from "react-router-dom/";
-import GlobalStorage from "../../../common/GlobalStorage";
+import GlobalStorage from "../../../../common/GlobalStorage";
+import {Link, navigate} from "@reach/router";
 
 
 let GS = new GlobalStorage()
@@ -27,7 +25,7 @@ export default function RegisterForm(props) {
 
         if (errors.username === "" && errors.email === "" && errors.password === "" && errors.passwordR === "") {
             GS.createUser(fields.username, fields.email, fields.password)
-            props.history.push('/login')
+            navigate('/login')
 
         }
         return errors
@@ -47,7 +45,7 @@ export default function RegisterForm(props) {
 
     const classes = useStyles();
 
-    function SignUp() {
+    function signUp() {
         let verdict = checkSignUp({
             username: refToNameField.current.value,
             email: refToEmailField.current.value,
@@ -74,9 +72,7 @@ export default function RegisterForm(props) {
     return (<div>
         {fields({})}
         {console.log(myFields)}
-        <Button fullWidth onClick={SignUp}
-                variant="contained" color="primary"
-                className={classes.submit}>
+        <Button fullWidth onClick={signUp} variant="contained" color="primary" className={classes.submit}>
             Sign Up
         </Button>
         <Grid container>

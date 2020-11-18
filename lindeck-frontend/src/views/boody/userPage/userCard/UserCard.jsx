@@ -8,10 +8,14 @@ import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import Input from "@material-ui/core/Input";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
+import GlobalStorage from "../../../../common/GlobalStorage";
+import {navigate} from "@reach/router";
+
+
+let GS = new GlobalStorage()
 
 export default class UserCard extends React.Component {
     myImage = (user) => {
@@ -26,7 +30,10 @@ export default class UserCard extends React.Component {
             </div>
 
         return <div className="image-upload">
-            <ButtonBase className="imageHolderAva">
+
+            <ButtonBase className="imageHolderAva" onClick={() => {
+                navigate('/user/' + user.username)
+            }}>
                 <img className="imageAva" src={user.image} alt={"ava"}/>
             </ButtonBase>
         </div>
@@ -34,7 +41,7 @@ export default class UserCard extends React.Component {
     }
     imgClicked = () => {
         if (this.props.isMe)
-            this.props.history.push('/user')
+            navigate('/user')
     }
 
     render() {

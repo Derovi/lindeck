@@ -1,11 +1,12 @@
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import "./Header.css"
 import React from "react";
 import MovingMenuButton from "./menuBar/MovingMenuButton";
-import Button from "@material-ui/core/Button";
-import "./Header.css"
-import GlobalStorage from "../common/GlobalStorage";
+import GlobalStorage from "../../common/GlobalStorage";
 import ButtonBase from "@material-ui/core/ButtonBase";
+import Toolbar from "@material-ui/core/Toolbar";
+import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
+import {navigate} from "@reach/router";
 
 let GS = new GlobalStorage()
 let user = GS.getUser(GS.getMyName())
@@ -17,7 +18,7 @@ export default class Header extends React.Component {
 
     render() {
         let props = this.props
-        return <header className="root">
+        return <><header className="root">
             <AppBar className="appBar" position="static">
                 <Toolbar style={this.state.style} className="toolbar">
                     <MovingMenuButton className="menuButton" history={props.history}/>
@@ -26,19 +27,18 @@ export default class Header extends React.Component {
                                 onMouseEnter={() => this.setState({style: {background: "#f6b93b"}})}
                                 onMouseLeave={() => this.setState({style: {background: "black"}})}
                                 onClick={() => {
-                                    props.history.push('/')
                                     this.setState({style: {background: "black"}})
+                                    navigate(`/`)
                                 }}>
                             <h1 className={"logoName"}>Life in deck</h1>
                         </button>
                     </div>
-                    {console.log(user)}
-                    {!user && <div className={"registerAndLoginButtons"}><Button onClick={() => props.history.push('/login')} color="inherit">
+                    {!user && <div className={"registerAndLoginButtons"}><Button onClick={() => navigate(`/login`)} color="inherit">
                         Login
-                    </Button><Button onClick={() => props.history.push('/register')} color="inherit">
+                    </Button><Button onClick={() => navigate('/register')} color="inherit">
                         Register
                     </Button></div>}
-                    {user && <ButtonBase onClick={() => props.history.push('/user')} className="AvaSmallHolder">
+                    {user && <ButtonBase onClick={() => navigate('/user/'+GS.getMyName())} className="AvaSmallHolder">
                         <img src={user.image} alt={"ava"}/>
                     </ButtonBase>
                     }
@@ -46,5 +46,6 @@ export default class Header extends React.Component {
                 </Toolbar>
             </AppBar>
         </header>
+            {this.props.children}</>
     }
 }

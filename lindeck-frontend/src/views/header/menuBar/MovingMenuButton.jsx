@@ -1,16 +1,15 @@
 import React, {Component} from "react";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import IconButton from "@material-ui/core/IconButton";
+import ListItem from "@material-ui/core/ListItem";
+import Divider from "@material-ui/core/Divider";
+import List from "@material-ui/core/List";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import InboxIcon from '@material-ui/icons/MoveToInbox';
 import {Directions} from "@material-ui/icons";
-import Button from "@material-ui/core/Button";
-import Toolbar from "@material-ui/core/Toolbar";
-import GlobalStorage from "../../common/GlobalStorage";
+import GlobalStorage from "../../../common/GlobalStorage";
+import {navigate} from "@reach/router";
 
 
 let GS = new GlobalStorage()
@@ -33,24 +32,24 @@ class MovingMenuButton extends Component {
             onClick={ev => this.toggleDrawer(false, ev)}
             onKeyDown={ev => this.toggleDrawer(false, ev)}>
             <List>
-                <ListItem onClick={() => this.props.history.push('/deck')} button>
+                <ListItem onClick={() => navigate('/deck')} button>
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"My last deck"}/>
                 </ListItem>
             </List>
             <Divider/>
             <List>
-                <ListItem onClick={() => this.props.history.push('/decklibrary')} button>
+                <ListItem onClick={() => navigate('/decklibrary')} button>
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"Deck library"}/>
                 </ListItem>
                 {!user && <div>
                     <Divider/>
-                    <ListItem onClick={() => this.props.history.push('/login')} button>
+                    <ListItem onClick={() => navigate('/login')} button>
                         <ListItemIcon> <InboxIcon/> </ListItemIcon>
                         <ListItemText primary={"Login"}/>
                     </ListItem>
-                    <ListItem onClick={() => this.props.history.push('/register')} button>
+                    <ListItem onClick={() => navigate('/register')} button>
                         <ListItemIcon> <InboxIcon/> </ListItemIcon>
                         <ListItemText primary={"Register"}/>
                     </ListItem>
