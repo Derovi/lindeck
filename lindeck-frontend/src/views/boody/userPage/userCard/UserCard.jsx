@@ -19,6 +19,9 @@ import {navigate} from "@reach/router";
 let GS = new GlobalStorage()
 
 export default class UserCard extends React.Component {
+    state = {
+        following: this.props.user.username in GS.getMyUser().following
+    }
     myImage = (user) => {
         if (this.props.isMe)
             return <div className="image-upload">
@@ -40,6 +43,7 @@ export default class UserCard extends React.Component {
         </div>
 
     }
+
     render() {
         let user = this.props.user
         return <Paper className="userPaper">
@@ -61,7 +65,7 @@ export default class UserCard extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            {!this.props.isMe && <Button>Unfollow</Button>}
+                            {!this.props.isMe && this.followUnfollow(user)}
                         </Grid>
                     </Grid>
                     <Grid item xs={7}>
@@ -77,12 +81,12 @@ export default class UserCard extends React.Component {
 
     createHistory = () => {
         return <List className="listOfDecks">
-            {console.log(this.props.user.deckListId)}
             {this.props.user.deckListId.map((deckId, index) => {
                 let deck = GS.getDeckById(deckId)
                 return <button key={index} className="deckSelectButton"
                                style={{background: index % 2 === 0 ? "gainsboro" : "white"}}>
-                    <ListItem onClick={() => navigate('/user/'+this.props.user.username+"/deck/"+deck.deckSettings.name)}>
+                    <ListItem
+                        onClick={() => navigate('/user/' + this.props.user.username + "/deck/" + deck.deckSettings.name)}>
                         <ListItemAvatar>
                             <Avatar>
                                 <ViewCarouselIcon/>
@@ -93,22 +97,41 @@ export default class UserCard extends React.Component {
                 </button>
             })}
 
-            {this.props.isMe&&<button className="deckSelectButton"
-                                      style={{background: this.props.user.deckListId.length % 2 === 0 ? "gainsboro" : "white"}}>
-                    <ListItem onClick={() => navigate('/user/'+this.props.user.username+"/deck-build/")}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <AddIcon/>
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Create new Deck" secondary="write now"/>
-                    </ListItem>
-                </button>
+            {this.props.isMe && <button className="deckSelectButton"
+                                        style={{background: this.props.user.deckListId.length % 2 === 0 ? "gainsboro" : "white"}}>
+                <ListItem onClick={() => navigate('/user/' + this.props.user.username + "/deck-build/")}>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <AddIcon/>
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary="Create new Deck" secondary="write now"/>
+                </ListItem>
+            </button>
             }
             {this.props.user.deckListId.length === 0 && <ListItem>
                 <Typography variant="overline" color="textSecondary">
                     There is no deck created yest.
                 </Typography></ListItem>}
         </List>
+    }
+
+    followUnfollow(user) {
+        if (GS.getMyName() !== "") {
+            if (this.state.following) {
+                return <Button onClick={() => {
+                    this.follow(user.username, true)
+                }}> Follow</Button>;
+            }
+            return <Button onClick={() => {
+                this.follow(user.username, false)
+            }}> Unfollow</Button>;
+        }
+    }
+
+    follow(username, startFollow) {
+        GS.myUserFollowing(username, startFollow)
+        this.setState({following: !startFollow})
+
     }
 }

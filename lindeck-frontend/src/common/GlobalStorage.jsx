@@ -12,7 +12,7 @@ function saveToLS(key, value) {
 
 export default class GlobalStorage {
     constructor() {
-        if (getFromLS("users")) {
+       if (getFromLS("users")) {
             saveToLS("users", [
                 {
                     username: "watislaf",
@@ -58,8 +58,16 @@ export default class GlobalStorage {
         }
     }
 
+    getMyUser() {
+        return getFromLS("myUser");
+    }
+
     getMyName() {
-        return getFromLS("myUserName");
+        let user = getFromLS("myUser");
+        if (user) {
+            return user.username
+        }
+        return ""
     }
 
     getDeckIdFromUsernameDeckname(username, deckname) {
@@ -97,7 +105,6 @@ export default class GlobalStorage {
     GetSettings() {
         return JSON.parse(JSON.stringify(getFromLS("settings"))) || {rowHeight: 100, cols: 6};
     }
-
 
     saveUser(user) {
         saveToLS("user", user)
@@ -161,7 +168,7 @@ export default class GlobalStorage {
     signIn(email, password) {
         let userFound = getFromLS("users").filter(user => user.email === email && user.password === password)[0]
         if (userFound) {
-            saveToLS("myUserName", userFound.username);
+            saveToLS("myUser", userFound);
             return true;
         }
         return false
@@ -211,8 +218,7 @@ export default class GlobalStorage {
         let decks = getFromLS("decks")
         let ids = decks.map(deck => deck.deckSettings.uniqueId)
         settings.uniqueId = 1 + Math.max(...ids)
-        console.log(settings.uniqueId)
-        decks.push(
+         decks.push(
             {
                 layout: [{i: "0", x: 1, y: 1, w: 2, h: 2}],
                 cards: [{
@@ -227,5 +233,20 @@ export default class GlobalStorage {
         let user = users.filter(user => user.username === settings.owner)[0]
         user.deckListId.push(settings.uniqueId)
         saveToLS("users", users)
+    }
+
+    myUserFollowing(username, startFollow) {
+        let myUsername = this.getMyName()
+        let users = getFromLS("users")
+        let user = users.filter(user => user.username === myUsername)[0]
+        if(startFollow) {
+            user.following.push(username)
+        }else{
+            const index = user.following.indexOf(username);
+            if (index > -1) {
+                user.following.splice(index, 1);
+            }
+        }
+        saveToLS("users",users)
     }
 }

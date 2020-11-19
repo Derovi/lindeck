@@ -76,7 +76,7 @@ export default function CreateDeckPage(props) {
                     maxLength: 20,
                 }} className="centerField" label="Deck Name"/>
                 <br/>
-                <TextField defaultValue={"my loved deck"} ref={descriptionRef} inputProps={{
+                <TextField defaultValue={"my loved deck"} inputRef={descriptionRef} inputProps={{
                     maxLength: 20,
                 }} className="centerField" label="Describe "/>
                 <br/>
