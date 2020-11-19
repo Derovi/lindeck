@@ -7,7 +7,7 @@ export default class UserObject {
     following = ["burik", "derovi"]
     deckListId = [0]
 
-    constructor(username,email,password,describe,image,deckListId,following){
+    constructor(username,email,password,describe,image,following,deckListId){
         this.username = username||this.username
         this.email = email||this.email
         this.password = password||this.password
