@@ -10,10 +10,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Footer(props) {
     const classes = useStyles();
 
-    function redirect() {
-        props.history.push('/login')
-    }
-
     return <footer>
         <div className={classes.footer}>
                         ©2020 Life in deck project.

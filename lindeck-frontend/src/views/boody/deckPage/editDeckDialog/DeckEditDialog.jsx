@@ -10,7 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import "./DeckEditDialog.css"
 import TextField from "@material-ui/core/TextField";
-import {Typography} from "@material-ui/core";
 
 export default function DeckEditDialog(props) {
     const oldValueOfCols = props.deck.cols

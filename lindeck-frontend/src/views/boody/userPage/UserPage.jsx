@@ -7,8 +7,8 @@ import GS from "../../../common/classes/GlobalStorage";
 
 
 export default class UserPage extends React.Component {
-    username = this.props.username
-    user = GS.getUser(this.username)
+    username = GS.getUser(this.props.username)
+    user =  this.props.username
 
     updateUrl() {
         if (this.username !== this.props.username) {
@@ -23,7 +23,7 @@ export default class UserPage extends React.Component {
             <UserCard user={this.user} isMe={GS.getSession().isMe(this.username)}/>
             <Paper className="titlePaper">
                 <span>
-                Following
+                Following : {this.user.following.length}
                 </span>
             </Paper>
             {this.generateFollowing(this.user.following)}

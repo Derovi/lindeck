@@ -12,6 +12,7 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
 import AddIcon from '@material-ui/icons/Add';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {navigate} from "@reach/router";
 import GS from "../../../../common/classes/GlobalStorage";
 
@@ -42,11 +43,11 @@ export default class UserCard extends React.Component {
                 <Grid item xs={12} sm container>
                     <Grid item xs={5} container direction="column" spacing={2}>
                         <Grid item xs>
-                            <Typography  gutterBottom variant="overline">
+                            <Typography gutterBottom variant="overline">
                                 <span className="fontSize20">{user.username}</span>
                             </Typography>
                             <br/>
-                            <Typography  color="textSecondary" variant="caption" gutterBottom>
+                            <Typography color="textSecondary" variant="caption" gutterBottom>
                                 <span className="fontSize15">{user.describe}</span>
                             </Typography>
                         </Grid>
@@ -86,14 +87,18 @@ export default class UserCard extends React.Component {
         return <List className="listOfDecks">
             {this.props.user.deckListId.map((deckId, uniqId) => {
                 let deck = GS.getDeckById(deckId)
+                if (!deck.canSee(this.session.username)) {
+                    return;
+                }
                 return <button key={uniqId} className="deckSelectButton"
                                style={{background: uniqId % 2 === 0 ? "gainsboro" : "white"}}>
                     <ListItem
                         onClick={() => navigate('/user/' + this.props.user.username + "/deck/" + deck.name)}>
                         <ListItemAvatar>
-                            <Avatar> <ViewCarouselIcon/> </Avatar>
+                            <Avatar> {deck.privacy === "private" ? <VisibilityOffIcon/> : <ViewCarouselIcon/>}</Avatar>
                         </ListItemAvatar>
                         <ListItemText primary={deck.name} secondary={deck.description}/>
+
                     </ListItem>
                 </button>
             })}

@@ -3,7 +3,7 @@ import 'react-grid-layout/css/styles.css';
 import React, {Component} from 'react';
 import ReactGridLayout from "react-grid-layout";
 import ReactResizeDetector from 'react-resize-detector';
-import MovingDeckEditButton from "./movingDeckEditButton/DeckEditMenu";
+import MovingDeckEditButton from "./deckEditMenu/DeckEditMenu";
 import DeckEditDialog from "./editDeckDialog/DeckEditDialog";
 import Card from "./card/Card";
 import GS from "../../../common/classes/GlobalStorage";

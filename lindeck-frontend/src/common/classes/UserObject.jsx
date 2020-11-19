@@ -1,11 +1,11 @@
 export default class UserObject {
-    username = "admin"
-    email = "admin@mail.ru"
-    password = "admin"
-    describe = "i am the admin"
+    username = ""
+    email = "null"
+    password = "null"
+    describe = "null"
     image = "https=//images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max"
-    following = ["burik", "derovi"]
-    deckListId = [0]
+    following = []
+    deckListId = []
 
     constructor(username,email,password,describe,image,following,deckListId){
         this.username = username||this.username
@@ -15,5 +15,8 @@ export default class UserObject {
         this.image = image||this.image
         this.deckListId = deckListId||this.deckListId
         this.following = following||this.following
+    }
+    isValid() {
+        return this.username!==""
     }
 }

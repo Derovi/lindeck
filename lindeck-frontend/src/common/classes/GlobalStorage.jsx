@@ -62,7 +62,8 @@ class GlobalStorage {
         if (!getFromLS("decks")) {
             saveToLS("decks", [new DeckObject(
                 [new CardObject()], [new LayoutObject()],
-                "watislaf", "name1", "description", 100, 2, 0)
+                "watislaf", "name1", "description", 100, 2, 0,
+                "global", "admin")
             ])
         }
 
@@ -179,11 +180,13 @@ class GlobalStorage {
         return ""
     }
 
-    createNewDeckWithSettings(name, description, cols, height) {
+    createNewDeckWithSettings(name, description, cols, height, privacy) {
         let decks = getFromLS("decks")
         let ids = decks.map(deck => deck.uniqueId)
         let newUniq = 1 + Math.max(...ids)
-        let deck = new DeckObject(null, null, this.session.username, name, description, height, cols, newUniq)
+        let deck = new DeckObject(
+            null, null, this.session.username, name, description, height,
+            cols, newUniq, privacy, null)
         decks.push(deck)
         saveToLS("decks", decks)
         // give deck to user
@@ -222,6 +225,11 @@ class GlobalStorage {
         let deckToChange = newDecks.filter(deck => deck.uniqueId === newDeck.uniqueId)[0]
         newDecks[newDecks.indexOf(deckToChange)] = newDeck // filter return copy. Why ???
         saveToLS("decks", newDecks)
+    }
+
+    SignOut() {
+        this.session = new SessionObject("", "")
+        saveToLS("session", this.session);
     }
 }
 
