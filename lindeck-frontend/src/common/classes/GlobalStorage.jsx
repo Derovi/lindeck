@@ -5,7 +5,7 @@ import CardObject from "./CardObject";
 import LayoutObject from "./LayoutObject";
 
 // Settings
-let cleanBaseOnPageReload = true //  important !! u can change it, so after reload all save
+let cleanBaseOnPageReload = false //  important !! u can change it, so after reload all save
 
 
 function getFromLS(key) {
