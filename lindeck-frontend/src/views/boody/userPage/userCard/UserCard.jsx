@@ -11,6 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
+import AddIcon from '@material-ui/icons/Add';
 import GlobalStorage from "../../../../common/GlobalStorage";
 import {navigate} from "@reach/router";
 
@@ -39,11 +40,6 @@ export default class UserCard extends React.Component {
         </div>
 
     }
-    imgClicked = () => {
-        if (this.props.isMe)
-            navigate('/user')
-    }
-
     render() {
         let user = this.props.user
         return <Paper className="userPaper">
@@ -81,21 +77,35 @@ export default class UserCard extends React.Component {
 
     createHistory = () => {
         return <List className="listOfDecks">
-            {this.props.user.deckList.map((decks, index) => {
+            {console.log(this.props.user.deckListId)}
+            {this.props.user.deckListId.map((deckId, index) => {
+                let deck = GS.getDeckById(deckId)
                 return <button key={index} className="deckSelectButton"
                                style={{background: index % 2 === 0 ? "gainsboro" : "white"}}>
-                    <ListItem>
+                    <ListItem onClick={() => navigate('/user/'+this.props.user.username+"/deck/"+deck.deckSettings.name)}>
                         <ListItemAvatar>
                             <Avatar>
                                 <ViewCarouselIcon/>
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={decks.name} secondary={decks.description}/>
+                        <ListItemText primary={deck.deckSettings.name} secondary={deck.deckSettings.description}/>
                     </ListItem>
                 </button>
-            })
+            })}
+
+            {this.props.isMe&&<button className="deckSelectButton"
+                                      style={{background: this.props.user.deckListId.length % 2 === 0 ? "gainsboro" : "white"}}>
+                    <ListItem onClick={() => navigate('/user/'+this.props.user.username+"/deck-build/")}>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <AddIcon/>
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="Create new Deck" secondary="write now"/>
+                    </ListItem>
+                </button>
             }
-            {this.props.user.deckList.length === 0 && <ListItem>
+            {this.props.user.deckListId.length === 0 && <ListItem>
                 <Typography variant="overline" color="textSecondary">
                     There is no deck created yest.
                 </Typography></ListItem>}

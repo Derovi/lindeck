@@ -70,8 +70,7 @@ export default function RegisterForm(props) {
     }
 
     return (<div>
-        {fields({})}
-        {console.log(myFields)}
+        {fields()}
         <Button fullWidth onClick={signUp} variant="contained" color="primary" className={classes.submit}>
             Sign Up
         </Button>

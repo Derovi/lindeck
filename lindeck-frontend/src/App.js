@@ -8,15 +8,17 @@ import RegisterPage from "./views/boody/registerPage/RegisterPage";
 import HomePage from "./views/boody/homePage/HomePage";
 import UserPage from "./views/boody/userPage/UserPage";
 import OnRouteChange from "reach-router-scroll-top";
+import CreateDeckPage from "./views/boody/createDeckPage/CreateDeckPage";
 
 
 class App extends Component {
 
     render() {
-        return (<div>
+        return <div>
                 <Header/>
-                <Router primary={false} >
-                    <DeckPage path="/deck"/>
+                <Router primary={false}>
+                    <DeckPage path="/user/:username/deck/:deckname"/>
+                    <CreateDeckPage path='/user/:username/deck-build'/>
                     <LoginPage path="/login"/>
                     <RegisterPage path="/register"/>
                     <HomePage path="/"/>
@@ -33,7 +35,7 @@ class App extends Component {
                     }}
                 />
             </div>
-        )
+
     }
 }
 
