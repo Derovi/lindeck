@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import RegisterForm from "./RegisterForm/RegisterForm";
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '100vh',

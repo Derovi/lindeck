@@ -2,9 +2,7 @@
     width: 100%;
     overflow: auto;
     height: 13em;
-
 }
-
 
 .userPaper {
     padding: 2em;
@@ -23,7 +21,6 @@
     position: relative;
     width: 13em;
     height: auto;
-
     cursor: pointer;
 }
 
@@ -40,4 +37,12 @@
 
 .image-upload>input {
     display: none;
+}
+
+.fontSize20{
+    font-size: 20px;
+}
+
+.fontSize15{
+    font-size: 15px;
 }

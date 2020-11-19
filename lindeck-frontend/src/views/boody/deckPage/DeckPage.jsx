@@ -5,10 +5,8 @@ import ReactGridLayout from "react-grid-layout";
 import ReactResizeDetector from 'react-resize-detector';
 import MovingDeckEditButton from "./movingDeckEditButton/DeckEditMenu";
 import DeckEditDialog from "./editDeckDialog/DeckEditDialog";
-import GlobalStorage from "../../../common/GlobalStorage";
 import Card from "./card/Card";
-
-let GS = new GlobalStorage()
+import GS from "../../../common/GlobalStorage";
 
 class deckPage extends Component {
     state = {
@@ -23,8 +21,8 @@ class deckPage extends Component {
         super(props);
         let myDeck = GS.getDeckIdFromUsernameDeckname(this.props.username, this.props.deckname)
 
-        this.state.layout = myDeck.layout
         this.state.cards = myDeck.cards
+        this.state.layout = myDeck.layout
         this.state.deckSettings = myDeck.deckSettings
     }
 

@@ -1,3 +1,10 @@
+import UserObject from "./UserObject";
+import SessionObject from "./SessionObject";
+
+// Settings
+let cleanBaseOnPageReload = true //  important !! u can change it, so after reload all save
+
+
 function getFromLS(key) {
     // Rewrite to Get From GS (global storage)
     return JSON.parse(global.localStorage.getItem(key));
@@ -10,41 +17,45 @@ function saveToLS(key, value) {
     }
 }
 
-export default class GlobalStorage {
+class GlobalStorage {
+    session = null
+
     constructor() {
-       if (getFromLS("users")) {
+        if (cleanBaseOnPageReload)
+            global.localStorage.clear();
+
+        if (!getFromLS("users")) {
             saveToLS("users", [
-                {
-                    username: "watislaf",
-                    email: "vladkozulin@mail.ru",
-                    password: "1234",
-                    describe: " Я влад коз",
-                    image: "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
-                    deckListId: [1],
-                    following: ["burik", "derovi"]
-                },
-                {
-                    username: "derovi",
-                    email: "iwillpush@mail.ru",
-                    password: "4321",
-                    describe: " Я запушу",
-                    image: "https://picsum.photos/200/300",
-                    deckListId: [],
-                    following: ["burik"]
-                },
-                {
-                    username: "burik",
-                    email: "bura@mail.ru",
-                    password: "burik",
-                    describe: "где",
-                    image: "https://picsum.photos/200",
-                    deckListId: [],
-                    following: []
-                }
+                new UserObject(
+                    "watislaf",
+                    "vladkozulin@mail.ru",
+                    "1234",
+                    " Я влад коз",
+                    "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
+                    [1],
+                    ["burik", "derovi"])
+                ,
+                new UserObject(
+                    "derovi",
+                    "iwillpush@mail.ru",
+                    "4321",
+                    " Я запушу",
+                    "https://picsum.photos/200/300",
+                    [],
+                    ["burik"])
+                ,
+                new UserObject(
+                    "burik",
+                    "bura@mail.ru",
+                    "burik",
+                    "где",
+                    "https://picsum.photos/200",
+                    [],
+                    [])
             ])
         }
 
-        if (getFromLS("decks")) {
+        if (!getFromLS("decks")) {
             saveToLS("decks", [{// TODO permission, owner and description posibility and Views all time
                 layout: [{i: "0", x: 1, y: 1, w: 2, h: 2}],
                 cards: [{
@@ -56,18 +67,19 @@ export default class GlobalStorage {
                 }
             }])
         }
+
+        if (!getFromLS("session")) {
+            saveToLS("session", new SessionObject())
+        }
+
+        this.session = new SessionObject(...Object.values(getFromLS("session")))
     }
 
     getMyUser() {
-        return getFromLS("myUser");
-    }
-
-    getMyName() {
-        let user = getFromLS("myUser");
-        if (user) {
-            return user.username
-        }
-        return ""
+        return getFromLS("myUser") || {
+            username: "",
+            following: ["burik", "derovi"]
+        };
     }
 
     getDeckIdFromUsernameDeckname(username, deckname) {
@@ -80,30 +92,13 @@ export default class GlobalStorage {
         return allDecks.filter(deck => deck.deckSettings.uniqueId === deckId)[0]
     }
 
+    getSession() {
+        return this.session
+    }
 
     getUser(UserName) {
         let allUsers = getFromLS("users")
         return allUsers.filter(user => user.username === UserName)[0]
-    }
-
-    getLayout() {
-        return JSON.parse(JSON.stringify(getFromLS("layout"))) || [{
-            0: {
-                h: 1, i: "0",
-                moved: false, static: false,
-                w: 2, x: 2, y: 0
-            }
-        }];
-    }
-
-    getCards() {
-        return JSON.parse(JSON.stringify(getFromLS("cards"))) || [{
-            type: "answer", textfield: "", secondfield: "", answer: "", verdict: 0, isFlipped: false, id: "0"
-        }];
-    }
-
-    GetSettings() {
-        return JSON.parse(JSON.stringify(getFromLS("settings"))) || {rowHeight: 100, cols: 6};
     }
 
     saveUser(user) {
@@ -168,7 +163,8 @@ export default class GlobalStorage {
     signIn(email, password) {
         let userFound = getFromLS("users").filter(user => user.email === email && user.password === password)[0]
         if (userFound) {
-            saveToLS("myUser", userFound);
+            this.session = new SessionObject(userFound.username, "42")
+            saveToLS("session", this.session);
             return true;
         }
         return false
@@ -218,7 +214,7 @@ export default class GlobalStorage {
         let decks = getFromLS("decks")
         let ids = decks.map(deck => deck.deckSettings.uniqueId)
         settings.uniqueId = 1 + Math.max(...ids)
-         decks.push(
+        decks.push(
             {
                 layout: [{i: "0", x: 1, y: 1, w: 2, h: 2}],
                 cards: [{
@@ -239,14 +235,26 @@ export default class GlobalStorage {
         let myUsername = this.getMyName()
         let users = getFromLS("users")
         let user = users.filter(user => user.username === myUsername)[0]
-        if(startFollow) {
+        if (startFollow) {
             user.following.push(username)
-        }else{
+        } else {
             const index = user.following.indexOf(username);
             if (index > -1) {
                 user.following.splice(index, 1);
             }
         }
-        saveToLS("users",users)
+        saveToLS("users", users)
+    }
+
+    getUserFollowing(username) {
+        let user = this.getUser(username)
+        return user.following
+    }
+
+    getSessionUser() {
+        return this.getUser(this.getSession().username)
     }
 }
+
+let GS = new GlobalStorage();
+export default GS;

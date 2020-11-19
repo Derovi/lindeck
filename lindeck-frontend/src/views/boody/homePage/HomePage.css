@@ -1,3 +1,14 @@
+.backGroundImage {
+    min-height: 100vh;
+    background-attachment: fixed;
+    overflow: hidden;
+    background-image: url(https://source.unsplash.com/random);
+    background-repeat: no-repeat;
+    background-color: gray;
+    background-size: cover;
+    background-position: center;
+}
+
 .centerFirstText {
     text-align: center;
     padding: 28vh 0;
@@ -50,24 +61,13 @@
     backdrop-filter: blur(5px);
 }
 
+
 .thirdCard {
     color: white;
     padding: 6vh;
     clip-path: polygon(0% 0%, 100% 28%, 100% 71%, 0 100%);
     background: linear-gradient(50deg, #000000 34%, #00000094 99%);
     backdrop-filter: blur(5px);
-}
-
-
-.backGroundImage {
-    min-height: 100vh;
-    background-attachment: fixed;
-    overflow: hidden;
-    background-image: url(https://source.unsplash.com/random);
-    background-repeat: no-repeat;
-    background-color: gray;
-    background-size: cover;
-    background-position: center;
 }
 
 .blackLine {

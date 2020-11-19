@@ -2,7 +2,6 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -18,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
     image: {
         backgroundImage: 'url(https://images.unsplash.com/photo-1603848237872-14b6a8274c34?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max)',
         backgroundRepeat: 'no-repeat',
-        backgroundColor:
-            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     },
@@ -59,18 +57,18 @@ export default function LoginPage(props) {
                     </Typography>
                     <LoginForm {...props}/>
 
-                        <Grid container>
-                            <Grid item xs>
-                                <Link to="/reset-password" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link to="/register" variant="body2">
-                                    Don't have an account? Sign Up
-                                </Link>
-                            </Grid>
+                    <Grid container>
+                        <Grid item xs>
+                            <Link to="/reset-password" variant="body2">
+                                Forgot password?
+                            </Link>
                         </Grid>
+                        <Grid item>
+                            <Link to="/register" variant="body2">
+                                Don't have an account? Sign Up
+                            </Link>
+                        </Grid>
+                    </Grid>
                 </div>
             </Grid>
         </Grid>

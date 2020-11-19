@@ -4,12 +4,10 @@ import Checkbox from "@material-ui/core/Checkbox";
 import React, {useRef, useState} from "react";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
-import GlobalStorage from "../../../../common/GlobalStorage";
 import Typography from "@material-ui/core/Typography";
 import {navigate} from "@reach/router";
+import GS from "../../../../common/GlobalStorage";
 
-
-let GS = new GlobalStorage()
 
 const useStyles = makeStyles((theme) => ({
     submit: {
@@ -42,7 +40,7 @@ export default function LoginForm(props) {
     function signIn() {
         let verdict = GS.signIn(refToEmailField.current.value, refToPasswordField.current.value)
         if (verdict) {
-            navigate('/user/' + GS.getMyName())
+            navigate('/user/' + GS.getSession().username)
             return
         }
         setLoginGood(verdict)

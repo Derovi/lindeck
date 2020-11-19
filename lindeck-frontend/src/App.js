@@ -14,31 +14,26 @@ import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage
 
 
 class App extends Component {
-
     render() {
-        return <div>
-                <Header/>
-                <Router primary={false}>
-                    <DeckPage path="/user/:username/deck/:deckname"/>
-                    <CreateDeckPage path='/user/:username/deck-build'/>
-                    <LoginPage path="/login"/>
-                    <ResetPasswordPage path="/reset-password"/>
-                    <RegisterPage path="/register"/>
-                    <HomePage path="/"/>
-                    <UserPage path='/user/:username'/>
-                    <NotFoundPage default />
-                </Router>
-                <Footer/>
-                <OnRouteChange
-                    action={() => {
-                        window.scrollTo({
-                            top: 0,
-                            left: 0,
-                            behavior: 'smooth'
-                        });
-                    }}
-                />
-            </div>
+        return <>
+            <Header/>
+            <Router primary={false}>
+                <HomePage path="/"/>
+                <LoginPage path="/login"/>
+                <RegisterPage path="/register"/>
+                <ResetPasswordPage path="/reset-password"/>
+
+                <UserPage path='/user/:username'/>
+                <CreateDeckPage path='/user/:username/deck-build'/>
+                <DeckPage path="/user/:username/deck/:deckname"/>
+                <NotFoundPage default/>
+            </Router>
+            <Footer/>
+
+            <OnRouteChange action={() => {
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+            }}/>
+        </>
 
     }
 }

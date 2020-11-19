@@ -14,7 +14,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Backdrop from "@material-ui/core/Backdrop";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
-import GlobalStorage from "../../../common/GlobalStorage";
+import GS from "../../../common/GlobalStorage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-let GS = new GlobalStorage()
 
 export default function CreateDeckPage(props) {
     const classes = useStyles();
@@ -48,6 +47,7 @@ export default function CreateDeckPage(props) {
     function selectHeight(event) {
         setHeight(event.target.value)
     }
+
 
 
     function checkForm() {
@@ -101,6 +101,17 @@ export default function CreateDeckPage(props) {
                         <MenuItem value="30">30</MenuItem>
                     </Select>
                 </FormControl>
+
+                <FormControl className="formControlCreate">
+                    <InputLabel> RowHeight</InputLabel>
+                    <Select autoFocus value={height} onChange={selectHeight}> // TODO !!!
+                        <MenuItem value="global">global</MenuItem>
+                        <MenuItem value="private">private</MenuItem>
+                        <MenuItem value="forFriends">forFriends</MenuItem>
+                        
+                    </Select>
+                </FormControl>
+
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => navigate('/user/' + props.username)}>Close</Button>

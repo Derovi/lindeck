@@ -1,14 +1,13 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import ResetPasswordForm from "./resetPasswordForm/resetPasswordForm";
+import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import {Link} from "@reach/router";
+import ResetPasswordForm from "./resetPasswordForm/resetPasswordForm";
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 
 const useStyles = makeStyles((theme) => ({

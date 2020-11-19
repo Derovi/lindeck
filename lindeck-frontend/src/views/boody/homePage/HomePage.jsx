@@ -1,22 +1,20 @@
 import React from 'react';
 import './HomePage.css'
-import GlobalStorage from "../../../common/GlobalStorage";
 import {navigate} from "@reach/router";
+import GS from "../../../common/GlobalStorage";
 
-
-let GS = new GlobalStorage()
 export default class HomePage extends React.Component {
     state = {
-        bigLine: null,
+        startAnimationHrRef: null,
         firstMovingTextStyle: {},
         secondMovingTextStyle: {}
     }
 
-    goStart = () => {
-        if (GS.getMyName() === "") {
+    clickStart = () => {
+        if (!GS.getSession().isActive) {
             navigate('/login')
         } else {
-            navigate('/user/' + GS.getMyName() + '/create')
+            navigate('/user/' + GS.getSession().username + '/create')
         }
     }
 
@@ -29,22 +27,21 @@ export default class HomePage extends React.Component {
     }
 
     handleScroll = () => {
-        if (this.bigLine.getBoundingClientRect().y < 500) {
-            this.setState({firstMovingTextStyle: {right: 0}})
-        } else {
-            this.setState({firstMovingTextStyle: {right: "100%"}})
-        }
-
         if (this.bigLine.getBoundingClientRect().y < 200) {
             this.setState({secondMovingTextStyle: {right: 0}})
         } else {
             this.setState({secondMovingTextStyle: {right: "100%"}})
         }
 
+        if (this.bigLine.getBoundingClientRect().y < 500) {
+            this.setState({firstMovingTextStyle: {right: 0}})
+        } else {
+            this.setState({firstMovingTextStyle: {right: "100%"}})
+        }
+
     }
 
     render() {
-        let props = this.props
         return <>
             <div className="backGroundImage" style={{
                 backgroundImage: 'url(https://images.unsplash.com/photo-1603848237872-14b6a8274c34?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max)'
@@ -54,7 +51,7 @@ export default class HomePage extends React.Component {
                         <h1>LIFE IN DECK</h1>
                         <hr/>
                         <div className="button_cont" align="center">
-                            <button className="mainPageButton" onClick={this.goStart}>
+                            <button className="mainPageButton" onClick={this.clickStart}>
                                 Start!
                             </button>
                         </div>

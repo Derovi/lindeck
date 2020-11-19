@@ -12,85 +12,86 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
 import AddIcon from '@material-ui/icons/Add';
-import GlobalStorage from "../../../../common/GlobalStorage";
 import {navigate} from "@reach/router";
-
-
-let GS = new GlobalStorage()
+import GS from "../../../../common/GlobalStorage";
 
 export default class UserCard extends React.Component {
-    state = {
-        following: this.props.user.username in GS.getMyUser().following
+    session = GS.getSession()
+    state = {}
+
+    constructor(props) {
+        super(props)
+        if (this.session.isActive) {
+            this.state = {
+                isFollowing: (this.props.user.username in GS.getUserFollowing(this.session.username))
+            }
+        }
     }
-    myImage = (user) => {
-        if (this.props.isMe)
-            return <div className="image-upload">
-                <ButtonBase className="imageHolderAva">
-                    <label htmlFor="file-input">
-                        <img className="imageAva" src={user.image} alt={"ava"}/>
-                    </label>
-                </ButtonBase>
-                <input id="file-input" type="file"/>
-            </div>
 
-        return <div className="image-upload">
-
-            <ButtonBase className="imageHolderAva" onClick={() => {
-                navigate('/user/' + user.username)
-            }}>
-                <img className="imageAva" src={user.image} alt={"ava"}/>
-            </ButtonBase>
-        </div>
-
+    follow(username, startFollow) {
+        GS.myUserFollowing(username, startFollow)
+        this.setState({following: !startFollow})
     }
+
 
     render() {
         let user = this.props.user
         return <Paper className="userPaper">
             <Grid container spacing={2}>
-                <Grid item>
-                    {this.myImage(user)}
-                </Grid>
+                <Grid item> {this.userImage(user)} </Grid>
                 <Grid item xs={12} sm container>
                     <Grid item xs={5} container direction="column" spacing={2}>
                         <Grid item xs>
-                            <Typography gutterBottom variant="overline">
-                                {user.username}
+                            <Typography  gutterBottom variant="overline">
+                                <span className="fontSize20">{user.username}</span>
                             </Typography>
-                            <Typography variant="body2" gutterBottom>
-                                {user.discribe}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary">
-                                ID: 1030114
+                            <br/>
+                            <Typography  color="textSecondary" variant="caption" gutterBottom>
+                                <span className="fontSize15">{user.describe}</span>
                             </Typography>
                         </Grid>
                         <Grid item>
                             {!this.props.isMe && this.followUnfollow(user)}
+                            {this.props.isMe && this.describeButton(user)}
                         </Grid>
                     </Grid>
-                    <Grid item xs={7}>
-                        {this.createHistory()}
-
-                    </Grid>
+                    <Grid item xs={7}> {this.decksCreated()}</Grid>
                 </Grid>
             </Grid>
         </Paper>
 
     }
 
+    userImage = (user) => {
+        return <div className="image-upload">
+            {!this.props.isMe &&
+            <ButtonBase className="imageHolderAva"
+                        onClick={() => {
+                            navigate('/user/' + user.username)
+                        }}>
+                <img className="imageAva" src={user.image} alt={"ava"}/>
+            </ButtonBase>
+            }
+            {this.props.isMe && <><ButtonBase className="imageHolderAva">
+                <label htmlFor="file-input">
+                    <img className="imageAva" src={user.image} alt={"ava"}/>
+                </label>
+            </ButtonBase>
+                <input id="file-input" type="file"/></> // TODO get img url and use it
+            }
+        </div>
+    }
 
-    createHistory = () => {
+    decksCreated = () => {
         return <List className="listOfDecks">
-            {this.props.user.deckListId.map((deckId, index) => {
+            {this.props.user.deckListId.map((deckId, uniqId) => {
                 let deck = GS.getDeckById(deckId)
-                return <button key={index} className="deckSelectButton"
-                               style={{background: index % 2 === 0 ? "gainsboro" : "white"}}>
+                return <button key={uniqId} className="deckSelectButton"
+                               style={{background: uniqId % 2 === 0 ? "gainsboro" : "white"}}>
                     <ListItem
                         onClick={() => navigate('/user/' + this.props.user.username + "/deck/" + deck.deckSettings.name)}>
                         <ListItemAvatar>
-                            <Avatar>
-                                <ViewCarouselIcon/>
-                            </Avatar>
+                            <Avatar> <ViewCarouselIcon/> </Avatar>
                         </ListItemAvatar>
                         <ListItemText primary={deck.deckSettings.name} secondary={deck.deckSettings.description}/>
                     </ListItem>
@@ -117,8 +118,8 @@ export default class UserCard extends React.Component {
     }
 
     followUnfollow(user) {
-        if (GS.getMyName() !== "") {
-            if (this.state.following) {
+        if (this.session.isActive) {
+            if (this.state.isFollowing) {
                 return <Button onClick={() => {
                     this.follow(user.username, true)
                 }}> Follow</Button>;
@@ -129,9 +130,7 @@ export default class UserCard extends React.Component {
         }
     }
 
-    follow(username, startFollow) {
-        GS.myUserFollowing(username, startFollow)
-        this.setState({following: !startFollow})
-
+    describeButton(user) {
+        return <Button> Edit </Button> // TODO EDIT button
     }
 }

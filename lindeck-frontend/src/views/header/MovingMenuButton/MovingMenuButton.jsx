@@ -8,12 +8,11 @@ import List from "@material-ui/core/List";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import {Directions} from "@material-ui/icons";
-import GlobalStorage from "../../../common/GlobalStorage";
 import {navigate} from "@reach/router";
+import GS from "../../../common/GlobalStorage";
 
 
-let GS = new GlobalStorage()
-let user = GS.getUser(GS.getMyName())
+let session = GS.getSession()
 
 class MovingMenuButton extends Component {
     state = {
@@ -43,7 +42,7 @@ class MovingMenuButton extends Component {
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"Deck library"}/>
                 </ListItem>
-                {!user && <div>
+                {!session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => navigate('/login')} button>
                         <ListItemIcon> <InboxIcon/> </ListItemIcon>
