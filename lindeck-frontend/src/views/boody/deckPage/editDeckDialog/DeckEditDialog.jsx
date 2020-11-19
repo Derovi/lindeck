@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,12 +9,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import "./DeckEditDialog.css"
+import TextField from "@material-ui/core/TextField";
+import {Typography} from "@material-ui/core";
 
 export default function DeckEditDialog(props) {
-    const oldValueOfHeight = props.deckSettings.rowHeight
-    const oldValueOfCols = props.deckSettings.cols
-    const [height, setHeight] = React.useState(props.deckSettings.rowHeight);
-    const [cols, setCols] = React.useState(props.deckSettings.cols);
+    const oldValueOfCols = props.deck.cols
+    const [height, setHeight] = React.useState(props.deck.rowHeight);
+    const [cols, setCols] = React.useState(props.deck.cols);
+    const descriptionRef = useRef(null);
 
     const close = () => {
         props.openDeckEditDialog(false);
@@ -29,7 +31,7 @@ export default function DeckEditDialog(props) {
     }
 
     function save() {
-        props.saveDeckProps(cols, height)
+        props.saveDeckProps(descriptionRef.current.value, cols, height)
         close()
     }
 
@@ -39,42 +41,41 @@ export default function DeckEditDialog(props) {
                 The grid will reset, cause of cols decreasing.<br/>
             </span>
             }
-            {(oldValueOfHeight !== height) && <span style={{color: "brown"}}>
-                To apply height change - reload the page.<br/>
-            </span>}
         </div>
     }
 
-    return <Dialog fullWidth={true} open={props.open} onClose={close}>
+    return <Dialog className="wrapperCreate" fullWidth={true} open={props.open} onClose={close}>
         <DialogTitle>Deck Grid Settings</DialogTitle>
-        <DialogContent>
+        <DialogContent className="mainPaperCreate ">
+            <div className="centerField"><h1 className="betterFont">
+                {props.deck.name}
+            </h1></div>
+            <br/>
+            <TextField defaultValue={props.deck.description} inputRef={descriptionRef} inputProps={{
+                maxLength: 20,
+            }} className="centerField" label="Describe "/>
+            <br/>
             {createWarnings()}
             <FormControl className="formControl">
                 <InputLabel>maxWidth</InputLabel>
                 <Select autoFocus value={cols} onChange={selectCols}>
-                    <MenuItem value="2">2</MenuItem>
-                    <MenuItem value="4">4</MenuItem>
-                    <MenuItem value="6">6</MenuItem>
-                    <MenuItem value="12">12</MenuItem>
-                    <MenuItem value="20">20</MenuItem>
+                    {["2", "4", "6", "12", "20"].map((str, uniqId) =>
+                        <MenuItem key={uniqId} value={str}>{str}</MenuItem>
+                    )}
                 </Select>
             </FormControl>
             <FormControl className="formControl">
                 <InputLabel> RowHeight</InputLabel>
                 <Select autoFocus value={height} onChange={selectHeight}>
-                    <MenuItem value="300">300</MenuItem>
-                    <MenuItem value="240">240</MenuItem>
-                    <MenuItem value="100">100</MenuItem>
-                    <MenuItem value="60">60</MenuItem>
-                    <MenuItem value="30">30</MenuItem>
+                    {["400", "300", "240", "100", "60"].map((str, uniqId) =>
+                        <MenuItem key={uniqId} value={str}>{str}</MenuItem>
+                    )}
                 </Select>
             </FormControl>
         </DialogContent>
         <DialogActions>
             <Button onClick={close}>Close</Button>
-            <Button onClick={save} color="primary">
-                Save
-            </Button>
+            <Button onClick={save}> Save</Button>
         </DialogActions>
     </Dialog>
 }

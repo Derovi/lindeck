@@ -13,7 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
 import AddIcon from '@material-ui/icons/Add';
 import {navigate} from "@reach/router";
-import GS from "../../../../common/GlobalStorage";
+import GS from "../../../../common/classes/GlobalStorage";
 
 export default class UserCard extends React.Component {
     session = GS.getSession()
@@ -89,18 +89,18 @@ export default class UserCard extends React.Component {
                 return <button key={uniqId} className="deckSelectButton"
                                style={{background: uniqId % 2 === 0 ? "gainsboro" : "white"}}>
                     <ListItem
-                        onClick={() => navigate('/user/' + this.props.user.username + "/deck/" + deck.deckSettings.name)}>
+                        onClick={() => navigate('/user/' + this.props.user.username + "/deck/" + deck.name)}>
                         <ListItemAvatar>
                             <Avatar> <ViewCarouselIcon/> </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={deck.deckSettings.name} secondary={deck.deckSettings.description}/>
+                        <ListItemText primary={deck.name} secondary={deck.description}/>
                     </ListItem>
                 </button>
             })}
 
             {this.props.isMe && <button className="deckSelectButton"
                                         style={{background: this.props.user.deckListId.length % 2 === 0 ? "gainsboro" : "white"}}>
-                <ListItem onClick={() => navigate('/user/' + this.props.user.username + "/deck-build/")}>
+                <ListItem onClick={() => navigate('/user/' + this.props.user.username + "/deck-build")}>
                     <ListItemAvatar>
                         <Avatar>
                             <AddIcon/>

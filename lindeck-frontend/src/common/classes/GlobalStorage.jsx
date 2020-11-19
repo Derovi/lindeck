@@ -1,5 +1,8 @@
 import UserObject from "./UserObject";
 import SessionObject from "./SessionObject";
+import DeckObject from "./DeckObject";
+import CardObject from "./CardObject";
+import LayoutObject from "./LayoutObject";
 
 // Settings
 let cleanBaseOnPageReload = true //  important !! u can change it, so after reload all save
@@ -32,8 +35,9 @@ class GlobalStorage {
                     "1234",
                     " Я влад коз",
                     "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
-                    [1],
-                    ["burik", "derovi"])
+                    ["burik", "derovi"],
+                    [0]
+                )
                 ,
                 new UserObject(
                     "derovi",
@@ -41,8 +45,8 @@ class GlobalStorage {
                     "4321",
                     " Я запушу",
                     "https://picsum.photos/200/300",
-                    [],
-                    ["burik"])
+                    ["burik"],
+                    [])
                 ,
                 new UserObject(
                     "burik",
@@ -56,16 +60,10 @@ class GlobalStorage {
         }
 
         if (!getFromLS("decks")) {
-            saveToLS("decks", [{// TODO permission, owner and description posibility and Views all time
-                layout: [{i: "0", x: 1, y: 1, w: 2, h: 2}],
-                cards: [{
-                    type: "answer", textfield: "qwe", secondfield: "", answer: "",
-                    answered: 0, isFlipped: false, id: "0"
-                }],
-                deckSettings: {
-                    owner: "watislaf", uniqueId: 1, cols: 2, rowHeight: 100, name: "name1", description: "description"
-                }
-            }])
+            saveToLS("decks", [new DeckObject(
+                [new CardObject()], [new LayoutObject()],
+                "watislaf", "name1", "description", 100, 2, 0)
+            ])
         }
 
         if (!getFromLS("session")) {
@@ -75,21 +73,17 @@ class GlobalStorage {
         this.session = new SessionObject(...Object.values(getFromLS("session")))
     }
 
-    getMyUser() {
-        return getFromLS("myUser") || {
-            username: "",
-            following: ["burik", "derovi"]
-        };
-    }
-
-    getDeckIdFromUsernameDeckname(username, deckname) {
+    getDeckFromUsernameDeckname(username, deckname) {
         let allDecks = getFromLS("decks")
-        return allDecks.filter(deck => deck.deckSettings.owner === username && deck.deckSettings.name === deckname)[0]
+        console.log(allDecks)
+        let jsonDeck = allDecks.filter(deck => deck.owner === username && deck.name === deckname)[0]
+        return new DeckObject(...Object.values(jsonDeck))
     }
 
     getDeckById(deckId) {
         let allDecks = getFromLS("decks")
-        return allDecks.filter(deck => deck.deckSettings.uniqueId === deckId)[0]
+        let jsonDeck = allDecks.filter(deck => deck.uniqueId === deckId)[0]
+        return new DeckObject(...Object.values(jsonDeck))
     }
 
     getSession() {
@@ -98,11 +92,10 @@ class GlobalStorage {
 
     getUser(UserName) {
         let allUsers = getFromLS("users")
-        return allUsers.filter(user => user.username === UserName)[0]
-    }
-
-    saveUser(user) {
-        saveToLS("user", user)
+        let jsonUser = allUsers.filter(user => user.username === UserName)[0]
+        if (!jsonUser)
+            return null
+        return new UserObject(...Object.values(jsonUser))
     }
 
     registerNameIsPossible(name) {
@@ -170,30 +163,6 @@ class GlobalStorage {
         return false
     }
 
-    saveCards(newCardArray) {
-        saveToLS("cards", newCardArray)
-    }
-
-    saveCardsToDeckId(uniqueId, newCardArray) {
-        let allDecks = getFromLS("decks")
-        let decks = allDecks.filter(deck => deck.deckSettings.uniqueId === uniqueId)[0]
-        decks.cards = newCardArray
-        saveToLS("decks", allDecks)
-    }
-
-    saveLayoutToDeckId(uniqueId, newLayout) {
-        let allDecks = getFromLS("decks")
-        let decks = allDecks.filter(deck => deck.deckSettings.uniqueId === uniqueId)[0]
-        decks.layout = newLayout
-        saveToLS("decks", allDecks)
-    }
-
-    saveSettingsToDeckId(uniqueId, newSettings) {
-        let allDecks = getFromLS("decks")
-        let decks = allDecks.filter(deck => deck.deckSettings.uniqueId === uniqueId)[0]
-        decks.settings = newSettings;
-        saveToLS("decks", allDecks)
-    }
 
     newDeckNameIsPossible(username, possibleDeckname) {
         let expression = /^[a-zA-Z0-9]*$/;
@@ -203,31 +172,24 @@ class GlobalStorage {
         let decks = getFromLS("decks")
 
         if (decks.filter(deck => {
-            return deck.deckSettings.owner === username && deck.deckSettings.name === possibleDeckname
+            return deck.owner === username && deck.name === possibleDeckname
         }).length !== 0) {
             return "this deckname u already use."
         }
         return ""
     }
 
-    createNewDeckWithSettings(settings) {
+    createNewDeckWithSettings(name, description, cols, height) {
         let decks = getFromLS("decks")
-        let ids = decks.map(deck => deck.deckSettings.uniqueId)
-        settings.uniqueId = 1 + Math.max(...ids)
-        decks.push(
-            {
-                layout: [{i: "0", x: 1, y: 1, w: 2, h: 2}],
-                cards: [{
-                    type: "default", textfield: "my first card", secondfield: "", answer: "",
-                    answered: 0, isFlipped: false, id: "0"
-                }],
-                deckSettings: settings
-            })
+        let ids = decks.map(deck => deck.uniqueId)
+        let newUniq = 1 + Math.max(...ids)
+        let deck = new DeckObject(null, null, this.session.username, name, description, height, cols, newUniq)
+        decks.push(deck)
         saveToLS("decks", decks)
         // give deck to user
         let users = getFromLS("users")
-        let user = users.filter(user => user.username === settings.owner)[0]
-        user.deckListId.push(settings.uniqueId)
+        let user = users.filter(user => user.username === deck.owner)[0]
+        user.deckListId.push(deck.uniqueId)
         saveToLS("users", users)
     }
 
@@ -253,6 +215,13 @@ class GlobalStorage {
 
     getSessionUser() {
         return this.getUser(this.getSession().username)
+    }
+
+    saveDeck(newDeck) {
+        let newDecks = getFromLS("decks")
+        let deckToChange = newDecks.filter(deck => deck.uniqueId === newDeck.uniqueId)[0]
+        newDecks[newDecks.indexOf(deckToChange)] = newDeck // filter return copy. Why ???
+        saveToLS("decks", newDecks)
     }
 }
 

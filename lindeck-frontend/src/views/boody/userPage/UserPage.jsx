@@ -3,7 +3,7 @@ import React from "react";
 import "./UserPage.css"
 import UserCard from "./userCard/UserCard";
 import Paper from "@material-ui/core/Paper";
-import GS from "../../../common/GlobalStorage";
+import GS from "../../../common/classes/GlobalStorage";
 
 
 export default class UserPage extends React.Component {

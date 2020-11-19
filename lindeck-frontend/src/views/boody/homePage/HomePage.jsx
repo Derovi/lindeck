@@ -1,7 +1,7 @@
 import React from 'react';
 import './HomePage.css'
 import {navigate} from "@reach/router";
-import GS from "../../../common/GlobalStorage";
+import GS from "../../../common/classes/GlobalStorage";
 
 export default class HomePage extends React.Component {
     state = {
@@ -14,7 +14,7 @@ export default class HomePage extends React.Component {
         if (!GS.getSession().isActive) {
             navigate('/login')
         } else {
-            navigate('/user/' + GS.getSession().username + '/create')
+            navigate('/user/' + GS.getSession().username + '/deck-build')
         }
     }
 

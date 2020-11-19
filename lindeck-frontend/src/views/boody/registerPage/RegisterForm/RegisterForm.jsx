@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import React, {useRef, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Link, navigate} from "@reach/router";
-import GS from "../../../../common/GlobalStorage";
+import GS from "../../../../common/classes/GlobalStorage";
 
 
 

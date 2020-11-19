@@ -9,7 +9,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import {Directions} from "@material-ui/icons";
 import {navigate} from "@reach/router";
-import GS from "../../../common/GlobalStorage";
+import GS from "../../../common/classes/GlobalStorage";
 
 
 let session = GS.getSession()

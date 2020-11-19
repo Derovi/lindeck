@@ -6,15 +6,14 @@ import ReactMarkdown from "react-markdown";
 import ReactCardFlip from "react-card-flip";
 import Paper from "@material-ui/core/Paper";
 import AnswerEditDialog from "./answerEditDialog/AnswerEditDialog";
-import CardObject from "../../../../common/CardObject";
+import CardObject from "../../../../common/classes/CardObject";
 
 class Card extends Component {
     state = {
-        card: new CardObject(),
-        textEditDialog: false,
-        inputAnswerDialog: false,
         isFlipped: this.props.card.isFlipped,
-        verdict: this.props.card.verdict
+        verdict: this.props.card.verdict,
+        inputAnswerDialog: false,
+        textEditDialog: false
     }
 
     openTextEditDialog = (open) => {
@@ -39,7 +38,6 @@ class Card extends Component {
     answerCheck = (answer) => {
         if (answer === this.props.card.answer) {
             this.props.changeCardVerdict(1, this.props.card.id)
-
         } else {
             this.props.changeCardVerdict(-1, this.props.card.id)
         }
@@ -58,7 +56,6 @@ class Card extends Component {
         if (isFlipped)
             return this.props.card.secondfield
         return this.props.card.textfield
-
     }
 
     changeVerdict = (verdict) => {
@@ -100,7 +97,7 @@ class Card extends Component {
                                 textfield={this.getText(this.state.isFlipped)} setText={this.setText}
                                 needAnswer={this.props.card.type === "answer"}
                                 answerfield={this.props.card.answer} setAnswer={this.setAnswer}/>
-                {this.props.card.type === "answer"&&
+                {this.props.card.type === "answer" &&
                 <AnswerEditDialog open={this.state.inputAnswerDialog} openInputAnswerDialog={this.openInputAnswerDialog}
                                   answer={this.props.card.answer} answerCheck={this.answerCheck}/>}
             </Paper>

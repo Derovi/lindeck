@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {navigate} from "@reach/router";
-import GS from "../../../../common/GlobalStorage";
+import GS from "../../../../common/classes/GlobalStorage";
 
 
 const useStyles = makeStyles((theme) => ({

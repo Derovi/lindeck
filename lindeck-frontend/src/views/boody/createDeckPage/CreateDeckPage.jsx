@@ -14,7 +14,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Backdrop from "@material-ui/core/Backdrop";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
-import GS from "../../../common/GlobalStorage";
+import GS from "../../../common/classes/GlobalStorage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 export default function CreateDeckPage(props) {
     const classes = useStyles();
     const nameRef = useRef(null);
     const descriptionRef = useRef(null);
     const [height, setHeight] = React.useState(100);
+    const [privacy, setPrivacy] = React.useState("private");
     const [cols, setCols] = React.useState(6);
     const [nameError, setNameError] = React.useState("");
 
@@ -48,16 +48,17 @@ export default function CreateDeckPage(props) {
         setHeight(event.target.value)
     }
 
+    function selectPrivate(event) {
+        setPrivacy(event.target.value)
+    }
 
 
     function checkForm() {
         let error = GS.newDeckNameIsPossible(props.username, nameRef.current.value)
         if (error === "") {
             handleToggle()
-            GS.createNewDeckWithSettings({
-                owner: props.username, uniqueId: 42, cols: parseInt(cols), rowHeight: parseInt(height),
-                name: nameRef.current.value, description: descriptionRef.current.value
-            })
+            GS.createNewDeckWithSettings(nameRef.current.value, descriptionRef.current.value,
+                parseInt(cols), parseInt(height))
             navigate('/user/' + props.username + "/deck/" + nameRef.current.value)
             return
         }
@@ -84,31 +85,26 @@ export default function CreateDeckPage(props) {
                 <FormControl className="formControlCreate">
                     <InputLabel>maxWidth</InputLabel>
                     <Select autoFocus value={cols} onChange={selectCols}>
-                        <MenuItem value="2">2</MenuItem>
-                        <MenuItem value="4">4</MenuItem>
-                        <MenuItem value="6">6</MenuItem>
-                        <MenuItem value="12">12</MenuItem>
-                        <MenuItem value="20">20</MenuItem>
+                        {["2", "4", "6", "12", "20"].map((str, uniqId) =>
+                            <MenuItem key={uniqId} value={str}>{str}</MenuItem>
+                        )}
                     </Select>
                 </FormControl>
                 <FormControl className="formControlCreate">
                     <InputLabel> RowHeight</InputLabel>
                     <Select autoFocus value={height} onChange={selectHeight}>
-                        <MenuItem value="300">300</MenuItem>
-                        <MenuItem value="240">240</MenuItem>
-                        <MenuItem value="100">100</MenuItem>
-                        <MenuItem value="60">60</MenuItem>
-                        <MenuItem value="30">30</MenuItem>
+                        {["400", "300", "240", "100", "60"].map((str, uniqId) =>
+                            <MenuItem key={uniqId} value={str}>{str}</MenuItem>
+                        )}
                     </Select>
                 </FormControl>
 
                 <FormControl className="formControlCreate">
-                    <InputLabel> RowHeight</InputLabel>
-                    <Select autoFocus value={height} onChange={selectHeight}> // TODO !!!
-                        <MenuItem value="global">global</MenuItem>
-                        <MenuItem value="private">private</MenuItem>
-                        <MenuItem value="forFriends">forFriends</MenuItem>
-                        
+                    <InputLabel> Privacy </InputLabel>
+                    <Select autoFocus value={privacy} onChange={selectPrivate}>
+                        {["global", "private", "forFriends"].map((str, uniqId) =>
+                            <MenuItem key={uniqId} value={str}>{str}</MenuItem>
+                        )}
                     </Select>
                 </FormControl>
 
