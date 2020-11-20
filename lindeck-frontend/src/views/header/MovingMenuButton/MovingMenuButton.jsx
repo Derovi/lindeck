@@ -36,7 +36,11 @@ class MovingMenuButton extends Component {
             </List>
             <Divider/>
             <List>
-                <ListItem onClick={() => navigate('/decklibrary')} button>
+                <ListItem onClick={() => navigate('/users')} button>
+                    <ListItemIcon> <InboxIcon/> </ListItemIcon>
+                    <ListItemText primary={"Find User "}/>
+                </ListItem>
+                <ListItem onClick={() => navigate('/decks')} button>
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"Deck library (TODO) "}/>
                 </ListItem>

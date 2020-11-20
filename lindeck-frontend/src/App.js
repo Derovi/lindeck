@@ -11,6 +11,7 @@ import OnRouteChange from "reach-router-scroll-top";
 import CreateDeckPage from "./views/boody/createDeckPage/CreateDeckPage";
 import NotFoundPage from "./views/boody/nonFoundPage/NotFoundPage";
 import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage";
+import UserFindPage from "./views/boody/userFindPage/UserPage";
 
 
 class App extends Component {
@@ -22,6 +23,8 @@ class App extends Component {
                 <LoginPage path="/login"/>
                 <RegisterPage path="/register"/>
                 <ResetPasswordPage path="/reset-password"/>
+
+                <UserFindPage path='/users'/>
 
                 <UserPage path='/user/:username'/>
                 <CreateDeckPage path='/user/:username/deck-build'/>
