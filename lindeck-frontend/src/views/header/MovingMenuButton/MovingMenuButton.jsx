@@ -12,8 +12,6 @@ import {navigate} from "@reach/router";
 import GS from "../../../common/classes/GlobalStorage";
 
 
-let session = GS.getSession()
-
 class MovingMenuButton extends Component {
     state = {
         drawerOpen: false
@@ -42,7 +40,7 @@ class MovingMenuButton extends Component {
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"Deck library (TODO) "}/>
                 </ListItem>
-                {!session.isActive && <div>
+                {!this.props.session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => navigate('/login')} button>
                         <ListItemIcon> <InboxIcon/> </ListItemIcon>
@@ -53,7 +51,7 @@ class MovingMenuButton extends Component {
                         <ListItemText primary={"Register"}/>
                     </ListItem>
                 </div>}
-                {session.isActive && <div>
+                {this.props.session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => {
                         GS.SignOut()

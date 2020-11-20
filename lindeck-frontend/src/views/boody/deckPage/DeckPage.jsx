@@ -7,6 +7,7 @@ import MovingDeckEditButton from "./deckEditMenu/DeckEditMenu";
 import DeckEditDialog from "./editDeckDialog/DeckEditDialog";
 import Card from "./card/Card";
 import GS from "../../../common/classes/GlobalStorage";
+import {Redirect} from "@reach/router";
 
 
 class deckPage extends Component {
@@ -14,6 +15,11 @@ class deckPage extends Component {
         deck: GS.getDeckFromUsernameDeckname(this.props.username, this.props.deckname),
         editDeckDialogOpened: false,
         gridWidth: 800,
+    }
+
+    constructor(props) {
+        super(props)
+
     }
 
     addCard = (card) => {
@@ -73,6 +79,7 @@ class deckPage extends Component {
     }
 
     render() {
+        if (!this.state.deck) return <Redirect to="/nonfound" noThrow/>;
         return <>
             <MovingDeckEditButton
                 openEditDeckDialog={this.openEditDeckDialog} addCard={this.addCard}
@@ -101,10 +108,11 @@ class deckPage extends Component {
         </>
     }
 
-    saveDeckProps = (description, cols, height) => {
-        this.state.deck.description= description
+    saveDeckProps = (description, cols, height, privacy) => {
+        this.state.deck.description = description
         this.state.deck.cols = parseInt(cols)
         this.state.deck.rowHeight = parseInt(height)
+        this.state.deck.privacy = privacy
         this.setState({deck: this.state.deck});
         GS.saveDeck(this.state.deck)
 

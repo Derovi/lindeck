@@ -4,6 +4,7 @@ import "./UserPage.css"
 import UserCard from "./userCard/UserCard";
 import Paper from "@material-ui/core/Paper";
 import GS from "../../../common/classes/GlobalStorage";
+import {Redirect} from "@reach/router";
 
 
 export default class UserPage extends React.Component {
@@ -19,6 +20,7 @@ export default class UserPage extends React.Component {
 
     render() {
         this.updateUrl()
+        if (!this.user) return <Redirect to="/nonfound" noThrow/>;
         return <div className="rootUserPage backGroundImage">
             <UserCard user={this.user} isMe={GS.getSession().isMe(this.username)}/>
             <Paper className="titlePaper">

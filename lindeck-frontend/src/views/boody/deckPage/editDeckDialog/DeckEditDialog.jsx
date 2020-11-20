@@ -15,6 +15,7 @@ export default function DeckEditDialog(props) {
     const oldValueOfCols = props.deck.cols
     const [height, setHeight] = React.useState(props.deck.rowHeight);
     const [cols, setCols] = React.useState(props.deck.cols);
+    const [privacy, setPrivacy] = React.useState(props.deck.privacy);
     const descriptionRef = useRef(null);
 
     const close = () => {
@@ -29,8 +30,12 @@ export default function DeckEditDialog(props) {
         setHeight(event.target.value)
     }
 
+    function selectPrivacy(event) {
+        setPrivacy(event.target.value)
+    }
+
     function save() {
-        props.saveDeckProps(descriptionRef.current.value, cols, height)
+        props.saveDeckProps(descriptionRef.current.value, cols, height,privacy)
         close()
     }
 
@@ -67,6 +72,15 @@ export default function DeckEditDialog(props) {
                 <InputLabel> RowHeight</InputLabel>
                 <Select autoFocus value={height} onChange={selectHeight}>
                     {["400", "300", "240", "100", "60"].map((str, uniqId) =>
+                        <MenuItem key={uniqId} value={str}>{str}</MenuItem>
+                    )}
+                </Select>
+            </FormControl>
+
+            <FormControl className="formControlCreate">
+                <InputLabel> Privacy </InputLabel>
+                <Select autoFocus value={privacy} onChange={selectPrivacy}>
+                    {["global", "private"].map((str, uniqId) =>
                         <MenuItem key={uniqId} value={str}>{str}</MenuItem>
                     )}
                 </Select>

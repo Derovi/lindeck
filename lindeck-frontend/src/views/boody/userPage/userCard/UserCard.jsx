@@ -84,12 +84,15 @@ export default class UserCard extends React.Component {
     }
 
     decksCreated = () => {
+        let deckSaw = 0
         return <List className="listOfDecks">
-            {this.props.user.deckListId.map((deckId, uniqId) => {
+            { this.props.user.deckListId.map((deckId, uniqId) => {
                 let deck = GS.getDeckById(deckId)
+
                 if (!deck.canSee(this.session.username)) {
                     return;
                 }
+                deckSaw+=1
                 return <button key={uniqId} className="deckSelectButton"
                                style={{background: uniqId % 2 === 0 ? "gainsboro" : "white"}}>
                     <ListItem
@@ -115,7 +118,7 @@ export default class UserCard extends React.Component {
                 </ListItem>
             </button>
             }
-            {this.props.user.deckListId.length === 0 && <ListItem>
+            {deckSaw === 0 && <ListItem>
                 <Typography variant="overline" color="textSecondary">
                     There is no deck created yest.
                 </Typography></ListItem>}

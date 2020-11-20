@@ -63,7 +63,7 @@ class GlobalStorage {
             saveToLS("decks", [new DeckObject(
                 [new CardObject()], [new LayoutObject()],
                 "watislaf", "name1", "description", 100, 2, 0,
-                "global", "admin")
+                "global", [])
             ])
         }
 
@@ -76,9 +76,13 @@ class GlobalStorage {
 
     getDeckFromUsernameDeckname(username, deckname) {
         let allDecks = getFromLS("decks")
-        console.log(allDecks)
         let jsonDeck = allDecks.filter(deck => deck.owner === username && deck.name === deckname)[0]
-        return new DeckObject(...Object.values(jsonDeck))
+
+        let deckObject =  new DeckObject(...Object.values(jsonDeck))
+        if(!deckObject.canSee(this.session.username)){
+            return null
+        }
+        return deckObject
     }
 
     getDeckById(deckId) {
