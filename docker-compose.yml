@@ -36,6 +36,8 @@ services:
     depends_on:
       - auth
       - test
+    environment:
+      - REACT_APP_BASE_URL=http://api.localhost/
     ports:
     - 80:80
     - 443:443

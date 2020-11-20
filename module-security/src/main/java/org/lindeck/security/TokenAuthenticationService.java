@@ -41,6 +41,9 @@ public class TokenAuthenticationService {
     public static Authentication getAuthentication(HttpServletRequest request) {
         String token = null;
         Cookie cookie = null;
+        if (request.getCookies() == null) {
+            return null;
+        }
         for (Cookie candidate : request.getCookies()) {
             if (candidate.getName().equals(HEADER_STRING)) {
                 cookie = candidate;
