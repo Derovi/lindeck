@@ -40,6 +40,12 @@ class MovingMenuButton extends Component {
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"Deck library (TODO) "}/>
                 </ListItem>
+
+                <ListItem onClick={() => navigate('/users')} button>
+                    <ListItemIcon> <InboxIcon/> </ListItemIcon>
+                    <ListItemText primary={"Users (TODO) "}/>
+                </ListItem>
+
                 {!this.props.session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => navigate('/login')} button>
