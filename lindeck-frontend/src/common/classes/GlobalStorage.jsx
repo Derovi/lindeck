@@ -158,9 +158,9 @@ class GlobalStorage {
         if (userFound) {
             this.session = new SessionObject(userFound.username, "42")
             saveToLS("session", this.session);
-            return true;
+            return "";
         }
-        return false
+        return "Email or password is incorrect."
     }
 
 
