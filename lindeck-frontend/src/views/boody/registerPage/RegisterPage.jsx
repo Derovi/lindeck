@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
+
 export default function RegisterPage(props) {
     const classes = useStyles();
 
