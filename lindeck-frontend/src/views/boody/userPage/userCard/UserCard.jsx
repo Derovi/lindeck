@@ -88,7 +88,7 @@ export default class UserCard extends React.Component {
         return <List className="listOfDecks">
             {this.props.user.deckListId
                 .map(deckId => GS.getDeckById(deckId))
-                .filter(deck => !deck.canSee(this.session.username))
+                .filter(deck => deck.canSee(this.session.username))
                 .map((deck, uniqId) => {
                     deckSaw += 1
                     return <button key={uniqId} className="deckSelectButton"
