@@ -12,8 +12,6 @@ import {navigate} from "@reach/router";
 import GS from "../../../common/classes/GlobalStorage";
 
 
-let session = GS.getSession()
-
 class MovingMenuButton extends Component {
     state = {
         drawerOpen: false
@@ -33,16 +31,16 @@ class MovingMenuButton extends Component {
             <List>
                 <ListItem onClick={() => navigate('/deck')} button>
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
-                    <ListItemText primary={"My last deck"}/>
+                    <ListItemText primary={"My last deck (TODO)"}/>
                 </ListItem>
             </List>
             <Divider/>
             <List>
                 <ListItem onClick={() => navigate('/decklibrary')} button>
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
-                    <ListItemText primary={"Deck library"}/>
+                    <ListItemText primary={"Deck library (TODO) "}/>
                 </ListItem>
-                {!session.isActive && <div>
+                {!this.props.session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => navigate('/login')} button>
                         <ListItemIcon> <InboxIcon/> </ListItemIcon>
@@ -51,6 +49,21 @@ class MovingMenuButton extends Component {
                     <ListItem onClick={() => navigate('/register')} button>
                         <ListItemIcon> <InboxIcon/> </ListItemIcon>
                         <ListItemText primary={"Register"}/>
+                    </ListItem>
+                </div>}
+                {this.props.session.isActive && <div>
+                    <Divider/>
+                    <ListItem onClick={() => {
+                        GS.SignOut()
+                        navigate('/login')
+                    }} button>
+                        <ListItemIcon> <InboxIcon/> </ListItemIcon>
+                        <ListItemText primary={"SignOut"}/>
+                    </ListItem>
+
+                    <ListItem onClick={() => navigate('/login')} button>
+                        <ListItemIcon> <InboxIcon/> </ListItemIcon>
+                        <ListItemText primary={"Reset password (TODO)"}/>
                     </ListItem>
                 </div>}
             </List>

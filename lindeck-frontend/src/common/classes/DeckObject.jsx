@@ -1,6 +1,5 @@
 import CardObject from "./CardObject";
 import LayoutObject from "./LayoutObject";
-import GS from "./GlobalStorage";
 
 export default class DeckObject {
     cards = [new CardObject()]
@@ -11,8 +10,10 @@ export default class DeckObject {
     rowHeight = 100
     cols = 2
     uniqueId = 0
+    privacy = "global" // private | global
+    allowedUsers = []
 
-    constructor(cards, layout, owner, name, description, rowHeight, cols, uniqueId) {
+    constructor(cards, layout, owner, name, description, rowHeight, cols, uniqueId, privacy, allowedUsers) {
         this.cards = cards || this.cards
         this.layout = layout || this.layout
         this.layout = layout || this.layout
@@ -22,6 +23,8 @@ export default class DeckObject {
         this.rowHeight = rowHeight || this.rowHeight
         this.cols = cols || this.cols
         this.uniqueId = uniqueId || this.uniqueId
+        this.privacy = privacy || this.privacy
+        this.allowedUsers = allowedUsers || this.allowedUsers
     }
 
 
@@ -81,5 +84,15 @@ export default class DeckObject {
 
     getCard(id) {
         return this.cards.filter(card => card.id === id)[0]
+    }
+
+    // Privacy
+    canSee(username) {
+        console.log(username,this.allowedUsers)
+        if (this.privacy === "global")
+            return true
+        if(this.owner === username)
+            return true
+        return username in this.allowedUsers
     }
 }

@@ -116,7 +116,7 @@ export default function DeckEditMenu(props) {
             <List>
                 <ListItem button onClick={openEditView}>
                     <ListItemIcon> <SettingsOverscanOutlinedIcon/> </ListItemIcon>
-                    <ListItemText primary={"Edit grid view"}/>
+                    <ListItemText primary={"Deck settings"}/>
                 </ListItem>
                 <ListItem button onClick={addDefaultCard}>
                     <ListItemIcon> <PlusOneIcon/></ListItemIcon>

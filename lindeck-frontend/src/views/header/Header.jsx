@@ -20,7 +20,6 @@ export default class Header extends React.Component {
     componentDidMount() {
         globalHistory.listen(({action}) => {
             if (action === 'PUSH' && GS.getSession().username !== this.state.session.username) {
-                console.log("Ses")
                 this.setState({
                     session: GS.getSession(),
                     user: GS.getSessionUser()
@@ -30,14 +29,13 @@ export default class Header extends React.Component {
     }
 
     render() {
-        let props = this.props
         let session = this.state.session
         let user = this.state.user
         return <>
             <header className="root">
                 <AppBar className="appBar" position="static">
                     <Toolbar style={this.state.style} className="toolbar">
-                        <MovingMenuButton className="menuButton" history={props.history}/>
+                        <MovingMenuButton session={this.state.session} className="menuButton"/>
                         <div className="longPlaceHolder">
                             <button className="headerLindeckButton"
                                     onMouseEnter={() => this.setState({style: {background: "#f6b93b"}})}

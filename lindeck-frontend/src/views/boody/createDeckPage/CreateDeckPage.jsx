@@ -58,7 +58,7 @@ export default function CreateDeckPage(props) {
         if (error === "") {
             handleToggle()
             GS.createNewDeckWithSettings(nameRef.current.value, descriptionRef.current.value,
-                parseInt(cols), parseInt(height))
+                parseInt(cols), parseInt(height), privacy)
             navigate('/user/' + props.username + "/deck/" + nameRef.current.value)
             return
         }
@@ -102,7 +102,7 @@ export default function CreateDeckPage(props) {
                 <FormControl className="formControlCreate">
                     <InputLabel> Privacy </InputLabel>
                     <Select autoFocus value={privacy} onChange={selectPrivate}>
-                        {["global", "private", "forFriends"].map((str, uniqId) =>
+                        {["global", "private"].map((str, uniqId) =>
                             <MenuItem key={uniqId} value={str}>{str}</MenuItem>
                         )}
                     </Select>
