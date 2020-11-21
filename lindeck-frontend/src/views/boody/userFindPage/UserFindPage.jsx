@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./UserPage.css"
+import "./UserFindPage.css"
 import Paper from "@material-ui/core/Paper";
 import GS from "../../../common/classes/GlobalStorage";
 import UserCard from "../userPage/userCard/UserCard";
@@ -11,26 +11,24 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 export default class UserFindPage extends React.Component {
     state = {
         input: "",
-        wait: 0,
-        users:[]
+        loading: false,
+        users: []
     }
     inputValue = ""
-
+    wait = 0
 
     findMe = () => {
-        this.state.wait-=1
-        if (this.state.wait === 0) {
-            this.setState({wait: 0})
-            this.setState({users:GS.searchUsers(this.inputValue)})
-            console.log("SEARCH")
-
+        this.wait -= 1
+        if (this.wait === 0) {
+            this.setState({loading: false})
+            this.setState({users: GS.searchUsers(this.inputValue)})
         }
     }
 
     changeText = (event) => {
         this.inputValue = event.target.value;
-        this.setState({wait: (this.state.wait + 1)})
-
+        this.wait += 1
+        this.setState({loading: true})
         setTimeout(() => this.findMe(), 900);
     }
 
@@ -41,7 +39,7 @@ export default class UserFindPage extends React.Component {
                            helperText="Full width!" fullWidth
                            margin="normal" InputLabelProps={{shrink: true}}
                            variant="outlined" onChange={this.changeText}/>
-                {this.state.wait !== 0 && <CircularProgress color="secondary"/>}
+                {this.state.loading && <CircularProgress color="secondary"/>}
 
             </Paper>
 

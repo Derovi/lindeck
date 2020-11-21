@@ -11,7 +11,7 @@ import OnRouteChange from "reach-router-scroll-top";
 import CreateDeckPage from "./views/boody/createDeckPage/CreateDeckPage";
 import NotFoundPage from "./views/boody/nonFoundPage/NotFoundPage";
 import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage";
-import UserFindPage from "./views/boody/userFindPage/UserPage";
+import UserFindPage from "./views/boody/userFindPage/UserFindPage";
 
 
 class App extends Component {

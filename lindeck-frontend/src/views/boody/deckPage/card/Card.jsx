@@ -6,7 +6,6 @@ import ReactMarkdown from "react-markdown";
 import ReactCardFlip from "react-card-flip";
 import Paper from "@material-ui/core/Paper";
 import AnswerEditDialog from "./answerEditDialog/AnswerEditDialog";
-import CardObject from "../../../../common/classes/CardObject";
 
 class Card extends Component {
     state = {
