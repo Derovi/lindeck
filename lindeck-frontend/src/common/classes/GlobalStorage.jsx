@@ -78,8 +78,8 @@ class GlobalStorage {
         let allDecks = getFromLS("decks")
         let jsonDeck = allDecks.filter(deck => deck.owner === username && deck.name === deckname)[0]
 
-        let deckObject =  new DeckObject(...Object.values(jsonDeck))
-        if(!deckObject.canSee(this.session.username)){
+        let deckObject = new DeckObject(...Object.values(jsonDeck))
+        if (!deckObject.canSee(this.session.username)) {
             return null
         }
         return deckObject
@@ -226,6 +226,12 @@ class GlobalStorage {
     SignOut() {
         this.session = new SessionObject("", "")
         saveToLS("session", this.session);
+    }
+
+    searchUsers(inputUsername) {
+        if (inputUsername === "") return []
+        let users = getFromLS("users")
+        return users.filter(user => user.username.toLowerCase().includes(inputUsername.toLowerCase()));
     }
 }
 
