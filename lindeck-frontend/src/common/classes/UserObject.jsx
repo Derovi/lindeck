@@ -7,16 +7,17 @@ export default class UserObject {
     following = []
     deckListId = []
 
-    constructor(username,email,password,describe,image,following,deckListId){
-        this.username = username||this.username
-        this.email = email||this.email
-        this.password = password||this.password
-        this.describe = describe||this.describe
-        this.image = image||this.image
-        this.deckListId = deckListId||this.deckListId
-        this.following = following||this.following
+    constructor(username, email, password, describe, image, following, deckListId) {
+        this.username = username || this.username
+        this.email = email || this.email
+        this.password = password || this.password
+        this.describe = describe || this.describe
+        this.image = image || this.image
+        this.deckListId = deckListId || this.deckListId
+        this.following = following || this.following
     }
+
     isValid() {
-        return this.username!==""
+        return this.username !== ""
     }
 }

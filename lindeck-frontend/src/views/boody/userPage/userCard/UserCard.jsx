@@ -86,9 +86,10 @@ export default class UserCard extends React.Component {
     decksCreated = () => {
         let deckSaw = 0
         return <List className="listOfDecks">
+            {console.log(this.props.user.deckListId.map(deckId => GS.getDeckById(deckId)))}
             {this.props.user.deckListId
                 .map(deckId => GS.getDeckById(deckId))
-                .filter(deck => !deck.canSee(this.session.username))
+                .filter(deck => deck.canSee(this.session.username))
                 .map((deck, uniqId) => {
                     deckSaw += 1
                     return <button key={uniqId} className="deckSelectButton"
@@ -100,7 +101,6 @@ export default class UserCard extends React.Component {
                                     <ViewCarouselIcon/>}</Avatar>
                             </ListItemAvatar>
                             <ListItemText primary={deck.name} secondary={deck.description}/>
-
                         </ListItem>
                     </button>
                 })

@@ -8,12 +8,14 @@ import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import {globalHistory, navigate} from "@reach/router";
 
+import WifiOffIcon from '@material-ui/icons/WifiOff';
 
 export default class Header extends React.Component {
     state = {
         style: {background: "black"},
         session: GS.getSession(),
-        user: GS.getSessionUser()
+        user: GS.getSessionUser(),
+        isOnline: true
     }
 
     componentDidMount() {
@@ -27,11 +29,27 @@ export default class Header extends React.Component {
         })
     }
 
+    constructor(props) {
+        super(props)
+        this.checkOnline()
+    }
+
+    checkOnline() {
+        setTimeout(() => this.checkOnline(), 5000);
+        let isOnline = GS.session.isOnline
+        if (isOnline !== this.state.isOnline) {
+            this.setState({isOnline: isOnline})
+        }
+    }
+
     render() {
         let session = this.state.session
         let user = this.state.user
         return <>
-            <header className="root">
+            <header >
+                {this.state.isOnline && <div className={"errorDiv"}>
+                    <WifiOffIcon/>
+                </div>}
                 <AppBar className="appBar" position="static">
                     <Toolbar style={this.state.style} className="toolbar">
                         <MovingMenuButton session={this.state.session} className="menuButton"/>

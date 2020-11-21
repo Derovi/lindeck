@@ -1,12 +1,38 @@
 
-.root {
-    flexGrow: 1;
-}
-
 .toolbar {
     background: black;
     transition: all 0.4s ease 0s;
     box-shadow: 0 -30px 70px 30px rgba(128, 119, 122, 0.47);
+}
+
+.errorDiv {
+    text-align: center;
+    width: 100%;
+    letter-spacing: 0.08333em;
+    text-transform: uppercase;
+    position: fixed;
+    z-index: 1;
+    font-size: 12px;
+    bottom: 0;
+}
+
+.errorDiv {
+    background: linear-gradient(124deg, #00e0ff6e, #e81d1d);
+    background-size: 1800% 1800%;
+
+    -webkit-animation: rainbow 2s ease infinite;
+}
+
+@-webkit-keyframes rainbow {
+    0% {
+        background-position: 0% 82%
+    }
+    50% {
+        background-position: 100% 19%
+    }
+    100% {
+        background-position: 0% 82%
+    }
 }
 
 
