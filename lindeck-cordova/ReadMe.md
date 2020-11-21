@@ -27,8 +27,8 @@
 ---
 ЗАПУСК 
 
-4) Скинули ```/lindeck-frontend/$ npm run build``` весь в папку www
-5) Далее мочим ```/lindeck-mobile/$ cordova run android``` 
+5)  ```chmod +x cordova.sh``` 
+2) ```./cordova.sh```
 
 * errors 
 - Если не ранится, попробовать 
