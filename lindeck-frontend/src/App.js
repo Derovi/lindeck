@@ -20,8 +20,6 @@ class App extends Component {
             <Header/>
             <Router primary={false}>
                 <HomePage path="/"/>
-                <HomePage path="/android_asset/www/index.html"/>
-                <HomePage path="/lindeck/lindeck-frontend/build/index.html"/>
 
                 <LoginPage path="/login"/>
                 <RegisterPage path="/register"/>
