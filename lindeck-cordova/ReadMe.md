@@ -15,6 +15,7 @@
 
 3) Так же должны быть прописаны пути в файле -> ~/.bashrc :
     (Пути к джаве и андроиду могут быть другими) 
+   ```
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     export PATH=${PATH}:${JAVA_HOME}/bin
     export ANDROID_HOME=~/Android/Sdk
