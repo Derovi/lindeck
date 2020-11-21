@@ -16,13 +16,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function LoginForm(props) {
-
     const refToEmailField = useRef(null);
     const refToPasswordField = useRef(null);
 
     const classes = useStyles();
 
-    const [loginGood, setLoginGood] = useState(true);
+    const [loginGood, setLoginGood] = useState("");
 
     let myFields = [
         {username: "email", label: "Email Address", error: "", refset: refToEmailField},
@@ -49,7 +48,7 @@ export default function LoginForm(props) {
     return <> {fields()}
         <FormControlLabel control={<Checkbox value="remember" color="primary"/>}
                           label="Remember me"/>
-        {!loginGood && <Typography color="secondary"> Email or password is incorrect.</Typography>}
+        <Typography color="secondary">{loginGood}</Typography>
         <Button type="submit" fullWidth onClick={signIn}
                 variant="contained" color="primary"
                 className={classes.submit}>
