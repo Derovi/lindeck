@@ -86,25 +86,25 @@ export default class UserCard extends React.Component {
     decksCreated = () => {
         let deckSaw = 0
         return <List className="listOfDecks">
-            { this.props.user.deckListId.map((deckId, uniqId) => {
-                let deck = GS.getDeckById(deckId)
+            {this.props.user.deckListId
+                .map(deckId => GS.getDeckById(deckId))
+                .filter(deck => !deck.canSee(this.session.username))
+                .map((deck, uniqId) => {
+                    deckSaw += 1
+                    return <button key={uniqId} className="deckSelectButton"
+                                   style={{background: uniqId % 2 === 0 ? "gainsboro" : "white"}}>
+                        <ListItem
+                            onClick={() => navigate('/user/' + this.props.user.username + "/deck/" + deck.name)}>
+                            <ListItemAvatar>
+                                <Avatar> {deck.privacy === "private" ? <VisibilityOffIcon/> :
+                                    <ViewCarouselIcon/>}</Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={deck.name} secondary={deck.description}/>
 
-                if (!deck.canSee(this.session.username)) {
-                    return;
-                }
-                deckSaw+=1
-                return <button key={uniqId} className="deckSelectButton"
-                               style={{background: uniqId % 2 === 0 ? "gainsboro" : "white"}}>
-                    <ListItem
-                        onClick={() => navigate('/user/' + this.props.user.username + "/deck/" + deck.name)}>
-                        <ListItemAvatar>
-                            <Avatar> {deck.privacy === "private" ? <VisibilityOffIcon/> : <ViewCarouselIcon/>}</Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={deck.name} secondary={deck.description}/>
-
-                    </ListItem>
-                </button>
-            })}
+                        </ListItem>
+                    </button>
+                })
+            }
 
             {this.props.isMe && <button className="deckSelectButton"
                                         style={{background: this.props.user.deckListId.length % 2 === 0 ? "gainsboro" : "white"}}>

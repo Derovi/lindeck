@@ -17,27 +17,25 @@ class deckPage extends Component {
         gridWidth: 800,
     }
 
-    constructor(props) {
-        super(props)
-
-    }
-
     addCard = (card) => {
-        this.state.deck.addCard(card)
-        GS.saveDeck(this.state.deck)
-        this.setState({deck: this.state.deck})
+        let newDeck = this.state.deck
+        newDeck.addCard(card)
+        GS.saveDeck(newDeck)
+        this.setState({deck: newDeck})
     }
 
     resetLayout = () => {
-        this.state.deck.resetLayout()
-        GS.saveDeck(this.state.deck)
-        this.setState({deck: this.state.deck})
+        let newDeck = this.state.deck
+        newDeck.resetLayout()
+        GS.saveDeck(newDeck)
+        this.setState({deck: newDeck})
     }
 
     clearAll = () => {
-        this.state.deck.clear()
-        GS.saveDeck(this.state.deck)
-        this.setState({deck: this.state.deck})
+        let newDeck = this.state.deck
+        newDeck.clear()
+        GS.saveDeck(newDeck)
+        this.setState({deck: newDeck})
     }
 
     duplicateCard = (card) => {
@@ -49,9 +47,10 @@ class deckPage extends Component {
     }
 
     onLayoutChange(layout) {
-        this.state.deck.layout = layout
-        GS.saveDeck(this.state.deck)
-        this.setState({deck: this.state.deck});
+        let newDeck = this.state.deck
+        newDeck.layout = layout
+        GS.saveDeck(newDeck)
+        this.setState({deck: newDeck});
     }
 
     changeCardAnswer = (text, id) => {
@@ -109,15 +108,16 @@ class deckPage extends Component {
     }
 
     saveDeckProps = (description, cols, height, privacy) => {
-        this.state.deck.description = description
-        this.state.deck.cols = parseInt(cols)
-        this.state.deck.rowHeight = parseInt(height)
-        this.state.deck.privacy = privacy
-        this.setState({deck: this.state.deck});
-        GS.saveDeck(this.state.deck)
+        let newDeck = this.state.deck
+        newDeck.description = description
+        newDeck.cols = parseInt(cols)
+        newDeck.rowHeight = parseInt(height)
+        newDeck.privacy = privacy
+        this.setState({deck: newDeck});
+        GS.saveDeck(newDeck)
 
-        if (this.state.deck.cols > cols) {
-            this.state.deck.cols = cols
+        if (newDeck.cols > cols) {
+            newDeck.cols = cols
             this.resetLayout()
         }
     }

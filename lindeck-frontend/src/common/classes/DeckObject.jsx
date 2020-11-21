@@ -88,7 +88,6 @@ export default class DeckObject {
 
     // Privacy
     canSee(username) {
-        console.log(username,this.allowedUsers)
         if (this.privacy === "global")
             return true
         if(this.owner === username)
