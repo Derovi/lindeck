@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router} from "@reach/router"
+import {globalHistory, Router} from "@reach/router"
 import Header from "./views/header/Header";
 import Footer from "./views/footer/Footer";
 import DeckPage from "./views/boody/deckPage/DeckPage";
@@ -12,12 +12,30 @@ import CreateDeckPage from "./views/boody/createDeckPage/CreateDeckPage";
 import NotFoundPage from "./views/boody/nonFoundPage/NotFoundPage";
 import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage";
 import UserFindPage from "./views/boody/userFindPage/UserFindPage";
+import GS from "./common/classes/GlobalStorage";
 
 
 class App extends Component {
+    constructor(props) {
+        super(props)
+        setTimeout(() => this.checkOnline(), 100);
+    }
+
+    checkOnline() {
+        let isOnline = GS.sessionOnlineCheck()
+        if (isOnline !== this.state.isOnline) {
+            this.setState({isOnline: isOnline})
+        }
+        setTimeout(() => this.checkOnline(), 2000);
+    }
+
+    state = {
+        isOnline: false
+    }
+
     render() {
         return <>
-            <Header/>
+            <Header isOnline={this.state.isOnline}/>
             <Router primary={false}>
                 <HomePage path="/"/>
                 <LoginPage path="/login"/>

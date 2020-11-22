@@ -2,10 +2,10 @@ import CardObject from "./CardObject";
 import LayoutObject from "./LayoutObject";
 
 export default class DeckObject {
+    owner = "admin" // owner of deck
+    name = "" // mean null
     cards = [new CardObject()]
     layout = [new LayoutObject()]
-    owner = "admin" // owner of deck
-    name = "test"
     description = "test description"
     rowHeight = 100
     cols = 2
@@ -13,7 +13,7 @@ export default class DeckObject {
     privacy = "global" // private | global
     allowedUsers = []
 
-    constructor(cards, layout, owner, name, description, rowHeight, cols, uniqueId, privacy, allowedUsers) {
+    constructor(owner, name, cards, layout, description, rowHeight, cols, uniqueId, privacy, allowedUsers) {
         this.cards = cards || this.cards
         this.layout = layout || this.layout
         this.layout = layout || this.layout
@@ -90,7 +90,7 @@ export default class DeckObject {
     canSee(username) {
         if (this.privacy === "global")
             return true
-        if(this.owner === username)
+        if (this.owner === username)
             return true
         return username in this.allowedUsers
     }

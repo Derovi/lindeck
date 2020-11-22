@@ -40,14 +40,15 @@ export default class UserFindPage extends React.Component {
                            margin="normal" InputLabelProps={{shrink: true}}
                            variant="outlined" onChange={this.changeText}/>
                 {this.state.loading && <CircularProgress color="secondary"/>}
-
             </Paper>
 
-
             <Paper className="titlePaper">
-                <span>
-                    Users :
-                </span>
+                {GS.session.isOnline && < span>
+                Users :
+                    </span>}
+                {!GS.session.isOnline && < span>
+                U cant find users while offline mode :
+                    </span>}
             </Paper>
 
             {this.generateFound(this.state.users)}
@@ -56,7 +57,7 @@ export default class UserFindPage extends React.Component {
 
     generateFound = (usersFound) => {
         return usersFound.map((user, uniqId) => {
-            return <UserCard user={user} key={uniqId} isMe={GS.getSession().isMe(user.username)}/>
+            return <UserCard user={user} key={uniqId} isMe={GS.session.isMe(user.username)}/>
         })
     }
 }

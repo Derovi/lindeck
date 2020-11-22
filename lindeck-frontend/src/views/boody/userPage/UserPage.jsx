@@ -8,8 +8,8 @@ import {Redirect} from "@reach/router";
 
 
 export default class UserPage extends React.Component {
-    username = GS.getUser(this.props.username)
-    user =  this.props.username
+    username = this.props.username
+    user = GS.getUser(this.props.username)
 
     updateUrl() {
         if (this.username !== this.props.username) {
@@ -22,20 +22,24 @@ export default class UserPage extends React.Component {
         this.updateUrl()
         if (!this.user) return <Redirect to="/nonfound" noThrow/>;
         return <div className="rootUserPage backGroundImage">
-            <UserCard user={this.user} isMe={GS.getSession().isMe(this.username)}/>
+            <UserCard user={this.user} isMe={GS.session.isMe(this.username)}/>
             <Paper className="titlePaper">
-                <span>
+                {console.log(GS.session)}
+                {GS.session.isOnline && <span>
                 Following : {this.user.following.length}
-                </span>
+                </span>}
+                {!GS.session.isOnline && <span>
+                Session is offline. Connect to see following.
+                </span>}
             </Paper>
-            {this.generateFollowing(this.user.following)}
+            {GS.session.isOnline && this.generateFollowing(this.user.following)}
         </div>
     }
 
     generateFollowing = (followingArray) => {
         return followingArray.map((userNameToFollow, uniqId) => {
             let user = GS.getUser(userNameToFollow)
-            return <UserCard user={user} key={uniqId} isMe={GS.getSession().isMe(user.username)}/>
+            return <UserCard user={user} key={uniqId} isMe={GS.session.isMe(user.username)}/>
         })
     }
 }
