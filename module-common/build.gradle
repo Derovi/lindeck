@@ -1,0 +1,38 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+}
+
+apply plugin: 'java-library'
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+
+group 'org.lindeck'
+version '0.0.1'
+
+sourceCompatibility = '8'
+
+repositories {
+    mavenCentral()
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.14'
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1' // jwts
+    annotationProcessor 'org.projectlombok:lombok:1.18.14'  // lombok
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"  // jpa
+    runtimeOnly 'org.postgresql:postgresql:42.2.1'  // postgre
+}
