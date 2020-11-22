@@ -252,12 +252,13 @@ class GlobalStorage {
         return ""
     }
 
-    createNewDeckWithSettings(name, description, cols, height, privacy) {
+    createNewDeckWithSettings(settings) {
         let decks = getFromLS("decks")
 
-        let deck = new DeckObject({
-            ownerId: this.session.id, name: name, description: description, rowHeight: height,
-            cols: cols, privacy: privacy
+        let deck = new DeckObject({ 
+            ownerId: this.session.id, name: settings.name, description: settings.description, rowHeight: settings.height,
+            cols: settings.cols, privacy: settings.privacy
+ 
         })
         decks.push(deck)
         this.session.cashedDecks = decks // Save localy
