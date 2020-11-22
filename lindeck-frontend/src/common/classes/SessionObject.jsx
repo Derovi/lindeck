@@ -1,7 +1,7 @@
 
 export default class MySession {
     username = ""
-    myToken = "" // ???
+    myToken = "" // TODO
     isActive = false;
 
     constructor(myUserName, myToken) {

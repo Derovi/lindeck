@@ -11,9 +11,8 @@ import {globalHistory, navigate} from "@reach/router";
 
 export default class Header extends React.Component {
     state = {
-        style: {background: "black"},
-        session: GS.getSession(),
-        user: GS.getSessionUser()
+        backgroundColor: {background: "black"},
+        session: GS.getSession()
     }
 
     componentDidMount() {
@@ -28,41 +27,43 @@ export default class Header extends React.Component {
     }
 
     render() {
-        let session = this.state.session
-        let user = this.state.user
         return <>
             <header className="root">
                 <AppBar className="appBar" position="static">
-                    <Toolbar style={this.state.style} className="toolbar">
-                        <MovingMenuButton session={this.state.session} className="menuButton"/>
+                    <Toolbar style={this.state.backgroundColor} className="toolbar">
+                        <MovingMenuButton className="menuButton"/>
                         <div className="longPlaceHolder">
                             <button className="headerLindeckButton"
-                                    onMouseEnter={() => this.setState({style: {background: "#f6b93b"}})}
-                                    onMouseLeave={() => this.setState({style: {background: "black"}})}
+                                    onMouseEnter={() => this.setState({backgroundColor: {background: "#f6b93b"}})}
+                                    onMouseLeave={() => this.setState({backgroundColor: {background: "black"}})}
                                     onClick={() => {
-                                        this.setState({style: {background: "black"}})
+                                        this.setState({backgroundColor: {background: "black"}})
                                         navigate(`/`)
                                     }}>
                                 <h1 className={"logoName"}>Life in deck</h1>
                             </button>
                         </div>
 
-                        {!session.isActive &&
-                        <div className={"registerAndLoginButtons"}>
-                            <Button onClick={() => navigate(`/login`)} color="inherit">
-                                Login
-                            </Button><Button onClick={() => navigate('/register')} color="inherit">
-                            Register
-                        </Button></div>}
-                        {session.isActive &&
-                        <ButtonBase onClick={() => navigate('/user/' + session.username)} className="AvaSmallHolder">
-                            <img src={user.image} alt={"ava"}/>
-                        </ButtonBase>
-                        }
-
+                        {this.state.session.isActive ? this.state.session.isActive &&
+                            this.renderAva() : this.renderRegisterLoginButtons()}
                     </Toolbar>
                 </AppBar>
             </header>
             {this.props.children}</>
+    }
+
+    renderRegisterLoginButtons() {
+        return <div className={"registerAndLoginButtons"}>
+            <Button onClick={() => navigate(`/login`)} color="inherit">
+                Login
+            </Button><Button onClick={() => navigate('/register')} color="inherit">
+            Register
+        </Button></div>
+    }
+
+    renderAva() {
+        return <ButtonBase onClick={() => navigate('/user/' + this.state.session.username)} className="AvaSmallHolder">
+            <img src={this.state.session.myUser.image} alt={"ava"}/>
+        </ButtonBase>
     }
 }
