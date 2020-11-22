@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class CommonSecurity {
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();

@@ -21,14 +21,13 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
     }
- 
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
  
         String username = request.getParameter("username");
         String password = request.getParameter("password");
- 
         System.out.printf("JWTLoginFilter.attemptAuthentication: username/password= %s,%s", username, password);
         // System.out.println();
         return getAuthenticationManager()
@@ -42,7 +41,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         System.out.println("JWTLoginFilter.successfulAuthentication:");
  
         // Write Authorization to Headers of Response.
-        TokenAuthenticationService.addAuthentication(response, authResult.getName());
+        TokenAuthenticationService.addAuthentication(request, response, authResult.getName());
 
         // uncomment for debug
         // String authorizationString = response.getHeader("Authorization");

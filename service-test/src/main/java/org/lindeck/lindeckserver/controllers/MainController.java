@@ -9,6 +9,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/")
 public class MainController {
+
     @GetMapping
     public String getResult(Principal principal) {
         return principal.getName();
