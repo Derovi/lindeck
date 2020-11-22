@@ -3,7 +3,8 @@ import DeckObject from "./DeckObject";
 
 export default class SessionObject {
     username = ""
-    myToken = "" // ???
+
+    myToken = "" // TODO set toker from server
     myUser = new UserObject()
     myDecks = [new DeckObject()]
     isUpToDate = true
@@ -27,6 +28,6 @@ export default class SessionObject {
 
     updateOnline() {
 //        this.isOnline = window.navigator.onLine
-        return this.isOnline
+        return this.isOnline  // now sets offline by Button
     }
 }

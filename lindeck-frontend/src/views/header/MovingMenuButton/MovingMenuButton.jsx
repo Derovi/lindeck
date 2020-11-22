@@ -13,6 +13,7 @@ import GS from "../../../common/classes/GlobalStorage";
 
 
 class MovingMenuButton extends Component {
+
     state = {
         drawerOpen: false
     }
@@ -44,7 +45,7 @@ class MovingMenuButton extends Component {
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"Deck library (TODO) "}/>
                 </ListItem>
-                {!this.props.session.isActive && <div>
+                {!GS.session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => navigate('/login')} button>
                         <ListItemIcon> <InboxIcon/> </ListItemIcon>
@@ -55,7 +56,7 @@ class MovingMenuButton extends Component {
                         <ListItemText primary={"Register"}/>
                     </ListItem>
                 </div>}
-                {this.props.session.isActive && <div>
+                {GS.session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => {
                         if(GS.SignOut()) {
