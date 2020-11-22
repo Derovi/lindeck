@@ -1,19 +1,26 @@
+// default -> usual card, has a textfield in which you can enter text
+// answer ->  a card with an answer, uses the default fields of the card, and also has a verdict (answer color), answerfield (answer)
+// turning -> card, that can turn around and have two sides. Have isFlipped field and secondField
 export default class CardObject {
-    type = "default"  // turing | answer |
-    textfield = " text "
-    secondfield = " second text"
+    type = "default"  // turning | answer | default
+    textField = " text "
+
+    secondTextField = " second text"
+    isFlipped = false // turning make card flippable
+
     answer = "42"
     verdict = 0 // red-white-green : -1 0 1
-    isFlipped = false // turning make card flippable
     id = "0" // string field !
 
-    constructor(type, textfield, secondfield, answer, answered, isFlipped, id) {
-        this.type = type || this.type
-        this.textfield = textfield || this.textfield
-        this.secondfield = secondfield || this.secondfield
-        this.answer = answer || this.answer
-        this.answered = answered || this.answered
-        this.isFlipped = isFlipped || this.isFlipped
-        this.id = id || this.id
+    constructor(props = {}) {
+        this.type = props.type || this.type
+        this.textField = props.textField || this.textField
+        this.secondTextField = props.secondTextField || this.secondTextField
+        this.isFlipped = props.isFlipped || this.isFlipped
+        this.answer = props.answer || this.answer
+        this.verdict = props.verdict || this.verdict
+        this.id = props.id || this.id
     }
+
+
 }

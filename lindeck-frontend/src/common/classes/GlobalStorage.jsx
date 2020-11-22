@@ -5,7 +5,7 @@ import CardObject from "./CardObject";
 import LayoutObject from "./LayoutObject";
 
 // Settings
-let cleanBaseOnPageReload = false //  important !! u can change it, so after reload all save
+let cleanBaseOnPageReload = false //  important !! u can change it to true, so after reload all save
 
 
 function getFromLS(key) {
@@ -28,41 +28,45 @@ class GlobalStorage {
 
         if (!getFromLS("users")) {
             saveToLS("users", [
-                new UserObject(
-                    "watislaf",
-                    "vladkozulin@mail.ru",
-                    "1234",
-                    " Я влад коз",
-                    "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
-                    ["burik", "derovi"],
-                    [0]
+                new UserObject({
+                        username: "watislaf",
+                        email: "vladkozulin@mail.ru",
+                        password: "1234",
+                        describe: " Я влад коз",
+                        image: "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
+                        following: ["burik", "derovi"],
+                        deckListId: [0]
+                    }
                 )
                 ,
-                new UserObject(
-                    "derovi",
-                    "iwillpush@mail.ru",
-                    "4321",
-                    " Я запушу",
-                    "https://picsum.photos/200/300",
-                    ["burik"],
-                    [])
+                new UserObject({
+                    username: "derovi",
+                    email: "iwillpush@mail.ru",
+                    password: "4321",
+                    describe: " Я запушу",
+                    image: "https://picsum.photos/200/300",
+                    following: ["burik"],
+                    deckListId: []
+                })
                 ,
-                new UserObject(
-                    "burik",
-                    "bura@mail.ru",
-                    "burik",
-                    "где",
-                    "https://picsum.photos/200",
-                    [],
-                    [])
+                new UserObject({
+                    username: "burik",
+                    email: "bura@mail.ru",
+                    password: "burik",
+                    describe: "где",
+                    image: "https://picsum.photos/200",
+                    following: [],
+                    deckListId: []
+                })
             ])
         }
 
         if (!getFromLS("decks")) {
-            saveToLS("decks", [new DeckObject(
-                "watislaf", "name1", [new CardObject()], [new LayoutObject()],
-                "description", 100, 2, 0,
-                "global", [])
+            saveToLS("decks", [new DeckObject({
+                owner: "watislaf", name: "name1", cards: [new CardObject()], layout: [new LayoutObject()],
+                description: "description", rowHeight: 100, cols: 6, uniqueId: 0,
+                privacy: "global", allowedUser: []
+            })
             ])
         }
 
@@ -72,7 +76,9 @@ class GlobalStorage {
             saveToLS("session", new SessionObject())
 
         }
-        this.session = new SessionObject(...Object.values(getFromLS("session")))
+        this.session = new SessionObject(getFromLS("session"))
+        console.log(this.session)
+        console.log(getFromLS("session"))
         this.sessionOnlineCheck()
     }
 
@@ -84,10 +90,10 @@ class GlobalStorage {
             jsonDeck = allDecks.filter(deck => deck.owner === username && deck.name === deckname)[0]
             // SERVER GET DATA PART
         } else {
-            let allDecks = this.session.myDecks
+            let allDecks = this.session.cashedDecks
             jsonDeck = allDecks.filter(deck => deck.owner === username && deck.name === deckname)[0]
         }
-        let deckObject = new DeckObject(...Object.values(jsonDeck))
+        let deckObject = new DeckObject(jsonDeck)
         if (!deckObject.canSee(this.session.username)) {
             return null
         }
@@ -102,11 +108,11 @@ class GlobalStorage {
             jsonDeck = allDecks.filter(deck => deck.uniqueId === deckId)[0]
             // SERVER GET DATA PART
         } else {
-            let allDecks = this.session.myDecks
+            let allDecks = this.session.cashedDecks
             jsonDeck = allDecks.filter(deck => deck.uniqueId === deckId)[0]
         }
 
-        return new DeckObject(...Object.values(jsonDeck))
+        return new DeckObject(jsonDeck)
     }
 
 
@@ -118,12 +124,12 @@ class GlobalStorage {
             jsonUser = allUsers.filter(user => user.username === UserName)[0]
             // SERVER GET DATA PART
         } else {
-            let allUsers = [this.session.myUser]
+            let allUsers = [this.session.cashedUser]
             jsonUser = allUsers.filter(user => user.username === UserName)[0]
         }
         if (!jsonUser)
             return null
-        return new UserObject(...Object.values(jsonUser))
+        return new UserObject(jsonUser)
     }
 
     registerNameIsPossible(name) {
@@ -190,12 +196,19 @@ class GlobalStorage {
         let userFound = getFromLS("users").filter(user => user.email === email && user.password === password)[0]
         let allMyDecks = getFromLS("decks").filter(decks => decks.owner === userFound.username)
         if (userFound) {
+            let allMyDecks = getFromLS("decks").filter(decks => decks.owner === userFound.username)
             // SERVER GET TOKEN
-            this.session = new SessionObject(userFound.username, "42", userFound, allMyDecks)
+            this.session = new SessionObject({
+                username: userFound.username,
+                token: "42",
+                cashedUser: userFound,
+                cashedDecks: allMyDecks
+            })
             this.session.isOnline = true
+            this.session.isUpToDate = true
             saveToLS("session", this.session);
 
-
+            console.log(this.session)
             return "";
         }
         return "Email or password is incorrect."
@@ -207,7 +220,7 @@ class GlobalStorage {
         if (!expression.test(String(possibleDeckname).toLowerCase())) {
             return "only letters and numbers available."
         }
-        let decks = this.session.myDecks
+        let decks = this.session.cashedDecks
 
         if (decks.filter(deck => {
             return deck.owner === username && deck.name === possibleDeckname
@@ -218,21 +231,22 @@ class GlobalStorage {
     }
 
     createNewDeckWithSettings(name, description, cols, height, privacy) {
-        let decks = this.session.myDecks
+        let decks = this.session.cashedDecks
         let ids = decks.map(deck => deck.uniqueId)
         let newUniq = 1 + Math.max(...ids)
-        let deck = new DeckObject(
-            this.session.username, name, null, null, description, height,
-            cols, newUniq, privacy, null)
+        let deck = new DeckObject({
+            owner: this.session.username, name: name, description: description, rowHeight: height,
+            cols: cols, uniqueId: newUniq, privacy: privacy
+        })
         decks.push(deck)
-        this.session.myDecks = decks // Save localy
-        this.session.myUser.deckListId.push(deck.uniqueId)
+        this.session.cashedDecks = decks // Save localy
+        this.session.cashedUser.deckListId.push(deck.uniqueId)
         if (!this.session.isOnline) {
             this.session.isUpToDate = false
         } else {
             // save globaly
             this.updateDecksFromSession()
-            this.updateUser(this.session.myUser)
+            this.updateUser(this.session.cashedUser)
         }
         saveToLS("session", this.session)
 
@@ -240,11 +254,11 @@ class GlobalStorage {
 
     myUserFollowing(username, startFollow) {
         if (startFollow) {
-            this.session.myUser.following.push(username)
+            this.session.cashedUser.following.push(username)
         } else {
-            const index = this.session.myUser.following.indexOf(username);
+            const index = this.session.cashedUser.following.indexOf(username);
             if (index > -1) {
-                this.session.myUser.following.splice(index, 1);
+                this.session.cashedUser.following.splice(index, 1);
             }
         }
         saveToLS("session", this.session)
@@ -269,11 +283,11 @@ class GlobalStorage {
     }
 
     getSessionUser() {
-        return this.session.myUser
+        return this.session.cashedUser
     }
 
     saveDeck(newDeck) {
-        let newDecks = this.session.myDecks
+        let newDecks = this.session.cashedDecks
         let deckToChange = newDecks.filter(deck => deck.uniqueId === newDeck.uniqueId)[0]
         newDecks[newDecks.indexOf(deckToChange)] = newDeck
         this.session.isUpToDate = false
@@ -299,10 +313,9 @@ class GlobalStorage {
     }
 
     searchUsers(inputUsername) {
-        if (!this.session.isOnline) {
-            return []
-        }
+        if (!this.session.isOnline) return []
         if (inputUsername === "") return []
+
         let users = getFromLS("users")
         return users.filter(user => user.username.toLowerCase().includes(inputUsername.toLowerCase()));
     }
@@ -310,22 +323,21 @@ class GlobalStorage {
     sessionOnlineCheck() {
         let online = this.session.updateOnline()
         if (this.session.isActive && online && !this.session.isUpToDate) {
-            this.updateUser(this.session.myUser)
+            this.updateUser(this.session.cashedUser)
             this.updateDecksFromSession()
             this.session.isUpToDate = true
             saveToLS("session", this.session)
-            console.log("SAVE")
         }
         return online
     }
 
     updateUser(userUpdate) {
         if (!this.session.isOnline) {
-            console.log("HOW&???")
+            console.log("How ??? Offline state Here cant be reached. Bad using")
         }
         // SERVER UPDATE ->
         let users = getFromLS("users")
-        let newUser = users.filter(user => user.username === user.username)[0]
+        let newUser = users.filter(user => user.username === userUpdate.username)[0]
         Object.assign(newUser, userUpdate);   // copy
         saveToLS("users", users)
         // SERVER UPDATE
@@ -334,16 +346,28 @@ class GlobalStorage {
     updateDecksFromSession() {
 
         if (!this.session.isOnline) {
-            console.log("HOW&???")
+            console.log("HOW??? Offline state Here cant be reached. Bad using")
         }
         // SERVER UPDATE ->
         let decks = getFromLS("decks")
-        console.log(decks)
         let clearDecks = decks.filter(deck => deck.owner !== this.session.username) // remove all my decks
-        clearDecks.push(...this.session.myDecks) // push updated decks and maybe new decks
+        clearDecks.push(...this.session.cashedDecks) // push updated decks and maybe new decks
         saveToLS("decks", clearDecks)
-        console.log(clearDecks)
         // SERVER UPDATE
+    }
+
+    getUsersDecks(username) {
+        if (username === GS.session.username)
+            return GS.session.cashedDecks
+
+        // SERVER PART FIND ->
+        let user = getFromLS("users").filter(user => user.username === username)[0]
+        if (!user)
+            return []
+        let decks = getFromLS("decks").filter(deck => deck.owner === username)
+        // SERVER PART FIND
+
+        return decks
     }
 }
 

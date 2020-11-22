@@ -34,7 +34,7 @@ export default class DecksLibraryPage extends React.Component {
 
     render() {
         return <div className="rootUserPage backGroundImage">
-            <Paper className="titleInputPaper">
+            <Paper className="titleInputPaperWide">
                 <TextField label="Label" placeholder="Placeholder"
                            helperText="Full width!" fullWidth
                            margin="normal" InputLabelProps={{shrink: true}}

@@ -1,0 +1,9 @@
+rootProject.name = 'lindeck'
+
+include 'module-data'
+include 'module-common'
+include 'module-security' // depends on module-data
+include 'module-authentication' // depends on module-security
+
+include 'service-test' // depends on module-authentication
+include 'service-authorization' // depends on module-security

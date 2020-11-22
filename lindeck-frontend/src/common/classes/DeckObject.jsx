@@ -11,21 +11,20 @@ export default class DeckObject {
     cols = 2
     uniqueId = 0
     privacy = "global" // private | global
-    allowedUsers = []
+    allowedUsers = [] // TODO write place where you can set it
     followersNumber = 0
 
-    constructor(owner, name, cards, layout, description, rowHeight, cols, uniqueId, privacy, allowedUsers) {
-        this.cards = cards || this.cards
-        this.layout = layout || this.layout
-        this.layout = layout || this.layout
-        this.owner = owner || this.owner
-        this.name = name || this.name
-        this.description = description || this.description
-        this.rowHeight = rowHeight || this.rowHeight
-        this.cols = cols || this.cols
-        this.uniqueId = uniqueId || this.uniqueId
-        this.privacy = privacy || this.privacy
-        this.allowedUsers = allowedUsers || this.allowedUsers
+    constructor(props={}) {
+        this.owner = props.owner || this.owner
+        this.name = props.name || this.name
+        this.cards = props.cards || this.cards
+        this.layout = props.layout || this.layout
+        this.description = props.description || this.description
+        this.rowHeight = props.rowHeight || this.rowHeight
+        this.cols = props.cols || this.cols
+        this.uniqueId = props.uniqueId || this.uniqueId
+        this.privacy = props.privacy || this.privacy
+        this.allowedUsers = props.allowedUsers || this.allowedUsers
     }
 
 

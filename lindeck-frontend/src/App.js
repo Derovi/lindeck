@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {globalHistory, Router} from "@reach/router"
+import { Router} from "@reach/router"
 import Header from "./views/header/Header";
 import Footer from "./views/footer/Footer";
 import DeckPage from "./views/boody/deckPage/DeckPage";
@@ -9,11 +9,11 @@ import HomePage from "./views/boody/homePage/HomePage";
 import UserPage from "./views/boody/userPage/UserPage";
 import OnRouteChange from "reach-router-scroll-top";
 import CreateDeckPage from "./views/boody/createDeckPage/CreateDeckPage";
-import NotFoundPage from "./views/boody/nonFoundPage/NotFoundPage";
+import NotFoundPage from "./views/boody/notFoundPage/NotFoundPage";
 import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage";
 import UserFindPage from "./views/boody/userFindPage/UserFindPage";
 import GS from "./common/classes/GlobalStorage";
-import DecksLibraryPage from "./views/boody/deckLibraryPage/DecksLibraryPage";
+import DecksLibraryPage from "./views/boody/decksLibraryPage/DecksLibraryPage";
 import MyDecksPage from "./views/boody/myDecksPage/MyDecksPage";
 
 
@@ -45,7 +45,7 @@ class App extends Component {
                 <ResetPasswordPage path="/reset-password"/>
 
                 <UserFindPage path='/users'/>
-                <MyDecksPage path='/decks-library'/>
+                <MyDecksPage path='/decks/:username'/>
                 <DecksLibraryPage path='/decks-library'/>
 
                 <UserPage path='/user/:username'/>
@@ -64,8 +64,3 @@ class App extends Component {
 }
 
 export default App;
-
-// Live Cycle Hooks ->
-// Mount -> construcor / render / componentDidMount
-// update ->   render / componentDidUpdate
-// UnMount(destructor) ->   componentWillUnMount

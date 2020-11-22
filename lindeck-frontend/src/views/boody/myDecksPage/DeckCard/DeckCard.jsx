@@ -1,19 +1,9 @@
 import "./DeckCard.css"
 import React from "react";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import ButtonBase from "@material-ui/core/ButtonBase";
 import Typography from "@material-ui/core/Typography";
-import ListItem from "@material-ui/core/ListItem";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
-import AddIcon from '@material-ui/icons/Add';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import {navigate} from "@reach/router";
 import GS from "../../../../common/classes/GlobalStorage";
 
 export default class DeckCard extends React.Component {
@@ -21,20 +11,15 @@ export default class DeckCard extends React.Component {
         super(props)
         if (GS.session.isActive) {
             this.state = {
-                AmIFollowing: (GS.session.myUser.following.includes(this.props.user.username))
+                CanDelete: (GS.session.username === this.props.deck.owner)
             }
         }
-    }
-
-    follow(username, startFollow) {
-        GS.myUserFollowing(username, startFollow)
-        this.setState({AmIFollowing: startFollow})
     }
 
 
     render() {
         let deck = this.props.deck
-        return <Paper className="userPaper">
+        return <Paper>
             <Typography gutterBottom variant="overline">
                 <span className="fontSize20"> {deck.owner}</span>
             </Typography>
@@ -49,11 +34,10 @@ export default class DeckCard extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            {GS.session.myUser.username === deck.owner && this.renderEditButton(deck)}
-                            {GS.session.myUser.deckListId.includes(deck.id) && this.renderDeleteButton(deck)}
+                            {GS.session.cashedUser.username === deck.owner && this.renderEditButton(deck)}
+                            {GS.session.cashedUser.deckListId.includes(deck.id) && this.renderDeleteButton(deck)}
                         </Grid>
                     </Grid>
-                    <Grid item xs={7}> {this.decksCreated()}</Grid>
                 </Grid>
             </Grid>
         </Paper>
@@ -62,8 +46,9 @@ export default class DeckCard extends React.Component {
 
     renderDeleteButton(deck) {
         return <Button onClick={() => {
-            this.follow(user.username, true)
-        }}> Follow</Button>;
+            this.setState({CanDelete: false})
+            // Delete action GA TODO
+        }}> Delete </Button>;
     }
 
 

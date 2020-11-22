@@ -3,20 +3,22 @@ import DeckObject from "./DeckObject";
 
 export default class SessionObject {
     username = ""
-    myToken = "" // ???
-    myUser = new UserObject()
-    myDecks = [new DeckObject()]
+
+    token = "" // TODO set token from server
+    cashedUser = new UserObject()
+    cashedDecks = [new DeckObject()]
     isUpToDate = true
 
     isOnline = true
     isActive = false;
 
-    constructor(myUserName, myToken, myUser, myDecks, isUpToDate) {
-        this.username = myUserName || this.username
-        this.myToken = myToken || this.username
-        this.myUser = myUser || this.myUser
-        this.myDecks = myDecks || this.myDecks
-        this.isUpToDate = isUpToDate || this.isUpToDate
+    constructor(props = {}) {
+        console.log(props)
+        this.username = props.username || this.username
+        this.token = props.token || this.username
+        this.cashedUser = props.cashedUser || this.cashedUser
+        this.cashedDecks = props.cashedDecks || this.cashedDecks
+        this.isUpToDate = props.isUpToDate || this.isUpToDate
         this.isActive = this.username !== ""
         this.updateOnline()
     }
@@ -27,6 +29,6 @@ export default class SessionObject {
 
     updateOnline() {
 //        this.isOnline = window.navigator.onLine
-        return this.isOnline
+        return this.isOnline  // now sets offline by Button
     }
 }

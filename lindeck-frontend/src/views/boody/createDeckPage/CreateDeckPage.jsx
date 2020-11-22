@@ -51,7 +51,6 @@ export default function CreateDeckPage(props) {
         setPrivacy(event.target.value)
     }
 
-
     function checkForm() {
         let error = GS.newDeckNameIsPossible(props.username, nameRef.current.value)
         if (error === "") {
@@ -70,44 +69,7 @@ export default function CreateDeckPage(props) {
         }}/>
         <Dialog className="wrapperCreate" fullWidth={true} open={true}>
             <DialogTitle className="centerField ">Deck creation</DialogTitle>
-            <DialogContent className="mainPaperCreate ">
-                <TextField defaultValue={props.username + "Deck"} error={nameError !== ""} helperText={nameError}
-                           inputRef={nameRef} inputProps={{
-                    maxLength: 20,
-                }} className="centerField" label="Deck Name"/>
-                <br/>
-                <TextField defaultValue={"my loved deck"} inputRef={descriptionRef} inputProps={{
-                    maxLength: 20,
-                }} className="centerField" label="Describe "/>
-                <br/>
-                <br/>
-                <FormControl className="formControlCreate">
-                    <InputLabel>maxWidth</InputLabel>
-                    <Select autoFocus value={cols} onChange={selectCols}>
-                        {["2", "4", "6", "12", "20"].map((str, uniqId) =>
-                            <MenuItem key={uniqId} value={str}>{str}</MenuItem>
-                        )}
-                    </Select>
-                </FormControl>
-                <FormControl className="formControlCreate">
-                    <InputLabel> RowHeight</InputLabel>
-                    <Select autoFocus value={height} onChange={selectHeight}>
-                        {["400", "300", "240", "100", "60"].map((str, uniqId) =>
-                            <MenuItem key={uniqId} value={str}>{str}</MenuItem>
-                        )}
-                    </Select>
-                </FormControl>
-
-                <FormControl className="formControlCreate">
-                    <InputLabel> Privacy </InputLabel>
-                    <Select autoFocus value={privacy} onChange={selectPrivate}>
-                        {["global", "private"].map((str, uniqId) =>
-                            <MenuItem key={uniqId} value={str}>{str}</MenuItem>
-                        )}
-                    </Select>
-                </FormControl>
-
-            </DialogContent>
+            {renderContent()}
             <DialogActions>
                 <Button onClick={() => navigate('/user/' + props.username)}>Close</Button>
                 <Button onClick={() => checkForm()}> Start </Button>
@@ -117,4 +79,48 @@ export default function CreateDeckPage(props) {
                 <CircularProgress color="inherit"/>
             </Backdrop>
         </Dialog></>
+
+
+    function renderContent() {
+        return <DialogContent className="mainPaperCreate ">
+            <TextField defaultValue={props.username + "Deck"} error={nameError !== ""} helperText={nameError}
+                       inputRef={nameRef} inputProps={{
+                maxLength: 20,
+            }} className="centerField" label="Deck Name"/>
+            <br/>
+            <TextField defaultValue={"my loved deck"} inputRef={descriptionRef} inputProps={{
+                maxLength: 20,
+            }} className="centerField" label="Describe "/>
+            <br/>
+            <br/>
+
+            <FormControl className="formControlCreate">
+                <InputLabel>maxWidth</InputLabel>
+                <Select autoFocus value={cols} onChange={selectCols}>
+                    {["2", "4", "6", "12", "20"].map((str, uniqId) =>
+                        <MenuItem key={uniqId} value={str}>{str}</MenuItem>
+                    )}
+                </Select>
+            </FormControl>
+
+            <FormControl className="formControlCreate">
+                <InputLabel> RowHeight</InputLabel>
+                <Select autoFocus value={height} onChange={selectHeight}>
+                    {["400", "300", "240", "100", "60"].map((str, uniqId) =>
+                        <MenuItem key={uniqId} value={str}>{str}</MenuItem>
+                    )}
+                </Select>
+            </FormControl>
+
+            <FormControl className="formControlCreate">
+                <InputLabel> Privacy </InputLabel>
+                <Select autoFocus value={privacy} onChange={selectPrivate}>
+                    {["global", "private"].map((str, uniqId) =>
+                        <MenuItem key={uniqId} value={str}>{str}</MenuItem>
+                    )}
+                </Select>
+            </FormControl>
+
+        </DialogContent>
+    }
 }

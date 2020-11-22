@@ -34,7 +34,7 @@ export default class UserFindPage extends React.Component {
 
     render() {
         return <div className="rootUserPage backGroundImage">
-            <Paper className="titleInputPaper">
+            <Paper className="titleInputPaper inputLoadingHeight">
                 <TextField label="Label" placeholder="Placeholder"
                            helperText="Full width!" fullWidth
                            margin="normal" InputLabelProps={{shrink: true}}

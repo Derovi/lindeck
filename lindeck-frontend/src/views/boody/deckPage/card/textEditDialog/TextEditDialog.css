@@ -3,6 +3,7 @@
     min-height: 300px;
     width: 100%;
 }
+
 .inputCardAnswer {
     background-color: #f8f8f8;
     height: 60px;
@@ -28,5 +29,4 @@
 
 .dialogTitle {
     padding: 15px 0 0 15px;
-
 }
