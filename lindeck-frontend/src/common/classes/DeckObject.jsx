@@ -12,6 +12,7 @@ export default class DeckObject {
     uniqueId = 0
     privacy = "global" // private | global
     allowedUsers = []
+    followersNumber = 0
 
     constructor(owner, name, cards, layout, description, rowHeight, cols, uniqueId, privacy, allowedUsers) {
         this.cards = cards || this.cards
