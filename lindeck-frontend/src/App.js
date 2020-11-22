@@ -14,6 +14,7 @@ import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage
 import UserFindPage from "./views/boody/userFindPage/UserFindPage";
 import GS from "./common/classes/GlobalStorage";
 import UserDecksPage from "./views/boody/userDecksPage/UserDecksPage";
+import PermissionDenied from "./views/boody/permissionDeniedPage/PermissionDeniedPage";
 
 
 class App extends Component {
@@ -49,6 +50,8 @@ class App extends Component {
                 <UserPage path='/user/:username'/>
                 <CreateDeckPage path='/user/:username/deck-build'/>
                 <DeckPage path="/user/:username/deck/:deckname"/>
+
+                <PermissionDenied path="/permission-denied"/>
                 <NotFoundPage default/>
             </Router>
             <Footer/>

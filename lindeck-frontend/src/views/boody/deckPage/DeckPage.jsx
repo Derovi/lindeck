@@ -7,7 +7,7 @@ import MovingDeckEditButton from "./deckEditMenu/DeckEditMenu";
 import DeckEditDialog from "./editDeckDialog/DeckEditDialog";
 import Card from "./card/Card";
 import GS from "../../../common/classes/GlobalStorage";
-import {Redirect} from "@reach/router";
+import {navigate, Redirect} from "@reach/router";
 import CardObject from "../../../common/classes/CardObject";
 
 
@@ -108,19 +108,23 @@ class deckPage extends Component {
         </>
     }
 
-    saveDeckProps = (description, cols, height, privacy) => {
+    saveDeckProps = (settings) => {
         let newDeck = this.state.deck
-        newDeck.description = description
-        newDeck.cols = parseInt(cols)
-        newDeck.rowHeight = parseInt(height)
-        newDeck.privacy = privacy
+
+        if (newDeck.cols > settings.cols) {
+            newDeck.cols = settings.cols
+            this.resetLayout()
+        }
+        newDeck.name = settings.name
+        newDeck.description = settings.description
+        newDeck.cols = settings.cols
+        newDeck.rowHeight = settings.height
+        newDeck.privacy = settings.privacy
         this.setState({deck: newDeck});
         GS.saveDeck(newDeck)
 
-        if (newDeck.cols > cols) {
-            newDeck.cols = cols
-            this.resetLayout()
-        }
+
+        navigate('/user/' + this.props.username + "/deck/" + settings.name)
     }
 
 }
