@@ -20,6 +20,7 @@ class App extends Component {
             <Header/>
             <Router primary={false}>
                 <HomePage path="/"/>
+
                 <LoginPage path="/login"/>
                 <RegisterPage path="/register"/>
                 <ResetPasswordPage path="/reset-password"/>
