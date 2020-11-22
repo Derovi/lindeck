@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {globalHistory, Router} from "@reach/router"
+import { Router} from "@reach/router"
 import Header from "./views/header/Header";
 import Footer from "./views/footer/Footer";
 import DeckPage from "./views/boody/deckPage/DeckPage";
@@ -9,7 +9,7 @@ import HomePage from "./views/boody/homePage/HomePage";
 import UserPage from "./views/boody/userPage/UserPage";
 import OnRouteChange from "reach-router-scroll-top";
 import CreateDeckPage from "./views/boody/createDeckPage/CreateDeckPage";
-import NotFoundPage from "./views/boody/nonFoundPage/NotFoundPage";
+import NotFoundPage from "./views/boody/notFoundPage/NotFoundPage";
 import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage";
 import UserFindPage from "./views/boody/userFindPage/UserFindPage";
 import GS from "./common/classes/GlobalStorage";

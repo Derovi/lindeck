@@ -8,6 +8,7 @@ import DeckEditDialog from "./editDeckDialog/DeckEditDialog";
 import Card from "./card/Card";
 import GS from "../../../common/classes/GlobalStorage";
 import {Redirect} from "@reach/router";
+import CardObject from "../../../common/classes/CardObject";
 
 
 class deckPage extends Component {
@@ -19,7 +20,7 @@ class deckPage extends Component {
 
     addCard = (card) => {
         let newDeck = this.state.deck
-        newDeck.addCard(card)
+        newDeck.addCard(new CardObject(card))
         GS.saveDeck(newDeck)
         this.setState({deck: newDeck})
     }
@@ -66,9 +67,9 @@ class deckPage extends Component {
 
     changeCardText = (text, id, isFlipped) => {
         if (isFlipped) {
-            this.state.deck.getCard(id).secondfield = text
+            this.state.deck.getCard(id).secondTextField = text
         } else {
-            this.state.deck.getCard(id).textfield = text
+            this.state.deck.getCard(id).textField = text
         }
         GS.saveDeck(this.state.deck)
     }
@@ -78,7 +79,7 @@ class deckPage extends Component {
     }
 
     render() {
-        if (!this.state.deck) return <Redirect to="/nonfound" noThrow/>;
+        if (!this.state.deck) return <Redirect to="/not-found" noThrow/>;
         return <>
             <MovingDeckEditButton
                 openEditDeckDialog={this.openEditDeckDialog} addCard={this.addCard}

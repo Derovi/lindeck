@@ -25,10 +25,9 @@ export default function TextEditDialog(props) {
         <span className="stylishText dialogTitle">Text card edit</span>
         <DialogContent>
             <span className="stylishTextSmaller"> Text : </span>
-            <TextareaAutosize ref={inputRef} className="inputCardText" defaultValue={props.textfield}/>
-
+            <TextareaAutosize ref={inputRef} className="inputCardText" defaultValue={props.textField}/>
             {props.needAnswer && <><span className="stylishTextSmaller"> Answer : </span>
-                <TextareaAutosize ref={inputAnswerRef} className="inputCardAnswer" defaultValue={props.answerfield}/></>}
+                <TextareaAutosize ref={inputAnswerRef} className="inputCardAnswer" defaultValue={props.answer}/></>}
         </DialogContent>
         <DialogActions>
             <Button color="primary" onClick={close}>

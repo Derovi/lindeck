@@ -20,7 +20,7 @@ export default class UserPage extends React.Component {
 
     render() {
         this.updateUrl()
-        if (!this.user) return <Redirect to="/nonfound" noThrow/>;
+        if (!this.user) return <Redirect to="/not-found" noThrow/>;
         return <div className="rootUserPage backGroundImage">
             <UserCard user={this.user} isMe={GS.session.isMe(this.username)}/>
             <Paper className="titlePaper">

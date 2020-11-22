@@ -24,7 +24,7 @@ export default class UserCard extends React.Component {
         super(props)
         if (GS.session.isActive) {
             this.state = {
-                AmIFollowing: (GS.session.myUser.following.includes(this.props.user.username))
+                AmIFollowing: (GS.session.cashedUser.following.includes(this.props.user.username))
             }
         }
     }

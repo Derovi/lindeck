@@ -52,7 +52,7 @@ export default class HomePage extends React.Component {
                         <hr/>
                         <div className="button_cont" align="center">
                             <button className="mainPageButton" onClick={this.clickStart}>
-                                Start!
+                                Start right now!
                             </button>
                         </div>
                     </div>

@@ -23,13 +23,13 @@ export default function LoginForm(props) {
 
     const [loginGood, setLoginGood] = useState("");
 
-    let myFields = [
+    let fields = [
         {username: "email", label: "Email Address", error: "", refset: refToEmailField},
         {username: "password", label: "Password", error: "", refset: refToPasswordField},
     ]
 
-    function fields() {
-        return myFields.map((json, num) => {
+    function renderFields() {
+        return fields.map((json, num) => {
             return <TextField error={json.error !== ""} variant="outlined" margin="normal"
                               required fullWidth inputRef={json.refset} key={num} helperText={json.error}
                               label={json.label} name={json.username} type={json.username}/>
@@ -45,7 +45,7 @@ export default function LoginForm(props) {
         setLoginGood(verdict)
     }
 
-    return <> {fields()}
+    return <> {renderFields()}
         <FormControlLabel control={<Checkbox value="remember" color="primary"/>}
                           label="Remember me"/>
         <Typography color="secondary">{loginGood}</Typography>

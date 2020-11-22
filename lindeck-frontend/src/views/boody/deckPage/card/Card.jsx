@@ -53,8 +53,8 @@ class Card extends Component {
 
     getText = (isFlipped) => {
         if (isFlipped)
-            return this.props.card.secondfield
-        return this.props.card.textfield
+            return this.props.card.secondTextField
+        return this.props.card.textField
     }
 
     changeVerdict = (verdict) => {
@@ -93,9 +93,9 @@ class Card extends Component {
                 </div>
 
                 <TextEditDialog open={this.state.textEditDialog} openTextEditDialog={this.openTextEditDialog}
-                                textfield={this.getText(this.state.isFlipped)} setText={this.setText}
+                                textField={this.getText(this.state.isFlipped)} setText={this.setText}
                                 needAnswer={this.props.card.type === "answer"}
-                                answerfield={this.props.card.answer} setAnswer={this.setAnswer}/>
+                                answer={this.props.card.answer} setAnswer={this.setAnswer}/>
                 {this.props.card.type === "answer" &&
                 <AnswerEditDialog open={this.state.inputAnswerDialog} openInputAnswerDialog={this.openInputAnswerDialog}
                                   answer={this.props.card.answer} answerCheck={this.answerCheck}/>}

@@ -7,14 +7,14 @@ export default class UserObject {
     following = []
     deckListId = []
 
-    constructor(username, email, password, describe, image, following, deckListId) {
-        this.username = username || this.username
-        this.email = email || this.email
-        this.password = password || this.password
-        this.describe = describe || this.describe
-        this.image = image || this.image
-        this.deckListId = deckListId || this.deckListId
-        this.following = following || this.following
+    constructor(props = {}) {
+        this.username = props.username || this.username
+        this.email = props.email || this.email
+        this.password = props.password || this.password
+        this.describe = props.describe || this.describe
+        this.image = props.image || this.image
+        this.deckListId = props.deckListId || this.deckListId
+        this.following = props.following || this.following
     }
 
     isValid() {

@@ -13,7 +13,7 @@ import WifiOffIcon from '@material-ui/icons/WifiOff';
 export default class Header extends React.Component {
     state = {
         backgroundColor: {background: "black"},
-        session: GS.getSession()
+        session: GS.session
     }
 
     componentDidMount() {
@@ -53,10 +53,12 @@ export default class Header extends React.Component {
                     </Toolbar>
                 </AppBar>
             </header>
-            <Button style={{position: "fixed"}}
+
+            <Button style={{background: "aqua", position: "fixed"}}
                     onClick={() => GS.session.isOnline = !GS.session.isOnline}> WIFI </Button>
+
             {this.props.children}</>
-    }
+    }// TODO -> Remove wifi button
 
     renderRegisterLoginButtons() {
         return <div className={"registerAndLoginButtons"}>
@@ -69,7 +71,7 @@ export default class Header extends React.Component {
 
     renderAva() {
         return <ButtonBase onClick={() => navigate('/user/' + this.state.session.username)} className="AvaSmallHolder">
-            <img src={this.state.session.myUser.image} alt={"ava"}/>
+            <img src={this.state.session.cashedUser.image} alt={"ava"}/>
         </ButtonBase>
     }
 }
