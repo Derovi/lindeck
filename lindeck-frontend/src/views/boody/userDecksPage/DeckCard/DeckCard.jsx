@@ -13,12 +13,11 @@ export default class DeckCard extends React.Component {
         super(props)
         if (GS.session.isActive) {
             this.state = {
-                canDelete: (GS.session.username === this.props.deck.owner),
-                canEdit: (GS.session.username === this.props.deck.owner)
+                canDelete: (GS.session.id === this.props.deck.ownerId),
+                canEdit: (GS.session.id === this.props.deck.ownerId)
             }
         }
     }
-
 
     render() {
         let deck = this.props.deck
@@ -28,7 +27,7 @@ export default class DeckCard extends React.Component {
                     <Grid item xs={6} lg={12} container>
                         <Grid item xs={12} style={{background: "gainsboro"}}>
                             <Typography gutterBottom variant="overline" className="deckCardText">
-                                Owner : {deck.owner}
+                                Owner : {GS.getUserById(deck.ownerId).username}
                             </Typography>
                         </Grid>
 
@@ -63,8 +62,7 @@ export default class DeckCard extends React.Component {
     renderDeleteButton = (deck) => {
         return <Button className="deckCardButton" variant="contained" color="secondary" onClick={() => {
             this.setState({canDelete: false})
-            console.log(deck)
-            this.props.delete(deck.uniqueId)
+            this.props.delete(deck.uuid)
         }}> Delete </Button>;
     }
 
@@ -74,7 +72,7 @@ export default class DeckCard extends React.Component {
 
     renderSeeButton = (deck) => {
         return <Button className="deckCardButton" variant="contained" color="primary" onClick={() => {
-            navigate('/user/' + deck.owner + "/deck/" + deck.name)
+            navigate('/user/' + GS.getUserById(deck.ownerId).username + "/deck/" + deck.name)
         }}> See </Button>;
     }
 }

@@ -79,7 +79,7 @@ class deckPage extends Component {
     }
 
     render() {
-        if (!this.state.deck) return <Redirect to="/not-found" noThrow/>;
+        if (!this.state.deck.isValid()) return <Redirect to="/not-found" noThrow/>;
         return <>
             <MovingDeckEditButton
                 openEditDeckDialog={this.openEditDeckDialog} addCard={this.addCard}

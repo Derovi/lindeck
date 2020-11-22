@@ -22,7 +22,7 @@ export default class UserPage extends React.Component {
         this.updateUrl()
         if (!this.user) return <Redirect to="/not-found" noThrow/>;
         return <div className="rootUserPage backGroundImage">
-            <UserCard user={this.user} isMe={GS.session.isMe(this.username)}/>
+            <UserCard user={this.user} isMe={GS.session.isMe(this.user.id)}/>
             <Paper className="titlePaper">
                 {GS.session.isOnline && <span>
                 Following : {this.user.following.length}
@@ -38,7 +38,7 @@ export default class UserPage extends React.Component {
     generateFollowing = (followingArray) => {
         return followingArray.map((userNameToFollow, uniqId) => {
             let user = GS.getUser(userNameToFollow)
-            return <UserCard user={user} key={uniqId} isMe={GS.session.isMe(user.username)}/>
+            return <UserCard user={user} key={uniqId} isMe={GS.session.isMe(user.id)}/>
         })
     }
 }

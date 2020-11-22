@@ -15,8 +15,9 @@ export default class UserDecksPage extends React.Component {
     inputText = ""
 
     getDecks(name) {
-        let decks = GS.getUsersDecks(this.props.username).map(deck => new DeckObject(deck)).filter(deck => deck.canSee(GS.session.username))
-
+        let decks = GS.getUsersDecks(this.props.username)
+            .map(deck => new DeckObject(deck))
+            .filter(deck => deck.canSee(GS.session.id))
         if (name !== "")
             decks = decks.filter(deck => deck.name.toLowerCase().includes(this.inputText));
 
@@ -28,8 +29,8 @@ export default class UserDecksPage extends React.Component {
         page: 1,
     }
 
-    deleteDeck(id) {
-        GS.deleteDeck(id)
+    deleteDeck(uuid) {
+        GS.deleteDeck(uuid)
         this.setState({decks: this.getDecks()})
     }
 
@@ -39,7 +40,8 @@ export default class UserDecksPage extends React.Component {
     }
 
     render() {
-        if (GS.session.username !== this.props.username && !GS.session.isOnline)
+        if (GS.session.cashedUser.username !== this.props.username && !GS.session.isOnline)
+
             return <Redirect to="/not-found" noThrow/>;
         if (!GS.getUser(this.props.username))
             return <Redirect to="/not-found" noThrow/>;
@@ -75,7 +77,8 @@ export default class UserDecksPage extends React.Component {
     renderDecks(page) {
         let decks = this.state.decks.map((deck, uniqId) => {
             return <Grid item xs={12} sm={6} lg={3} key={uniqId}>
-                <DeckCard deck={deck} delete={(id) => this.deleteDeck(id)}/>
+                <DeckCard deck={deck} delete={(uuid) => this.deleteDeck(uuid)}/>
+
             </Grid>
         })
         return decks.slice((page - 1) * CARDS_PER_PAGE, (page) * CARDS_PER_PAGE)

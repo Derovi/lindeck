@@ -57,7 +57,7 @@ export default class UserFindPage extends React.Component {
 
     generateFound = (usersFound) => {
         return usersFound.map((user, uniqId) => {
-            return <UserCard user={user} key={uniqId} isMe={GS.session.isMe(user.username)}/>
+            return <UserCard user={user} key={uniqId} isMe={GS.session.isMe(user.id)}/>
         })
     }
 }

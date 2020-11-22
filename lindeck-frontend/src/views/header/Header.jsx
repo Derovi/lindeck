@@ -18,7 +18,7 @@ export default class Header extends React.Component {
 
     componentDidMount() {
         globalHistory.listen(({action}) => {
-            if (action === 'PUSH' && GS.session.username !== this.state.session.username) {
+            if (action === 'PUSH' && GS.session.id !== this.state.session.id) {
                 this.setState({
                     session: GS.session
                 })
@@ -70,7 +70,8 @@ export default class Header extends React.Component {
     }
 
     renderAva() {
-        return <ButtonBase onClick={() => navigate('/user/' + this.state.session.username)} className="AvaSmallHolder">
+        return <ButtonBase onClick={() => navigate('/user/' + this.state.session.cashedUser.username)}
+                           className="AvaSmallHolder">
             <img src={this.state.session.cashedUser.image} alt={"ava"}/>
         </ButtonBase>
     }

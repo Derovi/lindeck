@@ -38,8 +38,8 @@ export default function LoginForm(props) {
 
     function signIn() {
         let verdict = GS.signIn(refToEmailField.current.value, refToPasswordField.current.value)
-        if (verdict==="") {
-            navigate('/user/' + GS.session.username)
+        if (verdict === "") {
+            navigate('/user/' + GS.session.cashedUser.username)
             return
         }
         setLoginGood(verdict)
