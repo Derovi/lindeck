@@ -17,7 +17,6 @@ import {navigate} from "@reach/router";
 import GS from "../../../../common/classes/GlobalStorage";
 
 export default class UserCard extends React.Component {
-
     state = {}
 
     constructor(props) {
@@ -52,7 +51,8 @@ export default class UserCard extends React.Component {
                         </Grid>
                         <Grid item>
                             {!this.props.isMe && this.followUnfollow(user)}
-                            {this.props.isMe && this.describeButton(user)}
+                            {this.props.isMe && this.renderEditButton(user)}
+                            {this.renderDecksButton(user)}
                         </Grid>
                     </Grid>
                     <Grid item xs={7}> {this.decksCreated()}</Grid>
@@ -136,7 +136,13 @@ export default class UserCard extends React.Component {
         }
     }
 
-    describeButton(user) {
+    renderEditButton(user) {
         return <Button> Edit </Button> // TODO EDIT button
+    }
+
+    renderDecksButton(user) {
+        return <Button onClick={() => {
+            navigate('/decks/' + user.username)
+        }}> All decks </Button>
     }
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Router} from "@reach/router"
+import {Router} from "@reach/router"
 import Header from "./views/header/Header";
 import Footer from "./views/footer/Footer";
 import DeckPage from "./views/boody/deckPage/DeckPage";
@@ -13,6 +13,7 @@ import NotFoundPage from "./views/boody/notFoundPage/NotFoundPage";
 import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage";
 import UserFindPage from "./views/boody/userFindPage/UserFindPage";
 import GS from "./common/classes/GlobalStorage";
+import UserDecksPage from "./views/boody/userDecksPage/UserDecksPage";
 
 
 class App extends Component {
@@ -43,6 +44,7 @@ class App extends Component {
                 <ResetPasswordPage path="/reset-password"/>
 
                 <UserFindPage path='/users'/>
+                <UserDecksPage path='/decks/:username'/>
 
                 <UserPage path='/user/:username'/>
                 <CreateDeckPage path='/user/:username/deck-build'/>
@@ -60,8 +62,3 @@ class App extends Component {
 }
 
 export default App;
-
-// Live Cycle Hooks ->
-// Mount -> construcor / render / componentDidMount
-// update ->   render / componentDidUpdate
-// UnMount(destructor) ->   componentWillUnMount

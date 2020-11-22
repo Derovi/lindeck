@@ -9,11 +9,11 @@ export default class DeckObject {
     description = "test description"
     rowHeight = 100
     cols = 2
-    uniqueId = 0
+    uniqueId = ""
     privacy = "global" // private | global
     allowedUsers = [] // TODO write place where you can set it
 
-    constructor(props={}) {
+    constructor(props = {}) {
         this.owner = props.owner || this.owner
         this.name = props.name || this.name
         this.cards = props.cards || this.cards
@@ -21,7 +21,7 @@ export default class DeckObject {
         this.description = props.description || this.description
         this.rowHeight = props.rowHeight || this.rowHeight
         this.cols = props.cols || this.cols
-        this.uniqueId = props.uniqueId || this.uniqueId
+        this.uniqueId = props.owner + "|" + props.name
         this.privacy = props.privacy || this.privacy
         this.allowedUsers = props.allowedUsers || this.allowedUsers
     }

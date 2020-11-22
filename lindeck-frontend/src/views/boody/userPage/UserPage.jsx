@@ -24,7 +24,6 @@ export default class UserPage extends React.Component {
         return <div className="rootUserPage backGroundImage">
             <UserCard user={this.user} isMe={GS.session.isMe(this.username)}/>
             <Paper className="titlePaper">
-                {console.log(GS.session)}
                 {GS.session.isOnline && <span>
                 Following : {this.user.following.length}
                 </span>}

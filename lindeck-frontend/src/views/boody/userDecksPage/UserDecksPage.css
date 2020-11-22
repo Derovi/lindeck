@@ -1,0 +1,32 @@
+
+.titleInputPaperWide {
+    text-align: center;
+    padding: 1em;
+    margin: 2em auto;
+}
+
+.decksWrapper {
+    padding: 20px;
+    margin: auto;
+    max-width: 1200px;
+}
+
+.paginationHandle nav {
+    display: table;
+    margin: auto;
+}
+
+.titlePaperWide {
+    text-align: center;
+    padding: 1em;
+    margin: 2em auto;
+}
+
+
+.titlePaperWide span {
+    color: rebeccapurple;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: x-large;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}

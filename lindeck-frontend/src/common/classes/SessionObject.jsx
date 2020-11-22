@@ -13,10 +13,11 @@ export default class SessionObject {
     isActive = false;
 
     constructor(props = {}) {
-        this.username = props.myUserName || this.username
-        this.token = props.myToken || this.username
-        this.cashedUser = props.myUser || this.cashedUser
-        this.cashedDecks = props.myDecks || this.cashedDecks
+        console.log(props)
+        this.username = props.username || this.username
+        this.token = props.token || this.username
+        this.cashedUser = props.cashedUser || this.cashedUser
+        this.cashedDecks = props.cashedDecks || this.cashedDecks
         this.isUpToDate = props.isUpToDate || this.isUpToDate
         this.isActive = this.username !== ""
         this.updateOnline()

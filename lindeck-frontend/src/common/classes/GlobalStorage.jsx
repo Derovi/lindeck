@@ -35,7 +35,7 @@ class GlobalStorage {
                         describe: " Я влад коз",
                         image: "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
                         following: ["burik", "derovi"],
-                        deckListId: [0]
+                        deckListId: ["watislaf|name1"]
                     }
                 )
                 ,
@@ -64,7 +64,7 @@ class GlobalStorage {
         if (!getFromLS("decks")) {
             saveToLS("decks", [new DeckObject({
                 owner: "watislaf", name: "name1", cards: [new CardObject()], layout: [new LayoutObject()],
-                description: "description", rowHeight: 100, cols: 6, uniqueId: 0,
+                description: "description", rowHeight: 100, cols: 6,
                 privacy: "global", allowedUser: []
             })
             ])
@@ -127,7 +127,7 @@ class GlobalStorage {
         }
         if (!jsonUser)
             return null
-        return new UserObject( jsonUser)
+        return new UserObject(jsonUser)
     }
 
     registerNameIsPossible(name) {
@@ -196,15 +196,14 @@ class GlobalStorage {
             let allMyDecks = getFromLS("decks").filter(decks => decks.owner === userFound.username)
             // SERVER GET TOKEN
             this.session = new SessionObject({
-                myUserName: userFound.username,
-                myToken: "42",
-                myUser: userFound,
-                myDecks: allMyDecks
+                username: userFound.username,
+                token: "42",
+                cashedUser: userFound,
+                cashedDecks: allMyDecks
             })
             this.session.isOnline = true
             this.session.isUpToDate = true
             saveToLS("session", this.session);
-
             return "";
         }
         return "Email or password is incorrect."
@@ -227,16 +226,17 @@ class GlobalStorage {
     }
 
     createNewDeckWithSettings(name, description, cols, height, privacy) {
-        let decks = this.session.cashedDecks
-        let ids = decks.map(deck => deck.uniqueId)
-        let newUniq = 1 + Math.max(...ids)
+        let decks = getFromLS("decks")
+
         let deck = new DeckObject({
             owner: this.session.username, name: name, description: description, rowHeight: height,
-            cols: cols, uniqueId: newUniq, privacy: privacy
+            cols: cols, privacy: privacy
         })
         decks.push(deck)
         this.session.cashedDecks = decks // Save localy
         this.session.cashedUser.deckListId.push(deck.uniqueId)
+
+        console.log(this.session)
         if (!this.session.isOnline) {
             this.session.isUpToDate = false
         } else {
@@ -244,6 +244,8 @@ class GlobalStorage {
             this.updateDecksFromSession()
             this.updateUser(this.session.cashedUser)
         }
+        console.log(this.session)
+
         saveToLS("session", this.session)
 
     }
@@ -340,19 +342,47 @@ class GlobalStorage {
     }
 
     updateDecksFromSession() {
-
         if (!this.session.isOnline) {
             console.log("HOW??? Offline state Here cant be reached. Bad using")
         }
         // SERVER UPDATE ->
         let decks = getFromLS("decks")
         let clearDecks = decks.filter(deck => deck.owner !== this.session.username) // remove all my decks
-        clearDecks.push(...this.session.cashedDecks) // push updated decks and maybe new decks
+        clearDecks.push(...this.session.cashedDecks) // push updated decks and maybe new decks or delete old
         saveToLS("decks", clearDecks)
         // SERVER UPDATE
     }
+
+    getUsersDecks(username) {
+        if (username === GS.session.username)
+            return GS.session.cashedDecks
+        if (!this.session.isOnline)
+            return []
+        // SERVER PART FIND ->
+        let user = getFromLS("users").filter(user => user.username === username)[0]
+        if (!user)
+            return []
+        let decks = getFromLS("decks").filter(deck => deck.owner === username)
+        // SERVER PART FIND
+
+        return decks
+    }
+
+    deleteDeck(id) {
+        console.log(id)
+        this.session.cashedDecks = this.session.cashedDecks.filter(deck => deck.uniqueId !== id)
+        this.session.cashedUser.deckListId = this.session.cashedUser.deckListId.filter(deckId => deckId !== id)
+
+        if (this.session.isOnline) {
+            this.updateDecksFromSession()
+            this.updateUser(this.session.cashedUser)
+        } else {
+            this.session.isUpToDate = false
+        }
+        console.log(this.session)
+        saveToLS("session", this.session)
+    }
 }
 
-let
-    GS = new GlobalStorage();
+let GS = new GlobalStorage();
 export default GS;
