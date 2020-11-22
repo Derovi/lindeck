@@ -17,23 +17,22 @@ import {navigate} from "@reach/router";
 import GS from "../../../../common/classes/GlobalStorage";
 
 export default class UserCard extends React.Component {
-    session = GS.getSession()
+
     state = {}
 
     constructor(props) {
         super(props)
-        if (this.session.isActive) {
+        if (GS.session.isActive) {
             this.state = {
-                isFollowing: (this.props.user.username in GS.getUserFollowing(this.session.username))
+                AmIFollowing: (GS.session.myUser.following.includes(this.props.user.username))
             }
         }
     }
 
     follow(username, startFollow) {
         GS.myUserFollowing(username, startFollow)
-        this.setState({following: !startFollow})
+        this.setState({AmIFollowing: startFollow})
     }
-
 
     render() {
         let user = this.props.user
@@ -86,10 +85,9 @@ export default class UserCard extends React.Component {
     decksCreated = () => {
         let deckSaw = 0
         return <List className="listOfDecks">
-            {console.log(this.props.user.deckListId.map(deckId => GS.getDeckById(deckId)))}
             {this.props.user.deckListId
                 .map(deckId => GS.getDeckById(deckId))
-                .filter(deck => deck.canSee(this.session.username))
+                .filter(deck => deck.canSee(GS.session.username))
                 .map((deck, uniqId) => {
                     deckSaw += 1
                     return <button key={uniqId} className="deckSelectButton"
@@ -126,8 +124,8 @@ export default class UserCard extends React.Component {
     }
 
     followUnfollow(user) {
-        if (this.session.isActive) {
-            if (this.state.isFollowing) {
+        if (GS.session.isActive) {
+            if (!this.state.AmIFollowing) {
                 return <Button onClick={() => {
                     this.follow(user.username, true)
                 }}> Follow</Button>;

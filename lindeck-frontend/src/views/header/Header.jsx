@@ -13,41 +13,25 @@ import WifiOffIcon from '@material-ui/icons/WifiOff';
 export default class Header extends React.Component {
     state = {
         style: {background: "black"},
-        session: GS.getSession(),
-        user: GS.getSessionUser(),
-        isOnline: true
+        session: GS.session
     }
 
     componentDidMount() {
         globalHistory.listen(({action}) => {
-            if (action === 'PUSH' && GS.getSession().username !== this.state.session.username) {
+            if (action === 'PUSH' && GS.session.username !== this.state.session.username) {
                 this.setState({
-                    session: GS.getSession(),
-                    user: GS.getSessionUser()
+                    session: GS.session
                 })
             }
         })
     }
 
-    constructor(props) {
-        super(props)
-        this.checkOnline()
-    }
-
-    checkOnline() {
-        setTimeout(() => this.checkOnline(), 5000);
-        let isOnline = GS.session.isOnline
-        if (isOnline !== this.state.isOnline) {
-            this.setState({isOnline: isOnline})
-        }
-    }
-
     render() {
         let session = this.state.session
-        let user = this.state.user
+        let user = session.myUser
         return <>
-            <header >
-                {this.state.isOnline && <div className={"errorDiv"}>
+            <header>
+                {!this.props.isOnline && <div className={"errorDiv"}>
                     <WifiOffIcon/>
                 </div>}
                 <AppBar className="appBar" position="static">
@@ -75,12 +59,13 @@ export default class Header extends React.Component {
                         {session.isActive &&
                         <ButtonBase onClick={() => navigate('/user/' + session.username)} className="AvaSmallHolder">
                             <img src={user.image} alt={"ava"}/>
-                        </ButtonBase>
-                        }
+                        </ButtonBase>}
 
                     </Toolbar>
                 </AppBar>
             </header>
+            <Button style={{position: "fixed"}}
+                    onClick={() => GS.session.isOnline = !GS.session.isOnline}> WIFI </Button>
             {this.props.children}</>
     }
 }

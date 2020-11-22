@@ -58,8 +58,11 @@ class MovingMenuButton extends Component {
                 {this.props.session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => {
-                        GS.SignOut()
-                        navigate('/login')
+                        if(GS.SignOut()) {
+                            navigate('/login')
+                        }else{
+                            console.log("SORRY UNSAVED MASSAGE")
+                        }
                     }} button>
                         <ListItemIcon> <InboxIcon/> </ListItemIcon>
                         <ListItemText primary={"SignOut"}/>

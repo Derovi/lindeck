@@ -1,25 +1,23 @@
 import UserObject from "./UserObject";
 import DeckObject from "./DeckObject";
-import Axios from "axios";
 
-export default class MySession {
+export default class SessionObject {
     username = ""
     myToken = "" // ???
-    isActive = false;
-
-    isOnline = false
-
-
-    isUpToDate = true
     myUser = new UserObject()
     myDecks = [new DeckObject()]
+    isUpToDate = true
 
-    constructor(myUserName, myToken, myUser, myDecks) {
+    isOnline = true
+    isActive = false;
+
+    constructor(myUserName, myToken, myUser, myDecks, isUpToDate) {
         this.username = myUserName || this.username
         this.myToken = myToken || this.username
-        this.isActive = myUserName !== ""
-        this.myUser = myUser || myUser
-        this.myDecks = myDecks || myDecks
+        this.myUser = myUser || this.myUser
+        this.myDecks = myDecks || this.myDecks
+        this.isUpToDate = isUpToDate || this.isUpToDate
+        this.isActive = this.username !== ""
         this.updateOnline()
     }
 
@@ -28,19 +26,7 @@ export default class MySession {
     }
 
     updateOnline() {
-        Axios.get('https://dog.ceo/api/breeds/image/random')
-            .then(response => {
-                if (response.status >= 200 && response.status < 300) {
-                    return Promise.resolve(response.data);
-                } else {
-                    this.isOnline = false
-                }
-            })
-            .then(this.isOnline = true)
-            .catch(err => {
-                this.isOnline = false
-            });
-
+//        this.isOnline = window.navigator.onLine
         return this.isOnline
     }
 }

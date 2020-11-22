@@ -11,10 +11,10 @@ export default class HomePage extends React.Component {
     }
 
     clickStart = () => {
-        if (!GS.getSession().isActive) {
+        if (!GS.session.isActive) {
             navigate('/login')
         } else {
-            navigate('/user/' + GS.getSession().username + '/deck-build')
+            navigate('/user/' + GS.session.username + '/deck-build')
         }
     }
 
