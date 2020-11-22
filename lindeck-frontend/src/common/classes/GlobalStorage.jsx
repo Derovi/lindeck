@@ -78,7 +78,7 @@ class GlobalStorage {
 
     getDeckFromUsernameDeckname(username, deckname) {
         let jsonDeck = null
-        if (this.sessionOnlineCheck()) {
+        if (this.session.isOnline) {
             // SERVER GET DATA PART ->
             let allDecks = getFromLS("decks")
             jsonDeck = allDecks.filter(deck => deck.owner === username && deck.name === deckname)[0]
@@ -86,9 +86,6 @@ class GlobalStorage {
         } else {
             let allDecks = this.session.myDecks
             jsonDeck = allDecks.filter(deck => deck.owner === username && deck.name === deckname)[0]
-        }
-        if (!jsonDeck) {
-            return null
         }
         let deckObject = new DeckObject(...Object.values(jsonDeck))
         if (!deckObject.canSee(this.session.username)) {
@@ -108,7 +105,7 @@ class GlobalStorage {
             let allDecks = this.session.myDecks
             jsonDeck = allDecks.filter(deck => deck.uniqueId === deckId)[0]
         }
-        jsonDeck = jsonDeck || {}
+
         return new DeckObject(...Object.values(jsonDeck))
     }
 
@@ -133,7 +130,6 @@ class GlobalStorage {
         if (name.length < 3) {
             return "name is too short"
         }
-
 
         if (!this.session.isOnline) {
             return "connect to the internet"
@@ -194,6 +190,7 @@ class GlobalStorage {
         let userFound = getFromLS("users").filter(user => user.email === email && user.password === password)[0]
         let allMyDecks = getFromLS("decks").filter(decks => decks.owner === userFound.username)
         if (userFound) {
+            // SERVER GET TOKEN
             this.session = new SessionObject(userFound.username, "42", userFound, allMyDecks)
             this.session.isOnline = true
             saveToLS("session", this.session);
@@ -251,7 +248,6 @@ class GlobalStorage {
             }
         }
         saveToLS("session", this.session)
-        console.log(this.session)
         if (!this.session.isOnline) {
             return false
         }
