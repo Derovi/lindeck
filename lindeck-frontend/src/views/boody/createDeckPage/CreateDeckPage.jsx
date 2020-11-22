@@ -12,10 +12,10 @@ import DeckSettingsObject from "../../../common/classes/DeckSettingsObject";
 export default function CreateDeckPage(props) {
 
     if (GS.session.cashedUser.username !== props.username) return <Redirect to="/permission-denied" noThrow/>;
-
-
+ 
     function checkForm(settings) {
         let error = GS.newDeckNameIsPossible(GS.session.id, settings.name)
+ 
         if (error === "") {
             GS.createNewDeckWithSettings(settings)
             navigate('/user/' + props.username + "/deck/" + settings.name)

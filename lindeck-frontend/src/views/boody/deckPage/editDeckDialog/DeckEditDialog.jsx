@@ -8,7 +8,7 @@ export default function DeckEditDialog(props) {
     const close = () => {
         props.openDeckEditDialog(false);
     };
-
+ 
     function save(settings) {
         let error = ""
         if (settings.name !== props.deck.name)
@@ -19,7 +19,7 @@ export default function DeckEditDialog(props) {
         }
         return error
     }
-
+  
 
     return <>
         <DeckSettingsForm
