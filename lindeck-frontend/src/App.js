@@ -13,6 +13,8 @@ import NotFoundPage from "./views/boody/nonFoundPage/NotFoundPage";
 import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage";
 import UserFindPage from "./views/boody/userFindPage/UserFindPage";
 import GS from "./common/classes/GlobalStorage";
+import DecksLibraryPage from "./views/boody/deckLibraryPage/DecksLibraryPage";
+import MyDecksPage from "./views/boody/myDecksPage/MyDecksPage";
 
 
 class App extends Component {
@@ -43,6 +45,8 @@ class App extends Component {
                 <ResetPasswordPage path="/reset-password"/>
 
                 <UserFindPage path='/users'/>
+                <MyDecksPage path='/decks-library'/>
+                <DecksLibraryPage path='/decks-library'/>
 
                 <UserPage path='/user/:username'/>
                 <CreateDeckPage path='/user/:username/deck-build'/>
