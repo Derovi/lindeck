@@ -36,7 +36,8 @@ class GlobalStorage {
                         describe: " Я влад коз",
                         image: "https://images.unsplash.com/photo-1602904020862-eaed0610e55e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
                         following: ["burik", "derovi"],
-                        ownerDecksUuid: ["4321"],
+
+                        ownerDecksUuid: ["4321"], 
                     }
                 )
                 ,
@@ -148,6 +149,7 @@ class GlobalStorage {
         if (!jsonUser)
             return null
         return new UserObject(jsonUser)
+
     }
 
     registerNameIsPossible(name) {
@@ -373,6 +375,7 @@ class GlobalStorage {
         // SERVER UPDATE ->
         let decks = getFromLS("decks")
         let clearDecks = decks.filter(deck => deck.ownerId !== this.session.id) // remove all my decks
+
         clearDecks.push(...this.session.cashedDecks) // push updated decks and maybe new decks or delete old
         saveToLS("decks", clearDecks)
         // SERVER UPDATE
@@ -407,8 +410,6 @@ class GlobalStorage {
         console.log(this.session)
         saveToLS("session", this.session)
     }
-
-
 }
 
 let GS = new GlobalStorage();

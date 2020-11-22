@@ -12,7 +12,7 @@ export default class SessionObject {
     isOnline = true
     isActive = false;
 
-    constructor(props = {}) {
+    constructor(props = {}) { 
         this.token = props.token || this.token
         this.cashedUser = props.cashedUser || this.cashedUser
         this.cashedDecks = props.cashedDecks || this.cashedDecks
