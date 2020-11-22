@@ -52,7 +52,7 @@ export default function CreateDeckPage(props) {
     }
 
     function checkForm() {
-        let error = GS.newDeckNameIsPossible(props.username, nameRef.current.value)
+        let error = GS.newDeckNameIsPossible(GS.session.id, nameRef.current.value)
         if (error === "") {
             handleToggle()
             GS.createNewDeckWithSettings(nameRef.current.value, descriptionRef.current.value,

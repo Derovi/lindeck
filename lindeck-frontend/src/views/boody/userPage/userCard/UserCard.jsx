@@ -85,9 +85,9 @@ export default class UserCard extends React.Component {
     decksCreated = () => {
         let deckSaw = 0
         return <List className="listOfDecks">
-            {this.props.user.deckListId
-                .map(deckId => GS.getDeckById(deckId))
-                .filter(deck => deck.canSee(GS.session.username))
+            {this.props.user.ownerDecksUuid
+                .map(uuid => GS.getDeckByUuid(uuid))
+                .filter(deck => deck.canSee(GS.session.id))
                 .map((deck, uniqId) => {
                     deckSaw += 1
                     return <button key={uniqId} className="deckSelectButton"
@@ -105,7 +105,7 @@ export default class UserCard extends React.Component {
             }
 
             {this.props.isMe && <button className="deckSelectButton"
-                                        style={{background: this.props.user.deckListId.length % 2 === 0 ? "gainsboro" : "white"}}>
+                                        style={{background: this.props.user.ownerDecksUuid.length % 2 === 0 ? "gainsboro" : "white"}}>
                 <ListItem onClick={() => navigate('/user/' + this.props.user.username + "/deck-build")}>
                     <ListItemAvatar>
                         <Avatar>

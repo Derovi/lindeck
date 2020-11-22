@@ -35,7 +35,7 @@ export default function DeckEditDialog(props) {
     }
 
     function save() {
-        props.saveDeckProps(descriptionRef.current.value, cols, height,privacy)
+        props.saveDeckProps(descriptionRef.current.value, cols, height, privacy)
         close()
     }
 
@@ -53,6 +53,7 @@ export default function DeckEditDialog(props) {
         <DialogContent className="mainPaperCreate ">
             <div className="centerField"><h1 className="betterFont">
                 {props.deck.name}
+                {console.log(props.deck)}
             </h1></div>
             <br/>
             <TextField defaultValue={props.deck.description} inputRef={descriptionRef} inputProps={{

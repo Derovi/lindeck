@@ -30,7 +30,7 @@ class MovingMenuButton extends Component {
             onClick={ev => this.toggleDrawer(false, ev)}
             onKeyDown={ev => this.toggleDrawer(false, ev)}>
             <List>
-                {GS.session.isActive &&<> <ListItem onClick={() => navigate('/decks/'+GS.session.username)} button>
+                {GS.session.isActive &&<> <ListItem onClick={() => navigate('/decks/'+GS.session.cashedUser.username)} button>
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"My decks "}/>
                 </ListItem>

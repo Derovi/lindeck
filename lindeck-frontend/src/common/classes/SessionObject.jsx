@@ -2,7 +2,7 @@ import UserObject from "./UserObject";
 import DeckObject from "./DeckObject";
 
 export default class SessionObject {
-    username = ""
+    id = undefined
 
     token = "" // TODO set token from server
     cashedUser = new UserObject()
@@ -13,18 +13,17 @@ export default class SessionObject {
     isActive = false;
 
     constructor(props = {}) {
-        console.log(props)
-        this.username = props.username || this.username
-        this.token = props.token || this.username
+        this.token = props.token || this.token
         this.cashedUser = props.cashedUser || this.cashedUser
         this.cashedDecks = props.cashedDecks || this.cashedDecks
         this.isUpToDate = props.isUpToDate || this.isUpToDate
-        this.isActive = this.username !== ""
+        this.id = props.id
+        this.isActive = this.id !== undefined
         this.updateOnline()
     }
 
-    isMe(username) {
-        return username === this.username
+    isMe(id) {
+        return id === this.id
     }
 
     updateOnline() {

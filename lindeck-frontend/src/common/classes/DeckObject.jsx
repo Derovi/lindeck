@@ -1,29 +1,31 @@
 import CardObject from "./CardObject";
 import LayoutObject from "./LayoutObject";
+import {v4 as uuidv4} from 'uuid';
 
 export default class DeckObject {
-    owner = "admin" // owner of deck
+    ownerId = 0 // owner of deck
     name = "" // mean null
     cards = [new CardObject()]
     layout = [new LayoutObject()]
     description = "test description"
     rowHeight = 100
     cols = 2
-    uniqueId = ""
+    uuid = uuidv4()
     privacy = "global" // private | global
-    allowedUsers = [] // TODO write place where you can set it
+    allowedUsersId = [] // TODO write place where you can set it
 
     constructor(props = {}) {
-        this.owner = props.owner || this.owner
+        this.ownerId = props.ownerId || this.ownerId
         this.name = props.name || this.name
         this.cards = props.cards || this.cards
         this.layout = props.layout || this.layout
         this.description = props.description || this.description
         this.rowHeight = props.rowHeight || this.rowHeight
         this.cols = props.cols || this.cols
-        this.uniqueId = props.owner + "|" + props.name
+        this.uuid = props.uuid || this.uuid
         this.privacy = props.privacy || this.privacy
-        this.allowedUsers = props.allowedUsers || this.allowedUsers
+        this.allowedUsersId = props.allowedUsers || this.allowedUsersId
+        this.urlName = props.urlName || this.urlName
     }
 
 
@@ -86,11 +88,15 @@ export default class DeckObject {
     }
 
     // Privacy
-    canSee(username) {
+    canSee(id) {
         if (this.privacy === "global")
             return true
-        if (this.owner === username)
+        if (this.ownerId === id)
             return true
-        return username in this.allowedUsers
+        return id in this.allowedUsersId
+    }
+
+    isValid() {
+        return this.name !== ""
     }
 }
