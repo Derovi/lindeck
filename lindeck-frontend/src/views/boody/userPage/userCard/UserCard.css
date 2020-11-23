@@ -24,13 +24,13 @@
     cursor: pointer;
 }
 
-.deckSelectButton {
+.deckList {
     border: 0;
     width: 100%;
     background: 0;
 }
 
-.deckSelectButton li {
+.deckList li {
     padding-top: 3px;
     padding-bottom: 3px;
 }

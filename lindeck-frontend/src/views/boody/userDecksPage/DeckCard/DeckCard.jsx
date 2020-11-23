@@ -9,16 +9,6 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {navigate} from "@reach/router";
 
 export default class DeckCard extends React.Component {
-    constructor(props) {
-        super(props)
-        if (Controller.session.isActive) {
-            this.state = {
-                canDelete: (Controller.session.id === this.props.deck.ownerId),
-                canEdit: (Controller.session.id === this.props.deck.ownerId)
-            }
-        }
-    }
-
     render() {
         let deck = this.props.deck
         return <Paper className="deckCardHandler">
@@ -46,33 +36,38 @@ export default class DeckCard extends React.Component {
                 <div style={{width: "100%"}}>
                     {Controller.session.isActive && this.renderControlButtons(deck)}
                 </div>
-                {deck.privacy === "private" && <VisibilityOffIcon color="primary"/>}
+                {deck.privacy === "private" && <VisibilityOffIcon className="deckIcon" color="primary"/>}
             </Grid>
         </Paper>
 
     }
 
     renderControlButtons = (deck) => {
-        return <> {this.state.canEdit && this.renderEditButton(deck)}
-            {this.state.canDelete && this.renderDeleteButton(deck)}
-            {this.renderSeeButton(deck)}
+        this.props.deck.canDelete(Controller.session.id)
+        return <> {this.props.deck.canEdit(Controller.session.id) && this.renderEditButton(deck)}
+            {this.props.deck.canDelete(Controller.session.id) && this.renderDeleteButton(deck)}
+            {this.props.deck.canSee(Controller.session.id) && this.renderSeeButton(deck)}
         </>
     }
 
     renderDeleteButton = (deck) => {
         return <Button className="deckCardButton" variant="contained" color="secondary" onClick={() => {
-            this.setState({canDelete: false})
             this.props.delete(deck.uuid)
         }}> Delete </Button>;
     }
 
     renderEditButton = (deck) => {
-        return <Button className="deckCardButton" variant="contained"> Edit </Button> // TODO EDIT button
+        return <Button className="deckCardButton" variant="contained"
+                       onClick={() => {
+                           navigate('/user/' + Controller.getUserById(deck.ownerId).username + "/deck/" + deck.name + "/edit")
+                       }}> Edit </Button>
     }
 
     renderSeeButton = (deck) => {
-        return <Button className="deckCardButton" variant="contained" color="primary" onClick={() => {
-            navigate('/user/' + Controller.getUserById(deck.ownerId).username + "/deck/" + deck.name)
-        }}> See </Button>;
+        return <Button className="deckCardButton" variant="contained" color="primary"
+                       onClick={() => {
+                           navigate('/user/' + Controller.getUserById(deck.ownerId).username + "/deck/" + deck.name + "/view")
+                       }}>See </Button>
     }
+
 }

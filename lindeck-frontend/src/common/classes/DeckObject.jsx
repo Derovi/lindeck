@@ -12,7 +12,7 @@ export default class DeckObject {
     cols = 2
     uuid = uuidv4()
     privacy = "global" // private | global
-    allowedUsersId = [] // TODO write place where you can set it
+    members = [] // TODO write place where you can set it
 
     constructor(props = {}) {
         this.ownerId = props.ownerId || this.ownerId
@@ -24,7 +24,7 @@ export default class DeckObject {
         this.cols = props.cols || this.cols
         this.uuid = props.uuid || this.uuid
         this.privacy = props.privacy || this.privacy
-        this.allowedUsersId = props.allowedUsers || this.allowedUsersId
+        this.members = props.allowedUsers || this.members
         this.urlName = props.urlName || this.urlName
     }
 
@@ -93,7 +93,18 @@ export default class DeckObject {
             return true
         if (this.ownerId === id)
             return true
-        return id in this.allowedUsersId
+        return this.members.includes(id)
+    }
+
+    canEdit(id) {
+        if (this.ownerId === id)
+            return true
+
+        return this.members.includes(id)
+    }
+
+    canDelete(id) {
+        return this.ownerId === id;
     }
 
     isValid() {

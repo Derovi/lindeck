@@ -116,13 +116,14 @@ class ControllerObject {
             return "connect to the internet"
         }
         let sessionData = Connect.SignIn(email, password)
+        console.log(sessionData)
         if (sessionData.token === "") return "Email or password is incorrect."
 
         this.session = new SessionObject({
             token: sessionData.token,
             id: sessionData.user.id,
-            cashedUser: sessionData.user,
-            cashedDecks: sessionData.decks
+            cashedUser: new UserObject(sessionData.user),
+            cashedDecks: sessionData.decks.map(deckJson => new DeckObject(deckJson))
         })
         this.session.isOnline = true
         this.session.isUpToDate = true

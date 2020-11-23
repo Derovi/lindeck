@@ -15,7 +15,7 @@ export default function CreateDeckPage(props) {
  
         if (error === "") {
             Controller.createNewDeckWithSettings(settings)
-            navigate('/user/' + props.username + "/deck/" + settings.name)
+            navigate('/user/' + props.username + "/deck/" + settings.name+"/edit")
             return ""
         }
         return error

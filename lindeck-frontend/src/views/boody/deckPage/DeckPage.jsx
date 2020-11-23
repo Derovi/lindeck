@@ -79,7 +79,14 @@ class deckPage extends Component {
     }
 
     render() {
-        if (!this.state.deck.isValid()) return <Redirect to="/not-found" noThrow/>;
+        if (!this.state.deck.isValid() || !"view edit".includes(this.props.mode))
+            return <Redirect to="/not-found" noThrow/>;
+        let userid = Controller.session.id
+        if ((this.props.mode === "edit") && !this.state.deck.canEdit(userid))
+            return <Redirect to="/permission-denied" noThrow/>;
+        if ((this.props.mode === "view") && !this.state.deck.canSee(userid))
+            return <Redirect to="/permission-denied" noThrow/>;
+
         return <>
             <MovingDeckEditButton
                 openEditDeckDialog={this.openEditDeckDialog} addCard={this.addCard}

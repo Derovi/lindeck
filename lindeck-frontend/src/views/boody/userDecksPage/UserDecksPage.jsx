@@ -17,7 +17,6 @@ export default class UserDecksPage extends React.Component {
     getDecks(name) {
         let decks = Controller.getUsersDecks(this.props.username)
             .map(deck => new DeckObject(deck))
-            .filter(deck => deck.canSee(Controller.session.id))
         if (name !== "")
             decks = decks.filter(deck => deck.name.toLowerCase().includes(this.inputText));
 
@@ -41,7 +40,6 @@ export default class UserDecksPage extends React.Component {
 
     render() {
         if (Controller.session.cashedUser.username !== this.props.username && !Controller.session.isOnline)
-
             return <Redirect to="/not-found" noThrow/>;
         if (!Controller.getUser(this.props.username))
             return <Redirect to="/not-found" noThrow/>;

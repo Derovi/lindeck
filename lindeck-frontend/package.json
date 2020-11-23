@@ -2,6 +2,8 @@
   "name": "app-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
+  "basepage": "./",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
@@ -25,8 +27,8 @@
     "react-grid-layout": "^1.1.1",
     "react-markdown": "^5.0.2",
     "react-resize-detector": "^5.2.0",
-    "react-scripts": "4.0.0", 
-    "uuid": "^8.3.1", 
+    "react-scripts": "4.0.0",
+    "uuid": "^8.3.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

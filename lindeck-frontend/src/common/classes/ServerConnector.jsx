@@ -130,6 +130,7 @@ class ServerConnector {
 
     SignIn(email, password) {
         let sessionData = {token: "", user: new UserObject(), decks: [new DeckObject()]}
+
         // SERVER PART CHECK SIGN IN
         sessionData.user = getFromLS("users").filter(user => user.email === email && user.password === password)[0]
         if (sessionData.user) {

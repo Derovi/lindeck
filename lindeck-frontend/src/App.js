@@ -37,6 +37,7 @@ class App extends Component {
 
     render() {
         return <>
+
             <Header isOnline={this.state.isOnline}/>
             <Router primary={false}>
                 <HomePage path="/"/>
@@ -49,7 +50,7 @@ class App extends Component {
 
                 <UserPage path='/user/:username'/>
                 <CreateDeckPage path='/user/:username/deck-build'/>
-                <DeckPage path="/user/:username/deck/:deckname"/>
+                <DeckPage path="/user/:username/deck/:deckname/:mode"/>
 
                 <PermissionDenied path="/permission-denied"/>
                 <NotFoundPage default/>
