@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import ReactGridLayout from "react-grid-layout";
 import ReactResizeDetector from 'react-resize-detector';
 import MovingDeckEditButton from "./deckEditMenu/DeckEditMenu";
-import DeckEditDialog from "./editDeckDialog/DeckEditDialog";
+import DeckEditDialog from "./deckEditDialog/DeckEditDialog";
 import Card from "./card/Card";
 import Controller from "../../../common/classes/ControllerObject";
 import {navigate, Redirect} from "@reach/router";

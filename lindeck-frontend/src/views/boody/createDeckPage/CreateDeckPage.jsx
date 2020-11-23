@@ -1,9 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import "./CreateDeckPage.css"
 import {navigate, Redirect} from "@reach/router";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Backdrop from "@material-ui/core/Backdrop";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Controller from "../../../common/classes/ControllerObject";
 import DeckSettingsForm from "../../../common/views/deckSettingsForm/DeckSettingsForm";
 import DeckSettingsObject from "../../../common/classes/DeckSettingsObject";

@@ -83,15 +83,12 @@ class ServerConnector {
         // SERVER UPDATE
     }
 
-    updateDecksFromSession() {
-        if (!this.session.isOnline) {
-            console.log("HOW??? Offline state Here cant be reached. Bad using")
-        }
+    updateDecksFromSession(session) {
         // SERVER UPDATE ->
         let decks = getFromLS("decks")
-        let clearDecks = decks.filter(deck => deck.ownerId !== this.session.id) // remove all my decks
+        let clearDecks = decks.filter(deck => deck.ownerId !== session.id) // remove all my decks
 
-        clearDecks.push(...this.session.cashedDecks) // push updated decks and maybe new decks or delete old
+        clearDecks.push(...session.cashedDecks) // push updated decks and maybe new decks or delete old
         saveToLS("decks", clearDecks)
         // SERVER UPDATE
     }
@@ -115,15 +112,14 @@ class ServerConnector {
     }
 
 
-    setFollowing(username, startFollow) {
+    setFollowing(usernameFrom,usernameTo, startFollow) {
         // SERVER ADD START FOLLOW (TRUE FALSE) ->
-        let myUsername = this.session.cashedUser.username
         let users = getFromLS("users")
-        let user = users.filter(user => user.username === myUsername)[0]
+        let user = users.filter(user => user.username === usernameFrom)[0]
         if (startFollow) {
-            user.following.push(username)
+            user.following.push(usernameTo)
         } else {
-            const index = user.following.indexOf(username);
+            const index = user.following.indexOf(usernameTo);
             if (index > -1) {
                 user.following.splice(index, 1);
             }

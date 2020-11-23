@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import "./DeckEditDialog.css"
 import DeckSettingsForm from "../../../../common/views/deckSettingsForm/DeckSettingsForm";
 import DeckSettingsObject from "../../../../common/classes/DeckSettingsObject";

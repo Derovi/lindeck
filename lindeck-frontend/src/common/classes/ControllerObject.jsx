@@ -26,7 +26,7 @@ class ControllerObject {
     }
 
     getDeckNyUsernameDeckname(username, deckname) {
-        let jsonDeck = null
+        let jsonDeck
         if (this.session.isOnline) {
             jsonDeck = Connect.getDeckNyUsernameDeckname(username, deckname)
         } else {
@@ -41,7 +41,7 @@ class ControllerObject {
     }
 
     getDeckByUuid(uuid) {
-        let jsonDeck = null
+        let jsonDeck
         if (this.session.isOnline) {
             jsonDeck = Connect.getDeckByUuid(uuid)
         } else {
@@ -165,8 +165,8 @@ class ControllerObject {
         if (!this.session.isOnline) {
             this.session.isUpToDate = false
         } else {
-            this.updateDecksFromSession()
-            this.updateUser(this.session.cashedUser)
+            Connect.updateDecksFromSession(this.session)
+            Connect.updateUser(this.session.cashedUser)
         }
         saveToLS("session", this.session)
     }
@@ -184,7 +184,7 @@ class ControllerObject {
             }
         }
         saveToLS("session", this.session)
-        Connect.setFollowing(username, startFollow)
+        Connect.setFollowing(this.session.cashedUser.username, username, startFollow)
     }
 
 
@@ -197,7 +197,7 @@ class ControllerObject {
             saveToLS("session", this.session)
             return
         }
-        Connect.updateDecksFromSession()
+        Connect.updateDecksFromSession(this.session)
         saveToLS("session", this.session)
     }
 
@@ -223,7 +223,7 @@ class ControllerObject {
         let online = this.session.updateOnline()
         if (this.session.isActive && online && !this.session.isUpToDate) {
             Connect.updateUser(this.session.cashedUser)
-            Connect.updateDecksFromSession()
+            Connect.updateDecksFromSession(this.session)
             this.session.isUpToDate = true
             saveToLS("session", this.session)
         }
@@ -245,7 +245,7 @@ class ControllerObject {
         this.session.cashedUser.ownerDecksUuid = this.session.cashedUser.ownerDecksUuid.filter(deckId => deckId !== id)
 
         if (this.session.isOnline) {
-            Connect.updateDecksFromSession()
+            Connect.updateDecksFromSession(this.session)
             Connect.updateUser(this.session.cashedUser)
         } else {
             this.session.isUpToDate = false

@@ -1,7 +1,3 @@
-import CardObject from "./CardObject";
-import LayoutObject from "./LayoutObject";
-import {v4 as uuidv4} from "uuid";
-
 export default class DeckSettingsObject {
     name
     description
