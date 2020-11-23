@@ -1,7 +1,8 @@
-package org.lindeck.data.model;
+package org.lindeck.data.model.cards;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.lindeck.data.model.Deck;
 
 import javax.persistence.*;
 import java.util.UUID;

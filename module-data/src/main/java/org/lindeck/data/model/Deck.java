@@ -2,6 +2,7 @@ package org.lindeck.data.model;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.lindeck.data.model.cards.AbstractCard;
 
 import javax.persistence.*;
 import java.util.List;
