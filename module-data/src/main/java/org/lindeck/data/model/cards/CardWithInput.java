@@ -16,16 +16,20 @@ import javax.persistence.Enumerated;
 @Entity
 @Data
 public class CardWithInput extends AbstractCard {
-    public enum Type {
+    public enum AnswerType {
         INTEGER, FLOAT, STRING
     }
 
+    /**
+     * Type of answer.
+     * It can be either integer, float or string.
+     */
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private AnswerType answerType;
 
     /**
      * Answer is stored as string, but it can be either integer, float or string.
-     * Validator recognizes answer type according to {@link CardWithInput.Type}
+     * Validator recognizes answer type according to {@link AnswerType}
      */
     private String answer;
 }
