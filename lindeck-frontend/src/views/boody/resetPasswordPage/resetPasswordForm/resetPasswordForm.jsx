@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {navigate} from "@reach/router";
-import GS from "../../../../common/classes/GlobalStorage";
+import Controller from "../../../../common/classes/ControllerObject";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,9 +35,9 @@ export default function ResetPasswordForm(props) {
     }
 
     function signIn() {
-        let verdict = GS.signIn(refToEmailField.current.value, refToPasswordField.current.value)
+        let verdict = Controller.signIn(refToEmailField.current.value, refToPasswordField.current.value)
         if (verdict) {
-            navigate('/user/' + GS.getMyName())
+            navigate('/user/' + Controller.getMyName())
             return
         }
         setLoginGood(verdict)

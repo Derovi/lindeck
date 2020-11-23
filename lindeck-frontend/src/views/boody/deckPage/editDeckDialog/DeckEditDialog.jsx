@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import "./DeckEditDialog.css"
 import DeckSettingsForm from "../../../../common/views/deckSettingsForm/DeckSettingsForm";
 import DeckSettingsObject from "../../../../common/classes/DeckSettingsObject";
-import GS from "../../../../common/classes/GlobalStorage";
+import Controller from "../../../../common/classes/ControllerObject";
 
 export default function DeckEditDialog(props) {
     const close = () => {
@@ -12,7 +12,7 @@ export default function DeckEditDialog(props) {
     function save(settings) {
         let error = ""
         if (settings.name !== props.deck.name)
-            error = GS.newDeckNameIsPossible(GS.session.id, settings.name)
+            error = Controller.newDeckNameIsPossible(Controller.session.id, settings.name)
         if (error === "") {
             props.saveDeckProps(settings)
             close()

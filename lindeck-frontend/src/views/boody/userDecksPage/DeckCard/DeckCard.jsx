@@ -4,17 +4,17 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import GS from "../../../../common/classes/GlobalStorage";
+import Controller from "../../../../common/classes/ControllerObject";
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {navigate} from "@reach/router";
 
 export default class DeckCard extends React.Component {
     constructor(props) {
         super(props)
-        if (GS.session.isActive) {
+        if (Controller.session.isActive) {
             this.state = {
-                canDelete: (GS.session.id === this.props.deck.ownerId),
-                canEdit: (GS.session.id === this.props.deck.ownerId)
+                canDelete: (Controller.session.id === this.props.deck.ownerId),
+                canEdit: (Controller.session.id === this.props.deck.ownerId)
             }
         }
     }
@@ -27,7 +27,7 @@ export default class DeckCard extends React.Component {
                     <Grid item xs={6} lg={12} container>
                         <Grid item xs={12} style={{background: "gainsboro"}}>
                             <Typography gutterBottom variant="overline" className="deckCardText">
-                                Owner : {GS.getUserById(deck.ownerId).username}
+                                Owner : {Controller.getUserById(deck.ownerId).username}
                             </Typography>
                         </Grid>
 
@@ -44,7 +44,7 @@ export default class DeckCard extends React.Component {
                     </Grid>
                 </Grid>
                 <div style={{width: "100%"}}>
-                    {GS.session.isActive && this.renderControlButtons(deck)}
+                    {Controller.session.isActive && this.renderControlButtons(deck)}
                 </div>
                 {deck.privacy === "private" && <VisibilityOffIcon color="primary"/>}
             </Grid>
@@ -72,7 +72,7 @@ export default class DeckCard extends React.Component {
 
     renderSeeButton = (deck) => {
         return <Button className="deckCardButton" variant="contained" color="primary" onClick={() => {
-            navigate('/user/' + GS.getUserById(deck.ownerId).username + "/deck/" + deck.name)
+            navigate('/user/' + Controller.getUserById(deck.ownerId).username + "/deck/" + deck.name)
         }}> See </Button>;
     }
 }

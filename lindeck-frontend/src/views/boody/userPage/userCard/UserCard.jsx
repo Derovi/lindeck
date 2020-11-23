@@ -14,22 +14,22 @@ import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
 import AddIcon from '@material-ui/icons/Add';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {navigate} from "@reach/router";
-import GS from "../../../../common/classes/GlobalStorage";
+import Controller from "../../../../common/classes/ControllerObject";
 
 export default class UserCard extends React.Component {
     state = {}
 
     constructor(props) {
         super(props)
-        if (GS.session.isActive) {
+        if (Controller.session.isActive) {
             this.state = {
-                AmIFollowing: (GS.session.cashedUser.following.includes(this.props.user.username))
+                AmIFollowing: (Controller.session.cashedUser.following.includes(this.props.user.username))
             }
         }
     }
 
     follow(username, startFollow) {
-        GS.myUserFollowing(username, startFollow)
+        Controller.myUserFollowing(username, startFollow)
         this.setState({AmIFollowing: startFollow})
     }
 
@@ -86,8 +86,8 @@ export default class UserCard extends React.Component {
         let deckSaw = 0
         return <List className="listOfDecks">
             {this.props.user.ownerDecksUuid
-                .map(uuid => GS.getDeckByUuid(uuid))
-                .filter(deck => deck.canSee(GS.session.id))
+                .map(uuid => Controller.getDeckByUuid(uuid))
+                .filter(deck => deck.canSee(Controller.session.id))
                 .map((deck, uniqId) => {
                     deckSaw += 1
                     return <button key={uniqId} className="deckSelectButton"
@@ -124,7 +124,7 @@ export default class UserCard extends React.Component {
     }
 
     followUnfollow(user) {
-        if (GS.session.isActive) {
+        if (Controller.session.isActive) {
             if (!this.state.AmIFollowing) {
                 return <Button onClick={() => {
                     this.follow(user.username, true)

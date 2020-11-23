@@ -2,7 +2,7 @@ import React from "react";
 
 import "./UserFindPage.css"
 import Paper from "@material-ui/core/Paper";
-import GS from "../../../common/classes/GlobalStorage";
+import Controller from "../../../common/classes/ControllerObject";
 import UserCard from "../userPage/userCard/UserCard";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -21,7 +21,7 @@ export default class UserFindPage extends React.Component {
         this.wait -= 1
         if (this.wait === 0) {
             this.setState({loading: false})
-            this.setState({users: GS.searchUsers(this.inputValue)})
+            this.setState({users: Controller.searchUser(this.inputValue)})
         }
     }
 
@@ -43,10 +43,10 @@ export default class UserFindPage extends React.Component {
             </Paper>
 
             <Paper className="titlePaper">
-                {GS.session.isOnline && < span>
+                {Controller.session.isOnline && < span>
                 Users :
                     </span>}
-                {!GS.session.isOnline && < span>
+                {!Controller.session.isOnline && < span>
                 U cant find users while offline mode :
                     </span>}
             </Paper>
@@ -57,7 +57,7 @@ export default class UserFindPage extends React.Component {
 
     generateFound = (usersFound) => {
         return usersFound.map((user, uniqId) => {
-            return <UserCard user={user} key={uniqId} isMe={GS.session.isMe(user.id)}/>
+            return <UserCard user={user} key={uniqId} isMe={Controller.session.isMe(user.id)}/>
         })
     }
 }

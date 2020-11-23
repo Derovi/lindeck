@@ -9,7 +9,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import {Directions} from "@material-ui/icons";
 import {navigate} from "@reach/router";
-import GS from "../../../common/classes/GlobalStorage";
+import Controller from "../../../common/classes/ControllerObject";
 
 
 class MovingMenuButton extends Component {
@@ -30,7 +30,7 @@ class MovingMenuButton extends Component {
             onClick={ev => this.toggleDrawer(false, ev)}
             onKeyDown={ev => this.toggleDrawer(false, ev)}>
             <List>
-                {GS.session.isActive &&<> <ListItem onClick={() => navigate('/decks/'+GS.session.cashedUser.username)} button>
+                {Controller.session.isActive &&<> <ListItem onClick={() => navigate('/decks/'+Controller.session.cashedUser.username)} button>
 
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"My decks "}/>
@@ -46,7 +46,7 @@ class MovingMenuButton extends Component {
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
                     <ListItemText primary={"Deck library  "}/> TODO
                 </ListItem>
-                {!GS.session.isActive && <div>
+                {!Controller.session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => navigate('/login')} button>
                         <ListItemIcon> <InboxIcon/> </ListItemIcon>
@@ -57,10 +57,10 @@ class MovingMenuButton extends Component {
                         <ListItemText primary={"Register"}/>
                     </ListItem>
                 </div>}
-                {GS.session.isActive && <div>
+                {Controller.session.isActive && <div>
                     <Divider/>
                     <ListItem onClick={() => {
-                        if (GS.SignOut()) {
+                        if (Controller.SignOut()) {
                             navigate('/login')
                         } else {
                             console.log("SORRY UNSAVED MASSAGE")

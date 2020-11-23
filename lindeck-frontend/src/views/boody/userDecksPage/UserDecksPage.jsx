@@ -2,7 +2,7 @@ import React from "react";
 
 import "./UserDecksPage.css"
 import Paper from "@material-ui/core/Paper";
-import GS from "../../../common/classes/GlobalStorage";
+import Controller from "../../../common/classes/ControllerObject";
 import TextField from "@material-ui/core/TextField";
 import DeckCard from "./DeckCard/DeckCard";
 import Pagination from "@material-ui/lab/Pagination";
@@ -15,9 +15,9 @@ export default class UserDecksPage extends React.Component {
     inputText = ""
 
     getDecks(name) {
-        let decks = GS.getUsersDecks(this.props.username)
+        let decks = Controller.getUsersDecks(this.props.username)
             .map(deck => new DeckObject(deck))
-            .filter(deck => deck.canSee(GS.session.id))
+            .filter(deck => deck.canSee(Controller.session.id))
         if (name !== "")
             decks = decks.filter(deck => deck.name.toLowerCase().includes(this.inputText));
 
@@ -30,7 +30,7 @@ export default class UserDecksPage extends React.Component {
     }
 
     deleteDeck(uuid) {
-        GS.deleteDeck(uuid)
+        Controller.deleteDeck(uuid)
         this.setState({decks: this.getDecks()})
     }
 
@@ -40,10 +40,10 @@ export default class UserDecksPage extends React.Component {
     }
 
     render() {
-        if (GS.session.cashedUser.username !== this.props.username && !GS.session.isOnline)
+        if (Controller.session.cashedUser.username !== this.props.username && !Controller.session.isOnline)
 
             return <Redirect to="/not-found" noThrow/>;
-        if (!GS.getUser(this.props.username))
+        if (!Controller.getUser(this.props.username))
             return <Redirect to="/not-found" noThrow/>;
 
         return <div className="rootUserPage backGroundImage">
@@ -66,7 +66,7 @@ export default class UserDecksPage extends React.Component {
                     {this.renderDecks(this.state.page)}
                 </Grid>
                 <Paper className="titlePaperWide paginationHandle">
-                    <Pagination count={Math.ceil(GS.session.cashedDecks.length / CARDS_PER_PAGE)} variant="outlined"
+                    <Pagination count={Math.ceil(Controller.session.cashedDecks.length / CARDS_PER_PAGE)} variant="outlined"
                                 onChange={(event, number) => this.setState({page: number})}
                     />
                 </Paper>

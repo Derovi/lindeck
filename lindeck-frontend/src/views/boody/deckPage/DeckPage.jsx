@@ -6,14 +6,14 @@ import ReactResizeDetector from 'react-resize-detector';
 import MovingDeckEditButton from "./deckEditMenu/DeckEditMenu";
 import DeckEditDialog from "./editDeckDialog/DeckEditDialog";
 import Card from "./card/Card";
-import GS from "../../../common/classes/GlobalStorage";
+import Controller from "../../../common/classes/ControllerObject";
 import {navigate, Redirect} from "@reach/router";
 import CardObject from "../../../common/classes/CardObject";
 
 
 class deckPage extends Component {
     state = {
-        deck: GS.getDeckFromUsernameDeckname(this.props.username, this.props.deckname),
+        deck: Controller.getDeckNyUsernameDeckname(this.props.username, this.props.deckname),
         editDeckDialogOpened: false,
         gridWidth: 800,
     }
@@ -21,21 +21,21 @@ class deckPage extends Component {
     addCard = (card) => {
         let newDeck = this.state.deck
         newDeck.addCard(new CardObject(card))
-        GS.saveDeck(newDeck)
+        Controller.saveDeck(newDeck)
         this.setState({deck: newDeck})
     }
 
     resetLayout = () => {
         let newDeck = this.state.deck
         newDeck.resetLayout()
-        GS.saveDeck(newDeck)
+        Controller.saveDeck(newDeck)
         this.setState({deck: newDeck})
     }
 
     clearAll = () => {
         let newDeck = this.state.deck
         newDeck.clear()
-        GS.saveDeck(newDeck)
+        Controller.saveDeck(newDeck)
         this.setState({deck: newDeck})
     }
 
@@ -50,18 +50,18 @@ class deckPage extends Component {
     onLayoutChange(layout) {
         let newDeck = this.state.deck
         newDeck.layout = layout
-        GS.saveDeck(newDeck)
+        Controller.saveDeck(newDeck)
         this.setState({deck: newDeck});
     }
 
     changeCardAnswer = (text, id) => {
         this.state.deck.getCard(id).answer = text
-        GS.saveDeck(this.state.deck)
+        Controller.saveDeck(this.state.deck)
     }
 
     changeCardVerdict = (verdict, id) => {
         this.state.deck.getCard(id).verdict = verdict
-        GS.saveDeck(this.state.deck)
+        Controller.saveDeck(this.state.deck)
         this.setState({deck: this.state.deck});
     }
 
@@ -71,7 +71,7 @@ class deckPage extends Component {
         } else {
             this.state.deck.getCard(id).textField = text
         }
-        GS.saveDeck(this.state.deck)
+        Controller.saveDeck(this.state.deck)
     }
 
     openEditDeckDialog = (open) => {
@@ -121,7 +121,7 @@ class deckPage extends Component {
         newDeck.rowHeight = settings.height
         newDeck.privacy = settings.privacy
         this.setState({deck: newDeck});
-        GS.saveDeck(newDeck)
+        Controller.saveDeck(newDeck)
 
 
         navigate('/user/' + this.props.username + "/deck/" + settings.name)

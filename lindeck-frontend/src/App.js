@@ -12,7 +12,7 @@ import CreateDeckPage from "./views/boody/createDeckPage/CreateDeckPage";
 import NotFoundPage from "./views/boody/notFoundPage/NotFoundPage";
 import ResetPasswordPage from "./views/boody/resetPasswordPage/resetPasswordPage";
 import UserFindPage from "./views/boody/userFindPage/UserFindPage";
-import GS from "./common/classes/GlobalStorage";
+import Controller from "./common/classes/ControllerObject";
 import UserDecksPage from "./views/boody/userDecksPage/UserDecksPage";
 import PermissionDenied from "./views/boody/permissionDeniedPage/PermissionDeniedPage";
 
@@ -24,7 +24,7 @@ class App extends Component {
     }
 
     checkOnline() {
-        let isOnline = GS.sessionOnlineCheck()
+        let isOnline = Controller.sessionOnlineCheck()
         if (isOnline !== this.state.isOnline) {
             this.setState({isOnline: isOnline})
         }

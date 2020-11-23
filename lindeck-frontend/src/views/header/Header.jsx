@@ -1,7 +1,7 @@
 import "./Header.css"
 import React from "react";
 import MovingMenuButton from "./MovingMenuButton/MovingMenuButton";
-import GS from "../../common/classes/GlobalStorage";
+import Controller from "../../common/classes/ControllerObject";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
@@ -13,14 +13,14 @@ import WifiOffIcon from '@material-ui/icons/WifiOff';
 export default class Header extends React.Component {
     state = {
         backgroundColor: {background: "black"},
-        session: GS.session
+        session: Controller.session
     }
 
     componentDidMount() {
         globalHistory.listen(({action}) => {
-            if (action === 'PUSH' && GS.session.id !== this.state.session.id) {
+            if (action === 'PUSH' && Controller.session.id !== this.state.session.id) {
                 this.setState({
-                    session: GS.session
+                    session: Controller.session
                 })
             }
         })
@@ -55,7 +55,7 @@ export default class Header extends React.Component {
             </header>
 
             <Button style={{background: "aqua", position: "fixed"}}
-                    onClick={() => GS.session.isOnline = !GS.session.isOnline}> WIFI </Button>
+                    onClick={() => Controller.session.isOnline = !Controller.session.isOnline}> WIFI </Button>
 
             {this.props.children}</>
     }// TODO -> Remove wifi button

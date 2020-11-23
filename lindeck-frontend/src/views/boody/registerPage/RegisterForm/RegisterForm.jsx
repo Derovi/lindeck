@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import React, {useRef, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Link, navigate} from "@reach/router";
-import GS from "../../../../common/classes/GlobalStorage";
+import Controller from "../../../../common/classes/ControllerObject";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,15 +46,17 @@ function checkPassword(password) {
 export default function RegisterForm(props) {
     function checkSignUp(fields) {
         let errors = {username: "", email: "", password: "", passwordR: ""}
-        errors.username = GS.registerNameIsPossible(fields.username)
-        errors.email = GS.registerEmailIsPossible(fields.email)
+        errors.username = Controller.checkUserName(fields.username)
+        errors.email = Controller.checkEmail(fields.email)
+        let errorUserOrEmail = Controller.isUserNameOrEmailAlreadyExists(fields.username,fields.email)
+        errors.username = errorUserOrEmail.username
+        errors.email = errorUserOrEmail.email
         errors.password =checkPassword(fields.password)
         errors.passwordR = (fields.password === fields.passwordR ? "" : "Password arnt equals.")
 
         if (errors.username === "" && errors.email === "" && errors.password === "" && errors.passwordR === "") {
-            GS.createUser(fields.username, fields.email, fields.password)
+            Controller.createUser(fields.username, fields.email, fields.password)
             navigate('/login')
-
         }
         return errors
     }

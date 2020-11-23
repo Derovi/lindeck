@@ -4,20 +4,20 @@ import {navigate, Redirect} from "@reach/router";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Backdrop from "@material-ui/core/Backdrop";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import GS from "../../../common/classes/GlobalStorage";
+import Controller from "../../../common/classes/ControllerObject";
 import DeckSettingsForm from "../../../common/views/deckSettingsForm/DeckSettingsForm";
 import DeckSettingsObject from "../../../common/classes/DeckSettingsObject";
 
 
 export default function CreateDeckPage(props) {
 
-    if (GS.session.cashedUser.username !== props.username) return <Redirect to="/permission-denied" noThrow/>;
+    if (Controller.session.cashedUser.username !== props.username) return <Redirect to="/permission-denied" noThrow/>;
  
     function checkForm(settings) {
-        let error = GS.newDeckNameIsPossible(GS.session.id, settings.name)
+        let error = Controller.newDeckNameIsPossible(Controller.session.id, settings.name)
  
         if (error === "") {
-            GS.createNewDeckWithSettings(settings)
+            Controller.createNewDeckWithSettings(settings)
             navigate('/user/' + props.username + "/deck/" + settings.name)
             return ""
         }
