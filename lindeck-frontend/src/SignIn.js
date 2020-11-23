@@ -31,8 +31,7 @@ class SignIn extends Component {
     }
 
     render() {
-        return (
-            <Container>
+        return (<Container>
                 <TextField variant="outlined" margin="normal" onChange={this.loginChanged} required fullWidth autoFocus label="Login"/>
                 <TextField variant="outlined" type="password" margin="normal" onChange={this.passwordChanged}
                            error = {this.state.passwordValidationMessage != null}

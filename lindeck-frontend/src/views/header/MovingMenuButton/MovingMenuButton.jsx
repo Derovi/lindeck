@@ -44,7 +44,7 @@ class MovingMenuButton extends Component {
                 </ListItem>
                 <ListItem onClick={() => navigate('/decks-library')} button>
                     <ListItemIcon> <InboxIcon/> </ListItemIcon>
-                    <ListItemText primary={"Deck library (TODO) "}/>
+                    <ListItemText primary={"Deck library  "}/> TODO
                 </ListItem>
                 {!GS.session.isActive && <div>
                     <Divider/>

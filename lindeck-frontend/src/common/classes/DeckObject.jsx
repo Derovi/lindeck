@@ -9,20 +9,20 @@ export default class DeckObject {
     layout = [new LayoutObject()]
     description = "test description"
     rowHeight = 100
-    cols = 2 
-    uuid = uuidv4() 
+    cols = 2
+    uuid = uuidv4()
     privacy = "global" // private | global
     allowedUsersId = [] // TODO write place where you can set it
 
-    constructor(props = {}) { 
-        this.ownerId = props.ownerId || this.ownerId 
+    constructor(props = {}) {
+        this.ownerId = props.ownerId || this.ownerId
         this.name = props.name || this.name
         this.cards = props.cards || this.cards
         this.layout = props.layout || this.layout
         this.description = props.description || this.description
         this.rowHeight = props.rowHeight || this.rowHeight
-        this.cols = props.cols || this.cols 
-        this.uuid = props.uuid || this.uuid 
+        this.cols = props.cols || this.cols
+        this.uuid = props.uuid || this.uuid
         this.privacy = props.privacy || this.privacy
         this.allowedUsersId = props.allowedUsers || this.allowedUsersId
         this.urlName = props.urlName || this.urlName
