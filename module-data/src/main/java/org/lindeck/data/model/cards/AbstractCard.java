@@ -36,4 +36,6 @@ public abstract class AbstractCard {
 
     @ManyToOne
     private Deck deck;
+
+    // TODO add tips
 }

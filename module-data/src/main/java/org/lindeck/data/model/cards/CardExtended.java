@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 
 /**
  * @author derovi
+ * This card has answer, that shows hust by click.
  */
 
 @EqualsAndHashCode(callSuper = true)

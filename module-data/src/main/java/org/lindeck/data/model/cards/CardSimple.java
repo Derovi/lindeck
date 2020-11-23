@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 
 /**
  * @author derovi
+ * This card has no answer, just information.
  * CardSimple has no fields, that extend AbstractCard,
  * BUT it can change later!
  */
