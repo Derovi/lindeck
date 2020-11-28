@@ -9,8 +9,8 @@ import AnswerEditDialog from "./answerEditDialog/AnswerEditDialog";
 
 class Card extends Component {
     state = {
-        isFlipped: this.props.card.isFlipped,
-        verdict: this.props.card.verdict,
+        isFlipped: this.props.metadata.isFlipped,
+        verdict: this.props.metadata.verdict,
         inputAnswerDialog: false,
         textEditDialog: false
     }
@@ -63,7 +63,7 @@ class Card extends Component {
 
     getColor() {
         let color = "white"
-        let verdict = this.props.card.verdict
+        let verdict = this.props.metadata.verdict
         if (verdict === 1)
             color = "#cdffce"
         if (verdict === -1)

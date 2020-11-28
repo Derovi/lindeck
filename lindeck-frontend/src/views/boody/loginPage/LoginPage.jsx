@@ -7,7 +7,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import LoginForm from "./LoginForm/LoginForm";
-import {Link} from "@reach/router";
+import {Link, Redirect} from "@reach/router";
+import Controller from "../../../common/classes/ControllerObject";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginPage(props) {
     const classes = useStyles();
-
+//    if (Controller.session.isActive) return <HaveAlreadyLoginPage>
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline/>

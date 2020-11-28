@@ -2,6 +2,7 @@ import UserObject from "./UserObject";
 import SessionObject from "./SessionObject";
 import DeckObject from "./DeckObject";
 import Connect from "./ServerConnector";
+import DeckMetadataObject from "./DeckMetadataObject";
 
 function getFromLS(key) {
     return JSON.parse(global.localStorage.getItem(key));
@@ -154,14 +155,18 @@ class ControllerObject {
             ownerId: this.session.id,
             name: settings.name,
             description: settings.description,
-            rowHeight: settings.height,
-            cols: settings.cols,
             privacy: settings.privacy
-
         })
         decks.push(deck)
+
+
         this.session.cashedDecks = decks
         this.session.cashedUser.ownerDecksUuid.push(deck.uuid)
+        this.session.cashedUser.decksMetadata.push(new DeckMetadataObject({
+            deckUuid:deck.uuid,
+            cols:settings.cols,
+            rowHeight:settings.height,
+        }))
 
         if (!this.session.isOnline) {
             this.session.isUpToDate = false
@@ -195,10 +200,9 @@ class ControllerObject {
         newDecks[newDecks.indexOf(deckToChange)] = newDeck
         if (!this.session.isOnline) {
             this.session.isUpToDate = false
-            saveToLS("session", this.session)
-            return
+        } else {
+            Connect.updateDecksFromSession(this.session)
         }
-        Connect.updateDecksFromSession(this.session)
         saveToLS("session", this.session)
     }
 
@@ -256,6 +260,35 @@ class ControllerObject {
     }
 
 
+    getDeckMetadata(uuid) {
+        let metadata = this.session.cashedUser.decksMetadata.filter(metadata => metadata.deckUuid === uuid)[0]
+        if (!metadata) {
+            metadata = new DeckMetadataObject({deckUuid: uuid})
+            this.session.cashedUser.decksMetadata.push(metadata)
+            if (this.session.isOnline) {
+                Connect.updateUser(this.session.cashedUser)
+            } else {
+                this.session.isUpToDate = false
+            }
+            saveToLS("session", this.session)
+
+        }
+        return metadata
+    }
+
+    saveMetadata(newMetadata) {
+        let allMetadata = this.session.cashedUser.decksMetadata
+
+        let metadataToChange = allMetadata.filter(metadata => metadata.uuid === newMetadata.uuid)[0]
+        allMetadata[allMetadata.indexOf(metadataToChange)] = metadataToChange
+
+        if (!this.session.isOnline) {
+            this.session.isUpToDate = false
+        } else {
+            Connect.updateUser(this.session.cashedUser)
+        }
+        saveToLS("session", this.session)
+    }
 }
 
 let Controller = new ControllerObject();

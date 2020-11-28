@@ -73,19 +73,19 @@ export default function DeckEditMenu(props) {
 
     function addDefaultCard() {
         props.addCard({
-            type: "default", textField: "", secondTextField: "", isFlipped: false,  answer: "",verdict: 0,id: "0"
+            type: "default", textField: "", secondTextField: "", answer: "", id: "0"
         })
     }
 
     function addTurningCard() {
         props.addCard({
-            type: "turing", textField: "", secondTextField: "", isFlipped: false, answer: "", verdict: 0,id: "0"
+            type: "turing", textField: "", secondTextField: "", answer: "", id: "0"
         })
     }
 
     function addAnswerCard() {
         props.addCard({
-            type: "answer", textField: "", secondTextField: "",isFlipped: false, answer: "", verdict: 0,  id: "0"
+            type: "answer", textField: "", secondTextField: "", answer: "", id: "0"
         })
     }
 

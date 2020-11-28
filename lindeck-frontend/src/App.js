@@ -37,7 +37,6 @@ class App extends Component {
 
     render() {
         return <>
-
             <Header isOnline={this.state.isOnline}/>
             <Router primary={false}>
                 <HomePage path="/"/>

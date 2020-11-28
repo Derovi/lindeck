@@ -14,7 +14,7 @@ export default class HomePage extends React.Component {
         if (!Controller.session.isActive) {
             navigate('/login')
         } else {
-            navigate('/user/' + Controller.session.username + '/deck-build')
+            navigate('/user/' + Controller.session.cashedUser.username + '/deck-build')
         }
     }
 

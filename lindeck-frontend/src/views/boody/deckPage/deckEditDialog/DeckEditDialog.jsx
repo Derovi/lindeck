@@ -28,8 +28,8 @@ export default function DeckEditDialog(props) {
             settings={new DeckSettingsObject({
                 name: props.deck.name,
                 description: props.deck.description,
-                cols: props.deck.cols,
-                height: props.deck.rowHeight,
+                cols: props.metadata.cols,
+                height: props.metadata.rowHeight,
                 privacy: props.deck.privacy
             })}
             open={props.open}/>
