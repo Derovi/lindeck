@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./UserPage.css"
-import UserCard from "./userCard/UserCard";
+import UserCard from "../../../common/views/userCard/UserCard";
 import Paper from "@material-ui/core/Paper";
 import Controller from "../../../common/classes/ControllerObject";
 import {Redirect} from "@reach/router";

@@ -20,7 +20,6 @@ class ControllerObject {
     constructor() {
         if (!getFromLS("session")) {
             saveToLS("session", new SessionObject())
-
         }
         this.session = new SessionObject(getFromLS("session"))
         this.sessionOnlineCheck()
@@ -117,7 +116,6 @@ class ControllerObject {
             return "connect to the internet"
         }
         let sessionData = Connect.SignIn(email, password)
-        console.log(sessionData)
         if (sessionData.token === "") return "Email or password is incorrect."
 
         this.session = new SessionObject({
@@ -149,18 +147,14 @@ class ControllerObject {
     }
 
     createNewDeckWithSettings(settings) {
-        let decks = getFromLS("decks")
-
         let deck = new DeckObject({
             ownerId: this.session.id,
             name: settings.name,
             description: settings.description,
             privacy: settings.privacy
         })
-        decks.push(deck)
 
-
-        this.session.cashedDecks = decks
+        this.session.cashedDecks.push(deck)
         this.session.cashedUser.ownerDecksUuid.push(deck.uuid)
         this.session.cashedUser.decksMetadata.push(new DeckMetadataObject({
             deckUuid:deck.uuid,
@@ -278,7 +272,6 @@ class ControllerObject {
 
     saveMetadata(newMetadata) {
         let allMetadata = this.session.cashedUser.decksMetadata
-
         let metadataToChange = allMetadata.filter(metadata => metadata.uuid === newMetadata.uuid)[0]
         allMetadata[allMetadata.indexOf(metadataToChange)] = metadataToChange
 

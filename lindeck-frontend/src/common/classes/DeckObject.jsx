@@ -58,6 +58,8 @@ export default class DeckObject {
 
     // Privacy
     canSee(id) {
+        if (id === undefined)
+            return false
         if (this.privacy === "global")
             return true
         if (this.ownerId === id)

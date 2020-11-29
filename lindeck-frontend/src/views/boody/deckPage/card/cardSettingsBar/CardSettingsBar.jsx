@@ -9,6 +9,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import ThreeSixtyIcon from "@material-ui/icons/ThreeSixty";
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
+import Button from "@material-ui/core/Button";
 
 export default function CardSettingsBar(props) {
     const [refToButton, setRefToButton] = React.useState(null);
@@ -36,18 +37,28 @@ export default function CardSettingsBar(props) {
     }
 
     return <div className="settingsBar">
-        <IconButton size="small" onClick={openSettingsMenu}> <SettingsIcon/></IconButton>
-        <IconButton size="small" onClick={openTextEditDialog}> <TextFieldsIcon/></IconButton>
+        <IconButton size="small" className="floatLeft" onClick={openSettingsMenu}
+                    onTouchEnd={openSettingsMenu}>
+            <SettingsIcon/>
+        </IconButton>
+        <IconButton size="small" className="floatLeft" onClick={openTextEditDialog}
+                    onTouchEnd={openTextEditDialog}>
+            <TextFieldsIcon/></IconButton>
+        <div className="cardTitle">{props.cardTitle}</div>
         {props.needFlipButton && (
-            <IconButton className="floatRight" size="small" onClick={props.flipButtonClick}>
-                <ThreeSixtyIcon/>
+            <IconButton onClick={props.flipButtonClick} className="floatRight" size="small">
+                <ThreeSixtyIcon onTouchEnd={props.flipButtonClick}/>
             </IconButton>)
         }
         {props.needAnswerButtons && (<>
-            <IconButton className="floatRight" size="small" onClick={() => props.inputAnswerDialogOpen(true)}>
+            <IconButton className="floatRight" size="small"
+                        onClick={() => props.inputAnswerDialogOpen(true)}
+                        onTouchEnd={()=>props.inputAnswerDialogOpen(true)}>
                 <PlaylistAddCheckIcon/>
             </IconButton>
-            <IconButton className="floatRight" size="small" onClick={() => props.changeVerdict(0)}>
+            <IconButton className="floatRight" size="small"
+                        onClick={() => props.changeVerdict(0)}
+                        onTouchEnd={()=>props.changeVerdict(0)}>
                 <RefreshIcon/>
             </IconButton>
         </>)
@@ -55,9 +66,14 @@ export default function CardSettingsBar(props) {
         <Menu anchorEl={refToButton} open={Boolean(refToButton)}
               getContentAnchorEl={null} onClose={handleClose}
               transformOrigin={{vertical: "bottom", horizontal: "left"}}>
-            <MenuItem onClick={openTextEditDialog}> Edit Card </MenuItem>
-            <MenuItem onClick={duplicateCard}> Duplicate </MenuItem>
-            <MenuItem className="deleteButton" onClick={deleteCard}> Delete </MenuItem>
+            <MenuItem onClick={openTextEditDialog}
+                      onTouchEnd={openTextEditDialog}
+            > Edit Card </MenuItem>
+            <MenuItem onClick={duplicateCard}
+                      onTouchEnd={duplicateCard}
+            > Duplicate </MenuItem>
+            <MenuItem className="deleteButton" onClick={deleteCard}
+                      onTouchEnd={deleteCard}> Delete </MenuItem>
         </Menu>
     </div>
 }

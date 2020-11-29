@@ -9,7 +9,12 @@
     float: right;
 }
 
+.floatLeft {
+    float: left;
+}
+
 .settingsBar {
+    overflow: hidden; 
     box-shadow: -1px -2px 6px 5px;
     background: linear-gradient(45deg, #bf3351 30%, #7253ff 90%);
     width: 100%

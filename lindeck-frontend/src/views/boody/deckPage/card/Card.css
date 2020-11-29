@@ -1,5 +1,6 @@
 .react-card-flip {
     height: 100%;
+    width: 100%;
 }
 
 .paper {
@@ -9,6 +10,96 @@
     transition: all 0.4s ease 0s;
 }
 
-.text {
+.newText {
     padding: 3px;
+    vertical-align: middle;
+    margin: auto;
+}
+
+.cardTitle {
+    line-height: 2em;
+    display: inline;
+}
+
+.newCardTextHolder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    position: absolute;
+    transition: all 1s;
+    box-shadow: 2px 2px 20px #a47aa9;
+    overflow: hidden;
+    background: linear-gradient(120deg, #fffe2e, #a0faffdb, #c23fc08a, #06b3ff);
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 11s ease-in-out infinite;
+    -z-animation: rainbow 11s ease-in-out infinite;
+    -o-animation: rainbow 11s ease-in-out infinite;
+    animation: rainbow 11s ease-in-out infinite;
+}
+
+
+.handler {
+    height: 100%;
+    display: flex;
+}
+
+
+@-webkit-keyframes rainbow {
+    0% {
+        background-position: 0% 82%
+    }
+    50% {
+        background-position: 100% 19%
+    }
+    100% {
+        background-position: 0% 82%
+    }
+}
+
+@-moz-keyframes rainbow {
+    0% {
+        background-position: 0% 82%
+    }
+    50% {
+        background-position: 100% 19%
+    }
+    100% {
+        background-position: 0% 82%
+    }
+}
+
+@-o-keyframes rainbow {
+    0% {
+        background-position: 0% 82%
+    }
+    50% {
+        background-position: 100% 19%
+    }
+    100% {
+        background-position: 0% 82%
+    }
+}
+
+@keyframes rainbow {
+    0% {
+        background-position: 0% 82%
+    }
+    50% {
+        background-position: 100% 19%
+    }
+    100% {
+        background-position: 0% 82%
+    }
+}
+
+
+.heading {
+    font-weight: bold;
+    font-size: 2em;
+    color: white;
+    border-radius: 4px;
+    background: #85858536;
+    text-shadow: 4px 4px 0px #626262;
+    animation: fadeIn 2.5s linear forwards;
 }

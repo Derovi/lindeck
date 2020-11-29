@@ -3,7 +3,7 @@ import React from "react";
 import "./UserFindPage.css"
 import Paper from "@material-ui/core/Paper";
 import Controller from "../../../common/classes/ControllerObject";
-import UserCard from "../userPage/userCard/UserCard";
+import UserCard from "../../../common/views/userCard/UserCard";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
 

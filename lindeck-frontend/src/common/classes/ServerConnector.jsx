@@ -15,7 +15,7 @@ function saveToLS(key, value) {
 }
 
 // Settings
-let cleanBaseOnPageReload = true //  important !! u can change it to true, so after reload all clear
+let cleanBaseOnPageReload = false //  important !! u can change it to true, so after reload all clear
 
 
 class ServerConnector {
@@ -112,7 +112,7 @@ class ServerConnector {
     }
 
 
-    setFollowing(usernameFrom,usernameTo, startFollow) {
+    setFollowing(usernameFrom, usernameTo, startFollow) {
         // SERVER ADD START FOLLOW (TRUE FALSE) ->
         let users = getFromLS("users")
         let user = users.filter(user => user.username === usernameFrom)[0]
@@ -215,6 +215,7 @@ class ServerConnector {
         // SERVER GET DATA PART
         return jsonDeck
     }
+
 }
 
 

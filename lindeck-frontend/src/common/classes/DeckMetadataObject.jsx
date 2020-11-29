@@ -20,12 +20,29 @@ export default class DeckMetadataObject {
         this.layout = [...this.layout]
     }
 
-    clear() {
-        this.layout = []
+    createMetadataIfNotExists(id) {
+        if (!this.cardsMetadata.filter(cardMetadata => cardMetadata.cardId === id)[0]) {
+            this.cardsMetadata.push(new CardMetadataObject({cardId: id}))
+        }
     }
 
-    getMetadataId(id) {
+    getLayout(id) {
+        return this.layout.filter(cardLayout => cardLayout.i === id)[0]
+    }
+
+    clear() {
+        this.layout = []
+        this.cardsMetadata = []
+    }
+
+    getCardMetadataId(id) {
         return this.cardsMetadata.filter(metadata => metadata.cardId === id)[0]
+    }
+
+    setCardMetadata(metadata) {
+        let metadataFound = this.getCardMetadataId(metadata.cardId)
+        metadataFound.verdict = metadata.verdict
+        metadataFound.isFlipped = metadata.isFlipped
     }
 
     setLayout(layout) {
@@ -34,6 +51,16 @@ export default class DeckMetadataObject {
 
     deleteCard(id) {
         this.layout = this.layout.filter(layout => layout.i !== id)
+        this.cardsMetadata = this.cardsMetadata.filter(card => card.cardId !== id)
+    }
+
+    duplicateMetadataForCard(newAndOldId) {
+        let oldId = newAndOldId.oldId
+        let newId = newAndOldId.newId
+        let metadataWithNewId = new CardMetadataObject(this.cardsMetadata.filter(cardMetadata => cardMetadata.cardId === oldId)[0])
+        metadataWithNewId.cardId = newId
+        this.cardsMetadata.push(metadataWithNewId)
+        console.log(metadataWithNewId)
     }
 
     duplicateLayoutForCard(newAndOldId) {

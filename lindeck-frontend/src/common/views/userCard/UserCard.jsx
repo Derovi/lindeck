@@ -14,7 +14,7 @@ import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
 import AddIcon from '@material-ui/icons/Add';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {navigate} from "@reach/router";
-import Controller from "../../../../common/classes/ControllerObject";
+import Controller from "../../classes/ControllerObject";
 
 export default class UserCard extends React.Component {
     state = {}
@@ -55,7 +55,7 @@ export default class UserCard extends React.Component {
                             {this.renderDecksButton(user)}
                         </Grid>
                     </Grid>
-                    <Grid item xs={7}> {this.decksCreated()}</Grid>
+                    <Grid item xs={7}> {this.decksCreated(user)}</Grid>
                 </Grid>
             </Grid>
         </Paper>
@@ -82,7 +82,7 @@ export default class UserCard extends React.Component {
         </div>
     }
 
-    decksCreated = () => {
+    decksCreated = (user) => {
         let deckSaw = 0
         return <List className="listOfDecks">
             {this.props.user.ownerDecksUuid
@@ -91,14 +91,16 @@ export default class UserCard extends React.Component {
                     deckSaw += 1
                     return <div key={uniqId} className="deckList"
                                 style={{background: uniqId % 2 === 0 ? "gainsboro" : "white"}}>
-                        <ListItem
-                            onClick={() => navigate('/user/' + this.props.user.username + "/deck/" + deck.name + "/view")}>
-                            <ListItemAvatar>
-                                <Avatar> {deck.privacy === "private" ? <VisibilityOffIcon/> :
-                                    <ViewCarouselIcon/>}</Avatar>
-                            </ListItemAvatar>
-                            <ListItemText primary={deck.name} secondary={deck.description}/>
-                        </ListItem>
+                        {deck.canSee(user.id) ?
+                            <ListItem style={{cursor: "pointer"}}
+                                      onClick={() => navigate('/user/' + this.props.user.username + "/deck/" + deck.name + "/view")}>
+                                {this.deckListItem(deck)}
+                            </ListItem>
+                            :
+                            <ListItem>
+                                {this.deckListItem(deck)}
+                            </ListItem>
+                        }
                     </div>
                 })
             }
@@ -143,5 +145,13 @@ export default class UserCard extends React.Component {
         return <Button onClick={() => {
             navigate('/decks/' + user.username)
         }}> All decks </Button>
+    }
+
+    deckListItem(deck) {
+        return <><ListItemAvatar>
+            <Avatar> {deck.privacy === "private" ? <VisibilityOffIcon/> :
+                <ViewCarouselIcon/>}</Avatar>
+        </ListItemAvatar>
+            <ListItemText primary={deck.name} secondary={deck.description}/></>
     }
 }

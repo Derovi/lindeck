@@ -6,7 +6,7 @@ export default class SessionObject {
 
     token = "" // TODO set token from server
     cashedUser = new UserObject()
-    cashedDecks = [new DeckObject()]
+    cashedDecks = [] // new DeckObject()
     isUpToDate = true
 
     isOnline = true
@@ -14,11 +14,12 @@ export default class SessionObject {
 
     constructor(props = {}) {
         this.token = props.token || this.token
-        this.cashedUser = props.cashedUser || this.cashedUser
-        this.cashedDecks = props.cashedDecks || this.cashedDecks
+        this.cashedUser = new UserObject(props.cashedUser) || this.cashedUser
         this.isUpToDate = props.isUpToDate || this.isUpToDate
         this.id = props.id
 
+        this.cashedDecks = props.cashedDecks || this.cashedDecks
+        this.cashedDecks = this.cashedDecks.map(deck => new DeckObject(deck))
         this.isActive = this.id !== undefined
         this.updateOnline()
     }

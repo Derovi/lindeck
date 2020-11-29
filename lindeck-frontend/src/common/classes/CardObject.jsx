@@ -4,6 +4,7 @@
 
 export default class CardObject {
     type = "default"  // turning | answer | default
+    name = "card"
     textField = " text "
 
     secondTextField = " second text"
