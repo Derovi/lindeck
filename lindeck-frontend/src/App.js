@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Router} from "@reach/router"
 import Header from "./views/header/Header";
 import Footer from "./views/footer/Footer";
-import DeckPage from "./views/boody/deckPage/DeckPage";
 import LoginPage from "./views/boody/loginPage/LoginPage";
 import RegisterPage from "./views/boody/registerPage/RegisterPage";
 import HomePage from "./views/boody/homePage/HomePage";
@@ -15,6 +14,7 @@ import UserFindPage from "./views/boody/userFindPage/UserFindPage";
 import Controller from "./common/classes/ControllerObject";
 import UserDecksPage from "./views/boody/userDecksPage/UserDecksPage";
 import PermissionDenied from "./views/boody/permissionDeniedPage/PermissionDeniedPage";
+import DeckPage from "./views/boody/deckPage/DeckPage";
 
 
 class App extends Component {

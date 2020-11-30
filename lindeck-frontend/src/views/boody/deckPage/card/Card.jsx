@@ -1,18 +1,19 @@
 import "./Card.css"
 import React, {Component} from 'react';
 import CardSettingsBar from "./cardSettingsBar/CardSettingsBar";
-import TextEditDialog from "./textEditDialog/TextEditDialog";
+import CardEditDialog from "./cardEditDialog/CardEditDialog";
 import ReactMarkdown from "react-markdown";
 import ReactCardFlip from "react-card-flip";
 import Paper from "@material-ui/core/Paper";
-import AnswerEditDialog from "./answerEditDialog/AnswerEditDialog";
+import AnswerPutDialog from "./answerEditDialog/AnswerEditDialog";
+import CardObject from "../../../../common/classes/CardObject";
 
 class Card extends Component {
     state = {
+        card: new CardObject(this.props.card),
         metadata: this.props.metadata,
         inputAnswerDialog: false,
         textEditDialog: false,
-
         newCard: this.props.metadata.isNew,
         newCardOpacity: 1,
     }
@@ -25,28 +26,21 @@ class Card extends Component {
     }
 
     deleteCard = () => {
-        this.props.deleteCard(this.props.card.id)
+        this.props.deleteCard(this.state.card.id)
     }
 
     duplicateCard = () => {
-        this.props.duplicateCard({...this.props.card})
-    }
-
-    setText = (text) => {
-        this.props.changeCardText(text, this.props.card.id, this.state.metadata.isFlipped)
+        this.props.duplicateCard({...this.state.card})
     }
 
     answerCheck = (answer) => {
-        if (answer === this.props.card.answer) {
-            this.props.changeCardVerdict(1, this.props.card.id)
+        if (answer === this.state.card.answer) {
+            this.props.changeCardVerdict(1, this.state.card.id)
         } else {
-            this.props.changeCardVerdict(-1, this.props.card.id)
+            this.props.changeCardVerdict(-1, this.state.card.id)
         }
     }
 
-    setAnswer = (text) => {
-        this.props.changeCardAnswer(text, this.props.card.id)
-    }
 
     flip = (e) => {
         e.preventDefault();
@@ -55,10 +49,15 @@ class Card extends Component {
         this.setState({isFlipped: this.props.metadata.isFlipped})
     }
 
+    setCardMainData = (card) => {
+        this.props.setCardMainData(card)
+        this.setState({card: card})
+    }
+
     getText = (isFlipped) => {
         if (isFlipped)
-            return this.props.card.secondTextField
-        return this.props.card.textField
+            return this.state.card.secondTextField
+        return this.state.card.textField
     }
 
     changeVerdict = (verdict) => {
@@ -84,6 +83,7 @@ class Card extends Component {
     }
 
     render() {
+
         return <div className="handler">
             <ReactCardFlip isFlipped={this.state.metadata.isFlipped}>
                 {this.createTwoSidesOfCard()}
@@ -91,8 +91,15 @@ class Card extends Component {
             {this.state.newCard &&
             <div className="newCardTextHolder" style={{opacity: this.state.newCardOpacity}} onTouchEnd={this.newTextOk}
                  onClick={this.newTextOk}>
-                <div className="newText heading" > New card !!</div>
+                <div className="newText heading"> New card !!</div>
             </div>}
+            <CardEditDialog open={this.state.textEditDialog} openTextEditDialog={this.openTextEditDialog}
+                            setCardMainData={this.setCardMainData} card={this.state.card}/>
+
+            {this.state.card.type === "answer" &&
+            <AnswerPutDialog open={this.state.inputAnswerDialog}
+                             openInputAnswerDialog={this.openInputAnswerDialog}
+                             answer={this.state.card.answer} answerCheck={this.answerCheck}/>}
         </div>
     }
 
@@ -101,29 +108,18 @@ class Card extends Component {
             return <Paper key={isFlipped} className="paper" style={this.getColor()}>
 
                 <CardSettingsBar duplicateCard={this.duplicateCard} deleteCard={this.deleteCard}
-                                 needFlipButton={this.props.card.type === "turing"}
+                                 needFlipButton={this.state.card.isOfType("turning")}
                                  openTextEditDialog={this.openTextEditDialog} flipButtonClick={this.flip}
-                                 needAnswerButtons={this.props.card.type === "answer"}
+                                 needAnswerButtons={this.state.card.isOfType("answer")}
                                  changeVerdict={this.changeVerdict}
                                  inputAnswerDialogOpen={this.openInputAnswerDialog}
-                                 cardTitle={this.props.card.name}
-                />
+                                 cardTitle={this.state.card.name}/>
 
                 <div className="text">
                     <ReactMarkdown>
                         {this.getText(isFlipped)}
                     </ReactMarkdown>
                 </div>
-
-                <TextEditDialog open={this.state.textEditDialog} openTextEditDialog={this.openTextEditDialog}
-                                textField={this.getText(this.state.metadata.isFlipped)} setText={this.setText}
-                                needAnswer={this.props.card.type === "answer"}
-                                answer={this.props.card.answer} setAnswer={this.setAnswer}/>
-                {this.props.card.type === "answer" &&
-                <AnswerEditDialog open={this.state.inputAnswerDialog}
-                                  openInputAnswerDialog={this.openInputAnswerDialog}
-                                  answer={this.props.card.answer} answerCheck={this.answerCheck}/>}
-
             </Paper>
         })
     }

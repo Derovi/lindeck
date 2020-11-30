@@ -73,13 +73,13 @@ export default function DeckEditMenu(props) {
 
     function addDefaultCard() {
         props.addCard({
-            type: "default", textField: "", secondTextField: "", answer: "", id: "0"
+            type: "default", textField: "", id: "0"
         })
     }
 
     function addTurningCard() {
         props.addCard({
-            type: "turing", textField: "", secondTextField: "", answer: "", id: "0"
+            type: "turning", textField: "", id: "0"
         })
     }
 
@@ -109,7 +109,7 @@ export default function DeckEditMenu(props) {
             <List>
                 <ListItem button>
                     <ListItemIcon><LockOpenRoundedIcon/></ListItemIcon>
-                    <ListItemText primary={"Login"}/>
+                    <ListItemText primary={"Owner Page:" + {}}/>
                 </ListItem>
             </List>
             <Divider/>

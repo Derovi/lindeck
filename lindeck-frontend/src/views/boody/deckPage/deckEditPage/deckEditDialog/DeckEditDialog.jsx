@@ -1,8 +1,8 @@
 import React from 'react';
 import "./DeckEditDialog.css"
-import DeckSettingsForm from "../../../../common/views/deckSettingsForm/DeckSettingsForm";
-import DeckSettingsObject from "../../../../common/classes/DeckSettingsObject";
-import Controller from "../../../../common/classes/ControllerObject";
+import DeckSettingsForm from "../../../../../common/views/deckSettingsForm/DeckSettingsForm";
+import DeckSettingsObject from "../../../../../common/classes/DeckSettingsObject";
+import Controller from "../../../../../common/classes/ControllerObject";
 
 export default function DeckEditDialog(props) {
     const close = () => {

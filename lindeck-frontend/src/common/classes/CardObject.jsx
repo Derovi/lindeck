@@ -5,12 +5,18 @@
 export default class CardObject {
     type = "default"  // turning | answer | default
     name = "card"
-    textField = " text "
+    textField = ""
 
     secondTextField = " second text"
+
+    answerType = "type" // select / checkbox
     answer = "42"
 
+
     id = "0" // string field !
+    isOfType(string) {
+        return this.type.includes(string)
+    }
 
     constructor(props = {}) {
         this.type = props.type || this.type
@@ -20,6 +26,7 @@ export default class CardObject {
         this.answer = props.answer || this.answer
         this.verdict = props.verdict || this.verdict
         this.id = props.id || this.id
+        this.name = props.name || this.name
     }
 
 
