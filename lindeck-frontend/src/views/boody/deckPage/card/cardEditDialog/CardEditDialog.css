@@ -26,6 +26,9 @@
     color: midnightblue;
 }
 
+.marginSmall {
+    margin: 20px 30px 20px 0px !important;
+}
 
 .dialogTitle {
     padding: 15px 0 0 15px;

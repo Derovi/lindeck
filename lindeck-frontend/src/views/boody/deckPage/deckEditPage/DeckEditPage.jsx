@@ -18,10 +18,6 @@ class DeckEditPage extends Component {
         gridWidth: 800,
     }
 
-    constructor(props) {
-        super(props)
-        console.log(this.state.deckMetadata)
-    }
 
     setCardMetadata = (metadata) => {
         let newMetadata = this.state.deckMetadata
@@ -36,8 +32,6 @@ class DeckEditPage extends Component {
         newDeck.cards[newDeck.cards.indexOf(myCard)] = cardData
 
         Controller.saveDeck(newDeck)
-
-        console.log(newDeck)
     }
 
     addCard = (card) => {
@@ -97,30 +91,11 @@ class DeckEditPage extends Component {
         this.setState({metadata: newMetadata});
     }
 
-    changeCardAnswer = (text, id) => {
-        this.state.deck.getCard(id).answer = text
-        Controller.saveDeck(this.state.deck)
-    }
-
-    getMetadata(id) {
-        let metadataCard = this.state.deckMetadata.getCardMetadataId(id)
-        return metadataCard
-    }
-
     changeCardVerdict = (verdict, id) => {
         let newMetadata = this.state.deckMetadata
         newMetadata.getCardMetadataId(id).verdict = verdict
         Controller.saveMetadata(newMetadata)
         this.setState({metadata: newMetadata});
-    }
-
-    changeCardText = (text, id, isFlipped) => {
-        if (isFlipped) {
-            this.state.deck.getCard(id).secondTextField = text
-        } else {
-            this.state.deck.getCard(id).textField = text
-        }
-        Controller.saveDeck(this.state.deck)
     }
 
     openEditDeckDialog = (open) => {
@@ -130,7 +105,9 @@ class DeckEditPage extends Component {
     render() {
         return <>
             <DeckEditMenu openEditDeckDialog={this.openEditDeckDialog} addCard={this.addCard}
-                          resetLayout={this.resetLayout} clearAll={this.clearAll}>
+                          resetLayout={this.resetLayout} clearAll={this.clearAll}
+
+                        >
                 <div className="backGround">
                     <ReactResizeDetector handleWidth>
                         {({width}) => {

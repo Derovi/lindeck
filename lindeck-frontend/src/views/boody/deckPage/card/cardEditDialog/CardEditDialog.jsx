@@ -10,7 +10,8 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import TextField from "@material-ui/core/TextField";
+import ChipTextInput from "../../../../../common/views/chipTextInput/ChipTextInput";
 
 
 export default function CardEditDialog(props) {
@@ -33,8 +34,11 @@ export default function CardEditDialog(props) {
 
     let generateTopSettings = () => {
         return <>
-            {card.id}
-            <FormControl>
+
+            <TextField label="CardName" defaultValue={card.name} onChange={e => change(e, "name")}
+                       variant="outlined"/>
+            <br/>
+            <FormControl className="marginSmall">
                 <InputLabel shrink>
                     Type
                 </InputLabel>
@@ -43,11 +47,45 @@ export default function CardEditDialog(props) {
                     <MenuItem value={"answer"}>answer</MenuItem>
                     <MenuItem value={"default"}>default</MenuItem>
                 </Select>
-                <FormHelperText>Select type of card</FormHelperText>
-            </FormControl><br/>
+            </FormControl>
+
+            {card.isOfType("answer") &&
+            <FormControl className="marginSmall">
+                <InputLabel shrink>
+                    Type
+                </InputLabel>
+                <Select value={card.answerType} onChange={e => change(e, "answerType")} displayEmpty>
+                    <MenuItem value={"string"}>String input</MenuItem>
+                    <MenuItem value={"select"}>Select one</MenuItem>
+                    <MenuItem value={"multiple"}>Select multiple</MenuItem>
+                </Select>
+            </FormControl>
+            }
+            <br/>
         </>
     }
 
+    function changeAnswer(e, answerType) {
+        let newCard = new CardObject({...card})
+        if (answerType === "string") {
+            newCard.answer[0] = e.target.value
+        }
+        console.log(newCard)
+
+        setCard(newCard)
+    }
+
+    function generateAnswerInput(answerType) {
+        if (answerType === "string")
+            return <><span className="stylishTextSmaller"> Answer : </span>
+                <TextareaAutosize onChange={e => changeAnswer(e, "string")} className="inputCardAnswer"
+                                  defaultValue={card.answer[0]}/></>
+        if (answerType === "select" || answerType === "multiple")
+            return <><ChipTextInput card={card} setCard={setCard}/> </>
+
+    }
+
+// Answer
     let generateCenterText = () => {
         return <>
             <span className="stylishTextSmaller"> Text : </span>
@@ -57,11 +95,10 @@ export default function CardEditDialog(props) {
             {card.isOfType("turning") && <><span className="stylishTextSmaller"> Answer : </span>
                 <TextareaAutosize onChange={e => change(e, "secondTextField")}
                                   className="inputCardText" defaultValue={card.secondTextField}/>
+
             </>}
 
-            {card.isOfType("answer") && <><span className="stylishTextSmaller"> Answer : </span>
-                <TextareaAutosize onChange={e => change(e, "answer")} className="inputCardAnswer"
-                                  defaultValue={card.answer}/></>}
+            {card.isOfType("answer") && generateAnswerInput(card.answerType)}
         </>
     }
 

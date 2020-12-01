@@ -109,7 +109,7 @@ export default function DeckEditMenu(props) {
             <List>
                 <ListItem button>
                     <ListItemIcon><LockOpenRoundedIcon/></ListItemIcon>
-                    <ListItemText primary={"Owner Page:" + {}}/>
+                    <ListItemText primary={"Owner Page: TODO" }/>
                 </ListItem>
             </List>
             <Divider/>

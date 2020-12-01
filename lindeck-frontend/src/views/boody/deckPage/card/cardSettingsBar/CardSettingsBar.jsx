@@ -52,13 +52,13 @@ export default function CardSettingsBar(props) {
         }
         {props.needAnswerButtons && (<>
             <IconButton className="floatRight" size="small"
-                        onClick={() => props.inputAnswerDialogOpen(true)}
-                        onTouchEnd={()=>props.inputAnswerDialogOpen(true)}>
+                        onClick={props.inputAnswerClick}
+                        onTouchEnd={props.inputAnswerClick}>
                 <PlaylistAddCheckIcon/>
             </IconButton>
             <IconButton className="floatRight" size="small"
                         onClick={() => props.changeVerdict(0)}
-                        onTouchEnd={()=>props.changeVerdict(0)}>
+                        onTouchEnd={() => props.changeVerdict(0)}>
                 <RefreshIcon/>
             </IconButton>
         </>)
