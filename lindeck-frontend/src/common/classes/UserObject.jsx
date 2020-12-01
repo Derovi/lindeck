@@ -10,6 +10,7 @@ export default class UserObject {
     following = []
 
     ownerDecksUuid = []
+    memberDecksUuid = []
     decksMetadata = [] // new DeckMetadataObject()
 
     constructor(props = {}) {
@@ -19,6 +20,7 @@ export default class UserObject {
         this.describe = props.describe || this.describe
         this.image = props.image || this.image
         this.ownerDecksUuid = props.ownerDecksUuid || this.ownerDecksUuid
+        this.memberDecksUuid = props.memberDecksUuid || this.memberDecksUuid
         this.following = props.following || this.following
         this.id = props.id || this.id
 

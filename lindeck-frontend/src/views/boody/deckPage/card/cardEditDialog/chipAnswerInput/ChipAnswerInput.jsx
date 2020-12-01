@@ -1,13 +1,13 @@
-import "./ChipTextInput.css"
+import "./ChipAnswerInput.css"
 import Chip from "@material-ui/core/Chip";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import React, {useState} from "react";
 import TextField from "@material-ui/core/TextField";
-import CardObject from "../../classes/CardObject";
+import CardObject from "../../../../../../common/classes/CardObject";
 import {IconButton} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 
-export default function CardEditDialog(props) {
+export default function ChipAnswerInput(props) {
     let card = new CardObject(props.card)
     let [text, setText] = useState("")
     let deleteThis = (select) => {

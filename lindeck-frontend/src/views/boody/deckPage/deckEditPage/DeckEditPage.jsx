@@ -157,6 +157,8 @@ class DeckEditPage extends Component {
         newDeck.description = settings.description
         newDeck.privacy = settings.privacy
 
+        newDeck.members = settings.members
+
         this.setState({deck: newDeck});
         Controller.saveDeck(newDeck)
 

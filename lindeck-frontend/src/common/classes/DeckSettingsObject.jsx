@@ -4,6 +4,7 @@ export default class DeckSettingsObject {
     _cols
     _height
     privacy
+    members
 
     constructor(props = {}) {
         this.name = props.name
@@ -11,6 +12,7 @@ export default class DeckSettingsObject {
         this.cols = props.cols
         this.height = props.height
         this.privacy = props.privacy
+        this.members = props.members
     }
 
     set cols(cols) {

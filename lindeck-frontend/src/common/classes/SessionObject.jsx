@@ -8,6 +8,7 @@ export default class SessionObject {
     cashedUser = new UserObject()
     cashedDecks = [] // new DeckObject()
     isUpToDate = true
+    updateDecks = []
 
     isOnline = true
     isActive = false;
@@ -19,6 +20,7 @@ export default class SessionObject {
         this.id = props.id
 
         this.cashedDecks = props.cashedDecks || this.cashedDecks
+        this.updateDecks = props.updateDecks || this.updateDecks
         this.cashedDecks = this.cashedDecks.map(deck => new DeckObject(deck))
         this.isActive = this.id !== undefined
         this.updateOnline()

@@ -1,0 +1,21 @@
+.searchField {
+    max-width: 20em;
+    border: 0;
+    display: flow-root;
+
+    margin: 20px 0;
+}
+
+.searchField input {
+    border: none;
+    padding: 0;
+    background: none;
+    width: 100%;
+}
+
+.searchField .chip {
+    display: inline-block;
+
+    border: none;
+    background: none;
+}

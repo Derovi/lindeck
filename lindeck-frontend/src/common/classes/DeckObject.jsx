@@ -9,7 +9,7 @@ export default class DeckObject {
 
     uuid = uuidv4()
     privacy = "global" // private | global
-    members = [] // TODO write place where you can set it
+    members = []
 
     constructor(props = {}) {
         this.ownerId = props.ownerId || this.ownerId
@@ -19,7 +19,7 @@ export default class DeckObject {
 
         this.uuid = props.uuid || this.uuid
         this.privacy = props.privacy || this.privacy
-        this.members = props.allowedUsers || this.members
+        this.members = props.members || this.members
     }
 
 
