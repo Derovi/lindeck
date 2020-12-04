@@ -21,6 +21,7 @@ class DeckPage extends Component {
         }
     }
 
+
     render() {
         if (!Controller.session.isActive)
             return <Redirect to="/permission-denied" noThrow/>;
@@ -33,9 +34,11 @@ class DeckPage extends Component {
             return <Redirect to="/permission-denied" noThrow/>;
 
         if (this.props.mode === "edit")
-            return <DeckEditPage deck={this.state.deck} deckMetadata={this.state.deckMetadata}/>
+            return <DeckEditPage ownerAndDeckNames={{ownerName: this.props.username, deckname: this.props.deckname}}
+                                 deck={this.state.deck} deckMetadata={this.state.deckMetadata}/>
         if (this.props.mode === "view")
-            return <DeckViewPage deck={this.state.deck} deckMetadata={this.state.deckMetadata}/>
+            return <DeckViewPage ownerAndDeckNames={{ownerName: this.props.username, deckname: this.props.deckname}}
+                                 deck={this.state.deck} deckMetadata={this.state.deckMetadata}/>
 
     }
 

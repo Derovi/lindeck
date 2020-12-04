@@ -10,11 +10,13 @@ export default class DeckObject {
     uuid = uuidv4()
     privacy = "global" // private | global
     members = []
+    background = "#f0f8ff"
 
     constructor(props = {}) {
         this.ownerId = props.ownerId || this.ownerId
         this.name = props.name || this.name
         this.cards = props.cards || this.cards
+        this.background = props.background || this.background
         this.description = props.description || this.description
 
         this.uuid = props.uuid || this.uuid

@@ -7,7 +7,7 @@ import Card from "../card/Card";
 import Controller from "../../../../common/classes/ControllerObject";
 import {navigate, Redirect} from "@reach/router";
 import CardObject from "../../../../common/classes/CardObject";
-import DeckEditMenu from "./deckEditMenu/DeckEditMenu";
+import DeckEditMenu from "./deckSettingsMenu/DeckEditMenu";
 import DeckObject from "../../../../common/classes/DeckObject";
 
 class DeckEditPage extends Component {
@@ -98,17 +98,25 @@ class DeckEditPage extends Component {
         this.setState({metadata: newMetadata});
     }
 
+
+    setColor = (color) => {
+        let newDeck = this.state.deck
+        newDeck.background = color.hex
+        Controller.saveDeck(newDeck)
+
+        this.setState({deck: newDeck})
+    }
+
     openEditDeckDialog = (open) => {
         this.setState({editDeckDialogOpened: open})
     }
 
     render() {
         return <>
-            <DeckEditMenu openEditDeckDialog={this.openEditDeckDialog} addCard={this.addCard}
-                          resetLayout={this.resetLayout} clearAll={this.clearAll}
-
-                        >
-                <div className="backGround">
+            <DeckEditMenu isEdit={true} setColor={this.setColor}
+                          ownerAndDeckNames={this.props.ownerAndDeckNames} openEditDeckDialog={this.openEditDeckDialog} addCard={this.addCard}
+                          resetLayout={this.resetLayout} clearAll={this.clearAll}>
+                <div className="backGround" style={{background: this.state.deck.background}}>
                     <ReactResizeDetector handleWidth>
                         {({width}) => {
                             this.contentWidth = width

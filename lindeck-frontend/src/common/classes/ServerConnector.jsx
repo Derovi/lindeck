@@ -15,7 +15,7 @@ function saveToLS(key, value) {
 }
 
 // Settings
-let cleanBaseOnPageReload = true//  important !! u can change it to true, so after reload all clear
+let cleanBaseOnPageReload = false//  important !! u can change it to true, so after reload all clear
 
 
 class ServerConnector {

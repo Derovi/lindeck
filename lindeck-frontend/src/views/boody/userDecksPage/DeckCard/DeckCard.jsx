@@ -11,7 +11,7 @@ import {navigate} from "@reach/router";
 export default class DeckCard extends React.Component {
     render() {
         let deck = this.props.deck
-        return <Paper className="deckCardHandler">
+        return <Paper className="deckCardHandler" style={{background: deck.background}}>
             <Grid container>
                 <Grid container item md={12}>
                     <Grid item xs={6} lg={12} container>
