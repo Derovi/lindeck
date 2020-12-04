@@ -34,10 +34,11 @@ export default function CreateDeckPage(props) {
             checkForm={checkForm}
             close={close}
             settings={new DeckSettingsObject({
-                name: props.username + "Deck", description: "love lindeck", cols: 6, height: 100, privacy: "private"
+                name: props.username + "Deck", description: "love lindeck", cols: 6, height: 100, privacy: "private",
+                members:[]
             })}
+            ownerId = {Controller.session.id}
             open={true}/>
-
     </>
 
 

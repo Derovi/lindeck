@@ -151,17 +151,18 @@ class ControllerObject {
             ownerId: this.session.id,
             name: settings.name,
             description: settings.description,
-            privacy: settings.privacy
+            privacy: settings.privacy,
+            members: settings.members
         })
-
         this.session.cashedDecks.push(deck)
         this.session.cashedUser.ownerDecksUuid.push(deck.uuid)
         this.session.cashedUser.decksMetadata.push(new DeckMetadataObject({
-            deckUuid:deck.uuid,
-            cols:settings.cols,
-            rowHeight:settings.height,
+            deckUuid: deck.uuid,
+            cols: settings.cols,
+            rowHeight: settings.height,
         }))
 
+        this.session.updateDecks.push(deck.uuid)
         if (!this.session.isOnline) {
             this.session.isUpToDate = false
         } else {
@@ -192,6 +193,8 @@ class ControllerObject {
         let newDecks = this.session.cashedDecks
         let deckToChange = newDecks.filter(deck => deck.uuid === newDeck.uuid)[0]
         newDecks[newDecks.indexOf(deckToChange)] = newDeck
+
+        this.session.updateDecks.push(newDeck.uuid)
         if (!this.session.isOnline) {
             this.session.isUpToDate = false
         } else {
@@ -230,7 +233,7 @@ class ControllerObject {
     }
 
 
-    getUsersDecks(username) {
+    getUserDecks(username) {
         if (username === this.session.cashedUser.username)
             return this.session.cashedDecks
         if (!this.session.isOnline)
@@ -243,6 +246,7 @@ class ControllerObject {
         this.session.cashedDecks = this.session.cashedDecks.filter(deck => deck.uuid !== id)
         this.session.cashedUser.ownerDecksUuid = this.session.cashedUser.ownerDecksUuid.filter(deckId => deckId !== id)
 
+        this.session.updateDecks.push(id)
         if (this.session.isOnline) {
             Connect.updateDecksFromSession(this.session)
             Connect.updateUser(this.session.cashedUser)

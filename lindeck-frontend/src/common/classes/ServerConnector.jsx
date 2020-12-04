@@ -15,7 +15,7 @@ function saveToLS(key, value) {
 }
 
 // Settings
-let cleanBaseOnPageReload = false //  important !! u can change it to true, so after reload all clear
+let cleanBaseOnPageReload = true//  important !! u can change it to true, so after reload all clear
 
 
 class ServerConnector {
@@ -83,22 +83,75 @@ class ServerConnector {
         // SERVER UPDATE
     }
 
+
     updateDecksFromSession(session) {
+        session.updateDecks.forEach(deckIdToUpdate => {
+                let deckUpdated = session.cashedDecks.filter(deck => deck.uuid === deckIdToUpdate)[0]
+                let sessionDecksId = session.cashedDecks.map(deck => deck.uuid)
+                if (sessionDecksId.includes(deckIdToUpdate)) {
+                    this.updateDataDeck(deckUpdated)
+                } else {
+                    this.deleteDeck(deckUpdated)
+                }
+            }
+        )
+    }
+
+    updateDataDeck(newDeck) {
         // SERVER UPDATE ->
         let decks = getFromLS("decks")
-        let clearDecks = decks.filter(deck => deck.ownerId !== session.id) // remove all my decks
 
-        clearDecks.push(...session.cashedDecks) // push updated decks and maybe new decks or delete old
-        saveToLS("decks", clearDecks)
+        let oldDeck = decks.filter(deck => deck.uuid === newDeck.uuid)[0]
+        if (oldDeck) { // IF OLD DECK IS EXISTS
+            // oldDeck.members : 42,15,22
+            // newDeck.members : 15,44
+            // so we need to remove membership from user 42,22 and add to user 44
+
+            let usersAddedId = newDeck.members.filter(member => !oldDeck.members.includes(member))
+            let usersRemovedId = oldDeck.members.filter(member => !newDeck.members.includes(member))
+
+            let users = getFromLS("users")
+            usersAddedId.forEach(
+                userId => users.filter(user => user.id === userId)[0].memberDecksUuid.push(newDeck.uuid)
+            )
+            usersRemovedId.forEach(
+                userId => {
+                    let user = users.filter(user => user.id === userId)[0]
+                    user.memberDecksUuid = user.memberDecksUuid.filter(memberId => memberId !== userId)
+                }
+            )
+            saveToLS("users", users)
+        }
+        let clearedDecks = decks.filter(deck => deck.uuid !== newDeck.uuid)
+
+        clearedDecks.push(newDeck) // push updated decks
+        saveToLS("decks", clearedDecks)
         // SERVER UPDATE
     }
 
+    deleteDeck(deck) {
+        // SERVER UPDATE ->
+        let decks = getFromLS("decks")
+        decks.filter(tmpDeck => tmpDeck.uuid !== deck.uuid)
+        deck.members.forEach(memberId => {
+            let users = getFromLS("users")
+            let user = users.filter(user => user.id === memberId)[0]
+            user.memberDecksUuid = user.memberDecksUuid.filter(uuid => uuid !== deck.id)
+            saveToLS("users", users)
+        })
+        saveToLS("decks", decks)
+        //
+    }
+
+
     getUserDecks(username) {
         // SERVER PART FIND ->
+        console.log("42")
         let user = getFromLS("users").filter(user => user.username === username)[0]
         if (!user)
             return []
-        let decks = getFromLS("decks").filter(deck => deck.ownerId === user.id)
+        let decks = getFromLS("decks").filter(deck => deck.ownerId === user.id || deck.members.includes(user.id))
+
         // SERVER PART FIND
         return decks
     }
@@ -134,7 +187,8 @@ class ServerConnector {
         // SERVER PART CHECK SIGN IN
         sessionData.user = getFromLS("users").filter(user => user.email === email && user.password === password)[0]
         if (sessionData.user) {
-            sessionData.decks = getFromLS("decks").filter(decks => decks.ownerId === sessionData.user.id)
+            sessionData.decks = getFromLS("decks")
+                .filter(decks => decks.ownerId === sessionData.user.id || decks.members.includes(sessionData.user.id))
             sessionData.token = "42"
         }
         //
@@ -211,6 +265,8 @@ class ServerConnector {
         // SERVER GET DATA PART ->
         let allDecks = getFromLS("decks")
         let user = getFromLS("users").filter(user => user.username === username)[0]
+        if (user === undefined)
+            return {}
         let jsonDeck = allDecks.filter(deck => deck.ownerId === user.id && deck.name === deckname)[0]
         // SERVER GET DATA PART
         return jsonDeck

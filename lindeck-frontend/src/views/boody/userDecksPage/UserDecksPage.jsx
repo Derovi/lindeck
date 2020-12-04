@@ -15,7 +15,7 @@ export default class UserDecksPage extends React.Component {
     inputText = ""
 
     getDecks(name) {
-        let decks = Controller.getUsersDecks(this.props.username)
+        let decks = Controller.getUserDecks(this.props.username)
             .map(deck => new DeckObject(deck))
         if (name !== "")
             decks = decks.filter(deck => deck.name.toLowerCase().includes(this.inputText));

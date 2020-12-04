@@ -10,10 +10,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import DeckSettingsObject from "../../classes/DeckSettingsObject";
+import ChipModeratorInput from "./ChipModeratorsInput/ChipModeratorInput";
+import Controller from "../../classes/ControllerObject";
+import {Typography} from "@material-ui/core";
 
 
 export default function DeckSettingsForm(props) {
-
     const [settings, setSettings] = React.useState(props.settings);
     const [nameError, setNameError] = React.useState("");
 
@@ -24,9 +26,15 @@ export default function DeckSettingsForm(props) {
         setSettings(newSettings)
     }
 
+    function setMembers(value) {
+        let newSettings = new DeckSettingsObject(settings)
+        newSettings.members = value
+        setSettings(newSettings)
+    }
+
 
     return <Dialog className="wrapperCreate" fullWidth={true} open={props.open}>
-        <DialogTitle className="centerField ">Deck creation</DialogTitle>
+        <DialogTitle className="centerField">Deck creation</DialogTitle>
         {renderContent()}
         <DialogActions>
             <Button onClick={() => props.close()}>Close</Button>
@@ -69,6 +77,14 @@ export default function DeckSettingsForm(props) {
                     },
                 ]
             )}
+            <br/>
+            {(!Controller.session.isActive) ? <Typography color="inherit">
+                Connect to the Internet to add managers.
+            </Typography> : (Controller.session.id === props.ownerId) ?
+                <ChipModeratorInput membersNow={settings.members} setMembers={setMembers}/> :
+                <Typography color="inherit">
+                    Only owner can edit members
+                </Typography>}
         </DialogContent>
     }
 

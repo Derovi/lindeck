@@ -30,8 +30,10 @@ export default function DeckEditDialog(props) {
                 description: props.deck.description,
                 cols: props.metadata.cols,
                 height: props.metadata.rowHeight,
-                privacy: props.deck.privacy
+                privacy: props.deck.privacy,
+                members: props.deck.members
             })}
+            ownerId ={props.deck.ownerId}
             open={props.open}/>
     </>
 }
