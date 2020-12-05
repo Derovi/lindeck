@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import {globalHistory, navigate} from "@reach/router";
 
 import WifiOffIcon from '@material-ui/icons/WifiOff';
+import {useWindowWidth} from "@react-hook/window-size";
 
 export default class Header extends React.Component {
     state = {
@@ -43,7 +44,8 @@ export default class Header extends React.Component {
                                         this.setState({backgroundColor: {background: "black"}})
                                         navigate(`/`)
                                     }}>
-                                <h1 className={"logoName"}>Life in deck</h1>
+                                <Logo/>
+
                             </button>
                         </div>
 
@@ -75,4 +77,14 @@ export default class Header extends React.Component {
             <img src={this.state.session.cashedUser.image} alt={"ava"}/>
         </ButtonBase>
     }
+}
+
+function Logo() {
+    const onlyWidth = useWindowWidth()
+    let text = "Life in deck"
+    if (onlyWidth < 900) {
+        text = "LinDeck"
+    }
+    console.log(onlyWidth)
+    return <h1 className={"logoName " + (onlyWidth < 900 && " smallLogo")}>{text}</h1>
 }

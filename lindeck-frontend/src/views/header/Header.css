@@ -47,7 +47,6 @@
 }
 
 .headerLindeckButton {
-    width: 17em;
     color: white;
     text-transform: uppercase;
     text-decoration: none;
@@ -62,17 +61,22 @@
     display: inline;
     position: relative;
     font: 40px Helvetica, Sans-Serif;
-    letter-spacing: -5px;
+    letter-spacing: -3px;
     color: rgba(0, 0, 255, 0.5);
 }
 
 .logoName:after {
-    width: 5em;
+    width: 6em;
     content: "Life in deck";
     position: absolute;
     left: 10px;
     top: 5px;
     color: rgba(255, 0, 0, 0.5);
+}
+
+.smallLogo:after{
+    content: "LinDeck" !important;
+    left: -15px;
 }
 
 .headerLindeckButton:hover {

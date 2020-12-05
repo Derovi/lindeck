@@ -70,9 +70,7 @@ class Card extends Component {
 
 
     render() {
-
         return <div className="handler">
-
 
             <ReactCardFlip isFlipped={this.state.metadata.isFlipped}>
                 {this.createTwoSidesOfCard()}

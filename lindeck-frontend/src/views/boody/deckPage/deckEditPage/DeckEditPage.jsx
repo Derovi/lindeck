@@ -114,35 +114,14 @@ class DeckEditPage extends Component {
     render() {
         return <>
             <DeckEditMenu isEdit={true} setColor={this.setColor}
-                          ownerAndDeckNames={this.props.ownerAndDeckNames} openEditDeckDialog={this.openEditDeckDialog} addCard={this.addCard}
+                          ownerAndDeckNames={this.props.ownerAndDeckNames} openEditDeckDialog={this.openEditDeckDialog}
+                          addCard={this.addCard}
                           resetLayout={this.resetLayout} clearAll={this.clearAll}>
-                <div className="backGround" style={{background: this.state.deck.background}}>
-                    <ReactResizeDetector handleWidth>
-                        {({width}) => {
-                            this.contentWidth = width
+                <div className="backGround" style={{backgroundColor: this.state.deck.background}}>
+                    {this.state.deck.cards.length === 0 ?
+                        <div className={"noCardYet stylishText"}> There is No cards Yet</div>
+                        : this.renderEditGrid()}
 
-                            return <ReactGridLayout
-                                measureBeforeMount={false}
-                                className="layout" cols={this.state.deckMetadata.cols}
-                                rowHeight={this.state.deckMetadata.rowHeight} width={width || 0}
-                                onLayoutChange={layout => this.onLayoutChange(layout)}>
-
-                                {this.state.deck.cards.map((card) => {
-                                    let layout = this.state.deckMetadata.getLayout(card.id)
-                                    if (!layout) {
-                                        layout = this.state.deckMetadata.addLayoutForCard(card.id)
-                                    }
-                                    let metadata = this.state.deckMetadata.getCardMetadataId(card.id)
-                                    return <div className="cardHolder" key={card.id}
-                                                data-grid={layout}>
-                                        <Card card={card} setCardMainData={this.setCardMainData}
-                                              setCardMetadata={this.setCardMetadata} metadata={metadata}
-                                              duplicateCard={this.duplicateCard} deleteCard={this.deleteCard}/>
-                                    </div>
-                                })}
-                            </ ReactGridLayout>
-                        }}
-                    </ReactResizeDetector>
                 </div>
             </DeckEditMenu>
             <DeckEditDialog deck={this.state.deck} saveDeckProps={this.saveDeckProps} metadata={this.state.deckMetadata}
@@ -177,6 +156,35 @@ class DeckEditPage extends Component {
         navigate('/user/' + this.props.username + "/deck/" + settings.name + "/edit")
     }
 
+    renderEditGrid() {
+        return <ReactResizeDetector handleWidth>
+            {({width}) => {
+                this.contentWidth = width
+
+                return <ReactGridLayout
+                    measureBeforeMount={false}
+                    className="layout" cols={this.state.deckMetadata.cols}
+                    rowHeight={this.state.deckMetadata.rowHeight} width={width || 0}
+                    onLayoutChange={layout => this.onLayoutChange(layout)}>
+
+                    {this.state.deck.cards.map((card) => {
+                        let layout = this.state.deckMetadata.getLayout(card.id)
+                        if (!layout) {
+                            layout = this.state.deckMetadata.addLayoutForCard(card.id)
+                        }
+                        let metadata = this.state.deckMetadata.getCardMetadataId(card.id)
+                        return <div className="cardHolder" key={card.id}
+                                    data-grid={layout}>
+                            <Card card={card} setCardMainData={this.setCardMainData}
+                                  setCardMetadata={this.setCardMetadata} metadata={metadata}
+                                  duplicateCard={this.duplicateCard} deleteCard={this.deleteCard}/>
+                        </div>
+                    })}
+                </ ReactGridLayout>
+            }}
+        </ReactResizeDetector>
+
+    }
 }
 
 

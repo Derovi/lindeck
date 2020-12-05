@@ -80,8 +80,6 @@ export default function ChipModeratorInput(props) {
                     clearNow = true
                 }}
                 renderInput={(params) => <TextField variant="outlined" {...params}/>
-
-
                 }/>
 
 

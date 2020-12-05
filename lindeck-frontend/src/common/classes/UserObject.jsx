@@ -25,8 +25,10 @@ export default class UserObject {
         this.id = props.id || this.id
 
         this.decksMetadata = props.decksMetadata || this.decksMetadata
+
         this.decksMetadata = this.decksMetadata.map(
             jsonDeckMetadata => new DeckMetadataObject(jsonDeckMetadata))
+
     }
 
     isValid() {

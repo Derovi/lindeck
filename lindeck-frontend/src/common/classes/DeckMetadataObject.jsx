@@ -3,12 +3,14 @@ import CardMetadataObject from "./CardMetadataObject";
 
 export default class DeckMetadataObject {
     deckUuid = ""
-
+    // Edit
     cardsMetadata = [] // [ new CardMetadataObject()]
     layout = [] // new LayoutObject()
     rowHeight = 100
     cols = 2
 
+
+    // View
     resetLayout() {
         this.layout.forEach((layout, index) => {
                 layout.x = index % this.cols;
@@ -23,6 +25,7 @@ export default class DeckMetadataObject {
     createMetadataIfNotExists(id) {
         if (!this.cardsMetadata.filter(cardMetadata => cardMetadata.cardId === id)[0]) {
             this.cardsMetadata.push(new CardMetadataObject({cardId: id}))
+
         }
     }
 
@@ -60,7 +63,6 @@ export default class DeckMetadataObject {
         let metadataWithNewId = new CardMetadataObject(this.cardsMetadata.filter(cardMetadata => cardMetadata.cardId === oldId)[0])
         metadataWithNewId.cardId = newId
         this.cardsMetadata.push(metadataWithNewId)
-        console.log(metadataWithNewId)
     }
 
     duplicateLayoutForCard(newAndOldId) {
@@ -79,8 +81,17 @@ export default class DeckMetadataObject {
         this.layout.push({i: newId, x: x, y: 999, w: 2, h: 2})
     }
 
+
+    getNewShift() {
+        let x = this.cardsMetadata[0]
+        this.cardsMetadata.shift()
+        this.cardsMetadata.push(x)
+        return x.cardId
+    }
+
+
     constructor(props) {
-        this.deckUuid = props.deckUuid
+        this.deckUuid = props.deckUuid || this.deckUuid
         this.rowHeight = props.rowHeight || this.rowHeight
         this.cols = props.cols || this.cols
 
@@ -88,5 +99,15 @@ export default class DeckMetadataObject {
         this.layout = props.layout || this.layout
         this.cardsMetadata = this.cardsMetadata.map(
             jsonCardMetadada => new CardMetadataObject(jsonCardMetadada))
+
+
+        this.letStartButton = props.letStartButton
+        if (this.letStartButton === undefined)
+            this.letStartButton = true
+
+
+        this.cardsNotFinished = props.cardsNotFinished
+        if (this.cardsNotFinished === undefined)
+            this.cardsNotFinished = this.cardsMetadata.map(cardMeta => cardMeta.cardId)
     }
 }
