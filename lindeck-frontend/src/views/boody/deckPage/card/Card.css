@@ -3,7 +3,13 @@
     width: 100%;
 }
 
+.cardText {
+    margin: 7px;
+}
 .paper {
+    background-image: url(https://i.pinimg.com/originals/0c/b7/f9/0cb7f940cce3f1a613740db48b5ad639.jpg);
+
+    background-size: 233px;
     word-wrap: break-word;
     height: 100%;
     overflow: hidden;
@@ -17,6 +23,7 @@
 }
 
 .cardTitle {
+    margin-left: 2em;
     line-height: 2em;
     display: inline;
 }

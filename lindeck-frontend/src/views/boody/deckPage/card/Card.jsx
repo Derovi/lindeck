@@ -101,10 +101,11 @@ class Card extends Component {
                                  openTextEditDialog={this.openTextEditDialog} flipButtonClick={this.flip}
                                  needAnswerButtons={this.state.card.isOfType("answer")}
                                  changeVerdict={this.changeVerdict}
+                                 viewMode = {this.props.viewMode}
                                  inputAnswerClick={this.openInputAnswerDialog}
                                  cardTitle={this.state.card.name}/>
 
-                <div className="text">
+                <div className="cardText">
                     <ReactMarkdown>
                         {this.getText(isFlipped)}
                     </ReactMarkdown>

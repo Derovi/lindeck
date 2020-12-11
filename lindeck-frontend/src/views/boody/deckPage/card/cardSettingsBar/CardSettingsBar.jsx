@@ -37,13 +37,16 @@ export default function CardSettingsBar(props) {
     }
 
     return <div className="settingsBar">
-        <IconButton size="small" className="floatLeft" onClick={openSettingsMenu}
-                    onTouchEnd={openSettingsMenu}>
-            <SettingsIcon/>
-        </IconButton>
-        <IconButton size="small" className="floatLeft" onClick={openTextEditDialog}
-                    onTouchEnd={openTextEditDialog}>
-            <TextFieldsIcon/></IconButton>
+        {!props.viewMode && <>
+            <IconButton size="small" className="floatLeft" onClick={openSettingsMenu}
+                        onTouchEnd={openSettingsMenu}>
+                <SettingsIcon/>
+            </IconButton>
+            <IconButton size="small" className="floatLeft" onClick={openTextEditDialog}
+                        onTouchEnd={openTextEditDialog}>
+                <TextFieldsIcon/></IconButton>
+        </>
+        }
         <div className="cardTitle">{props.cardTitle}</div>
         {props.needFlipButton && (
             <IconButton onClick={props.flipButtonClick} className="floatRight" size="small">

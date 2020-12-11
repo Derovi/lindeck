@@ -112,7 +112,7 @@ export default function CardEditDialog(props) {
             <Button color="primary" onClick={close}>
                 Cancel
             </Button>
-            <Button color="primary" onClick={saveAndClose}>
+            <Button color="primary" autoFocus={true} onClick={saveAndClose}>
                 Save
             </Button>
         </DialogActions>
