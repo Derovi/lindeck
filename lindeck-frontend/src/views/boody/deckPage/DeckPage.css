@@ -1,0 +1,6 @@
+.backGround {
+
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjq-jFSdufVDxd4L8q57Dqs-a8Y3Z4rYhrlQ&usqp=CAU" width="4" height="4" viewBox="0 0 4 4"%3E%3Cpath fill="%239C92AC" fill-opacity="0.4"');
+    overflow: hidden;
+    min-height: 91vh;
+}

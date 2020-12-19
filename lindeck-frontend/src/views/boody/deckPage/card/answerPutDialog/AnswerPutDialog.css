@@ -1,0 +1,33 @@
+.answerBlock {
+    background: linear-gradient(59deg, #ffffff 30%, #f7f7f7 77%);
+    transition: 1s !important;
+    overflow: hidden;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    box-shadow: 0px 0px 2px 0px black !important;
+}
+
+.marginRightFlex {
+    margin: auto 15px auto auto !important;
+}
+
+.inputAnswer > .MuiInputBase-root > .MuiFilledInput-input {
+    padding: 7px;
+}
+
+.inputAnswer {
+    margin: auto 10px !important;
+    background: #ffffff00;
+}
+
+.overflowOverlay {
+    width: auto !important;;
+    display: block !important;
+    overflow: auto !important;;
+}
+
+.checkBox {
+    margin: auto !important;
+}

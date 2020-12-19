@@ -1,0 +1,15 @@
+.deckCardHandler {
+    padding: 20px;
+}
+
+.deckCardButton {
+    margin: 10px 5px 0 0 !important;
+}
+
+.deckCardText {
+    padding: 4px;
+}
+
+.deckIcon {
+    margin: 20px 10px 0 0
+}
