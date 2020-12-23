@@ -3,10 +3,13 @@ package org.lindeck.data.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
+
+/**
+ * Entity for users
+ * @author derovi
+ */
 
 @Entity
 @NoArgsConstructor
@@ -20,7 +23,9 @@ public class User {
     private String login;
     private String email;
     private String password;
-    private String role;
+
+    @OneToMany
+    private List<Deck> decks;
 
     public User(String login, String email, String password) {
         this.login = login;
